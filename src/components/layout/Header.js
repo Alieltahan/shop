@@ -1,26 +1,22 @@
-import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 import NavBar from './NavBar';
 
 const HeaderContainer = styled.div`
-  position: absolute;
+  display: flex;
   height: 8rem;
   width: 100%;
-  left: 0px;
-  top: 0px;
   border-radius: 0px;
+  justify-content: space-between;
+  align-items: center;
   /* --c-white */
   background: var(--c-white);
+  position: relative;
 `;
 
 const Header = () => {
-  // TODO for Each Data...
   return (
     <HeaderContainer>
       <NavBar />
-      {/* {dataCurrencies?.currencies.map((c) => (
-        <div>{c}</div>
-      ))} */}
     </HeaderContainer>
   );
 };
