@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import './App.css';
-import Container from './components/layout/Container';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
+import Main from './components/layout/Main';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -13,6 +13,8 @@ const GlobalStyles = createGlobalStyle`
 :root{
   --c-white: #FFFFFF;
   --c-primary: #5ECE7B;
+  --c-black: #1D1F22;
+  --c-info-variant: #B4D2F4;
 }
  *,
 *::after,
@@ -76,7 +78,7 @@ h4 {
   font-size: 3rem;
 }
 .active{
-    text-color: var(--c-primary);
+    color: var(--c-primary);
     border-bottom: 2px solid var(--c-primary);
   }
 
@@ -87,7 +89,7 @@ function App() {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <GlobalStyles />
-        <Container />
+        <Main />
       </BrowserRouter>
     </ApolloProvider>
   );

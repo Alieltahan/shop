@@ -15,3 +15,35 @@ export const QUERY_CURRENCIES = gql`
     currencies
   }
 `;
+
+// Query All Products
+export const QUERY_ALL_PRODUCTS = gql`
+  query QUERY_ALL_PRODUCTS {
+    categories {
+      name
+      products {
+        id
+        name
+        inStock
+        gallery
+        description
+        category
+        brand
+        prices {
+          currency
+          amount
+        }
+        attributes {
+          id
+          name
+          type
+          items {
+            displayValue
+            value
+            id
+          }
+        }
+      }
+    }
+  }
+`;

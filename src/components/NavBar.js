@@ -1,13 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { QUERY_CATEGORIES, QUERY_CURRENCIES } from '../http/graphql';
-import logo from '../../media/svg/logo.svg';
-import cartLogo from '../../media/svg/cart.svg';
+import { QUERY_CATEGORIES, QUERY_CURRENCIES } from './http/graphql';
+import logo from '../media/svg/logo.svg';
+import cartLogo from '../media/svg/cart.svg';
 import Currencies from './Currencies';
 
 const HeaderStyles = styled.div`
-  /* * Navigation */
   display: flex;
   margin-left: 10.1rem;
   height: 5.6rem;
@@ -39,14 +38,23 @@ const LogoStyle = styled.div`
     height: 2.862rem;
   }
 `;
-
-const CartStyle = styled.div`
+const CartCurrencyWrapper = styled.div`
+  position: absolute;
+  top: 2.3rem;
+  right: 10.1rem;
+  width: 20.4rem;
+  height: 4rem;
   display: flex;
-  height: 100%;
   justify-content: flex-end;
   align-items: center;
-  position: absolute;
-  right: 10.1rem;
+  flex-direction: row;
+`;
+const CartStyle = styled.div`
+  position: static;
+  width: 2rem;
+  height: 2rem;
+  right: 0;
+  top: calc(50% -20px / 2);
   img {
     cursor: pointer;
     width: 2rem;
@@ -65,10 +73,14 @@ const NavBar = () => {
       <LogoStyle>
         <img src={logo}></img>
       </LogoStyle>
-      {/* Cart */}
-      <CartStyle>
-        <img className="cart" src={cartLogo} />
-      </CartStyle>
+      <CartCurrencyWrapper>
+        {/* Curencies */}
+        <Currencies ccy={dataCurrencies?.currencies} />
+        {/* Cart */}
+        <CartStyle>
+          <img className="cart" src={cartLogo} />
+        </CartStyle>
+      </CartCurrencyWrapper>
       {/* Categories */}
       <HeaderStyles>
         {dataCategories?.categories?.map((cat) => (
@@ -77,8 +89,6 @@ const NavBar = () => {
           </NavLink>
         ))}
       </HeaderStyles>
-      {/* Curencies */}
-      <Currencies ccy={dataCurrencies?.currencies} />
     </>
   );
 };
