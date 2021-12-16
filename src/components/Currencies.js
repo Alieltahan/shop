@@ -59,10 +59,13 @@ const CcySwitcherStyle = styled.ul`
   right: -1.8rem;
   /* left: 124.8rem; */
   display: grid;
-  grid-template-columns: 1fr;
   width: 11.4rem;
   filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
-  height: max-content;
+  /* height: max-content; */
+  /* To Enable Transition has to identify the height */
+  /* TODO Edit if new ccy implemented (current 5 Ccys) */
+  height: 22.7rem;
+  transition: all 0.3s;
   &.collapse {
     height: 0;
     visibility: none;
@@ -78,8 +81,7 @@ const CcySwitcherStyle = styled.ul`
     width: 5.4rem;
     height: 2.9rem;
     text-align: right;
-    margin: 2rem 4rem 2.1rem 2rem;
-    background-color: #ccc;
+    margin: 1.05rem 4rem 0rem 2rem;
     &:first-of-type {
       margin-top: 2rem;
     }
