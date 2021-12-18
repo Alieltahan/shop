@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 
-const CategoryNameStyle = styled.h2`
-  margin-top: 8rem;
-  margin-left: 10.1rem;
-`;
-const ProductsContainerStyle = styled.div`
-  width: 38.6rem;
-  height: 44.4rem;
+// TODO Add Responsive Media Q
+const ProductsContainer = styled.div`
   margin-top: 8.762rem;
   margin-left: 10rem;
+  margin: 8.762rem 11.6rem 3rem 10rem;
+  background-color: #916969;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 4rem;
+  row-gap: 10.3rem;
+`;
+const ProductContainerStyle = styled.div`
+  width: 38.6rem;
+  height: 44.4rem;
   background-color: #ccc;
 `;
 const ProductStyle = styled.div`
@@ -16,17 +21,21 @@ const ProductStyle = styled.div`
   height: 44.4rem;
   padding: 1.6rem;
 `;
-const SingleProduct = ({ product }) => {
-  console.log(product);
-  //   console.log(product);
+const ImgContainer = styled.span``;
+
+const SingleProduct = ({ categories }) => {
+  //   const Product = category[0].product[0];
+  console.log(categories);
   return (
-    <>
-      <CategoryNameStyle>Category</CategoryNameStyle>
-      <ProductsContainerStyle>
-        <ProductStyle></ProductStyle>
-      </ProductsContainerStyle>
-      ;
-    </>
+    <ProductsContainer>
+      {categories?.map((category) =>
+        category?.products?.map((product) => (
+          <ProductContainerStyle>
+            <ProductStyle>{product.brand}</ProductStyle>
+          </ProductContainerStyle>
+        ))
+      )}
+    </ProductsContainer>
   );
 };
 
