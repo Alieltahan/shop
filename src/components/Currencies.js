@@ -31,7 +31,7 @@ const SymbolFrame = styled.div`
   left: 12.4rem;
   top: 0.55rem;
 `;
-
+// TODO Add Font
 const CcyStyle = styled.span`
   span {
     /* TODO Add Font */
@@ -55,12 +55,12 @@ const CcyStyle = styled.span`
 const CcySwitcherStyle = styled.ul`
   position: absolute;
   list-style: none;
-  top: 3rem;
+  top: 4rem;
   right: -1.8rem;
-  /* left: 124.8rem; */
   display: grid;
   width: 11.4rem;
   filter: drop-shadow(0px 4px 35px rgba(168, 172, 176, 0.19));
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 1px 8px;
   /* height: max-content; */
   /* To Enable Transition has to identify the height */
   /* TODO Edit if new ccy implemented (current 5 Ccys) */
