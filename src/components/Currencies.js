@@ -11,6 +11,13 @@ const WrapperCcyArrowStyle = styled.div`
   height: 2.9rem;
   left: 12.4rem;
   top: 0.55rem;
+  cursor: pointer;
+  & > img {
+    transition: all 0.3s;
+    &.rotate {
+      transform: rotate(180deg);
+    }
+  }
 `;
 // Space box on the left side of the Wrapper
 const SpaceStyle = styled.div`
@@ -145,7 +152,11 @@ const Currencies = ({ ccy }) => {
         <SymbolFrame>
           <span>{Symbols[CurrentCcy]}</span>
         </SymbolFrame>
-        <img src={arrow}></img>
+        <img
+          className={showCcy ? 'rotate' : ''}
+          alt="currency expand"
+          src={arrow}
+        ></img>
         <SpaceStyle />
         <CcySwitcherStyle className={ccy_list}>
           {ccy?.map((cc) => (

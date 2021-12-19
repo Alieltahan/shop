@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from './store/cart';
 import styled from 'styled-components';
 import cartLogo from '../media/svg/EmptyCart-white.svg';
+import { useNavigate } from 'react-router';
 
 const ProductContainerStyle = styled.div`
   position: static;
@@ -17,9 +18,10 @@ const ProductContainerStyle = styled.div`
   background-color: var(--c-white);
   &:hover {
     box-shadow: var(--product-card-box-shadow);
-    cursor: pointer;
     & .product__image-container-carticon {
+      cursor: pointer;
       opacity: 1;
+      z-index: 2;
     }
   }
   .product {
@@ -32,6 +34,7 @@ const ProductContainerStyle = styled.div`
       left: 1.6rem;
       top: 1.6rem;
       img {
+        cursor: pointer;
         position: static;
         left: 1.6rem;
         top: 1.6rem;
@@ -118,42 +121,50 @@ const ProductContainerStyle = styled.div`
   }
 `;
 
-const ProductCard = ({ categories }) => {
+const ProductCard = ({ products }) => {
+  // Getting Current Currency.
   const CurrentCcy = useSelector((state) => state.ccy.currency);
+  const Navigate = useNavigate();
   const dispatch = useDispatch();
+  // Add Product to Cart
   const handleAddToCart = (product) => {
     dispatch(addProduct(product));
   };
+  const handleProductDescription = (id) => {
+    Navigate(`/product/${id}`);
+  };
   return (
     <>
-      {categories?.map((category) =>
-        category?.products?.map((product) => (
-          <ProductContainerStyle key={product.id}>
-            <div className="product">
-              <div className="product__image-container">
-                <img src={product.gallery[0]} alt={product.name}></img>
-                <span
-                  onClick={() => handleAddToCart(product)}
-                  className="product__image-container-carticon"
-                >
-                  <img alt="cartLogo" src={cartLogo} />
-                </span>
-                <div className="product__content">
-                  <p>{product.name}</p>
-                  <div className={CurrentCcy}>
-                    {Number(
-                      product.prices
-                        .filter((price) => price.currency === CurrentCcy)
-                        .map((price) => price.amount)
-                        .join()
-                    )}
-                  </div>
+      {products?.map((product) => (
+        <ProductContainerStyle key={product.id}>
+          <div className="product">
+            <div className="product__image-container">
+              <img
+                onClick={() => handleProductDescription(product.id)}
+                src={product.gallery[0]}
+                alt={product.name}
+              ></img>
+              <span
+                onClick={() => handleAddToCart(product)}
+                className="product__image-container-carticon"
+              >
+                <img alt="cartLogo" src={cartLogo} />
+              </span>
+              <div className="product__content">
+                <p>{product.name}</p>
+                <div className={CurrentCcy}>
+                  {Number(
+                    product.prices
+                      .filter((price) => price.currency === CurrentCcy)
+                      .map((price) => price.amount)
+                      .join()
+                  )}
                 </div>
               </div>
             </div>
-          </ProductContainerStyle>
-        ))
-      )}
+          </div>
+        </ProductContainerStyle>
+      ))}
     </>
   );
 };

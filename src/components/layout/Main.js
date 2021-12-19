@@ -1,15 +1,26 @@
-import { Routes, Route } from 'react-router';
+import { useQuery } from '@apollo/client';
+import { Routes, Route, useLocation } from 'react-router';
+import { QUERY_CATEGORIES } from '../http/graphql';
 import Header from './Header';
 import PDP from './pages/PDP';
 import PLP from './pages/PLP';
+import SpecificCategory from './pages/SpecificCategory';
 
 const Main = () => {
+  // Getting All The Categories Dynamically (For Scalability in the Future)
+  const { data } = useQuery(QUERY_CATEGORIES);
   return (
     <>
       <Header />
       <Routes>
-        <Route exact path="/product" element={<PDP />} />
-        <Route exact path="/" element={<PLP />} />
+        <Route path="/product/:id" element={<PDP />} />
+        {data?.categories.map((category) => (
+          <Route
+            path={`/${category?.name}`}
+            element={<SpecificCategory category={`${category?.name}`} />}
+          />
+        ))}
+        <Route path="/" element={<PLP />} />
       </Routes>
     </>
   );
