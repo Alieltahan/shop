@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from './store/cart';
 import styled from 'styled-components';
 import cartLogo from '../media/svg/EmptyCart-white.svg';
 
@@ -119,6 +120,10 @@ const ProductContainerStyle = styled.div`
 
 const ProductCard = ({ categories }) => {
   const CurrentCcy = useSelector((state) => state.ccy.currency);
+  const dispatch = useDispatch();
+  const handleAddToCart = (product) => {
+    dispatch(addProduct(product));
+  };
   return (
     <>
       {categories?.map((category) =>
@@ -127,7 +132,10 @@ const ProductCard = ({ categories }) => {
             <div className="product">
               <div className="product__image-container">
                 <img src={product.gallery[0]} alt={product.name}></img>
-                <span className="product__image-container-carticon">
+                <span
+                  onClick={() => handleAddToCart(product)}
+                  className="product__image-container-carticon"
+                >
                   <img alt="cartLogo" src={cartLogo} />
                 </span>
                 <div className="product__content">
