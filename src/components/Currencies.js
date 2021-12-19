@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import arrow from '../media/svg/arrow.svg';
+import { updateCcy } from './store/currency';
 
 // Currency & Arrow Wrapper
 const WrapperCcyArrowStyle = styled.div`
@@ -124,24 +126,24 @@ const Symbols = {
   JPY: '¥',
   AUD: 'A$',
 };
+
 const Currencies = ({ ccy }) => {
-  const [currency, setCurrency] = useState('$');
   const [showCcy, setShowCcy] = useState(false);
+  const CurrentCcy = useSelector((state) => state.ccy.currency);
+  const dispatch = useDispatch();
   // For Un/Collapse Ccy list By Adding/Removing Class
   const ccy_list = showCcy ? '' : 'collapse';
 
-  // Handling Ccy Symbol Change
+  // Handling Ccy Change
   const handleCcyChange = (cc) => {
-    const newCcy = Symbols[cc];
-    setCurrency(newCcy);
-    console.log(newCcy);
+    dispatch(updateCcy({ currency: `${cc}` }));
   };
 
   return (
     <CcyStyle onClick={() => setShowCcy(!showCcy)}>
       <WrapperCcyArrowStyle>
         <SymbolFrame>
-          <span>{currency}</span>
+          <span>{Symbols[CurrentCcy]}</span>
         </SymbolFrame>
         <img src={arrow}></img>
         <SpaceStyle />

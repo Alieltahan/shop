@@ -2,14 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const ccySlice = createSlice({
   name: 'currency',
-  initialState: {},
+  initialState: { currency: 'USD' },
   reducers: {
     // Actions => action handler
-    usersReceived: (state, action) => {
-      return action.payload;
+    updateCcy: (state, action) => {
+      const { currency } = action.payload;
+      state.currency = currency;
     },
   },
 });
 
-export const {} = ccySlice.actions;
+export const { updateCcy } = ccySlice.actions;
 export default ccySlice.reducer;

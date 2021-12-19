@@ -3,7 +3,8 @@ import './App.css';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
 import Main from './components/layout/Main';
-
+import confStore from './components/store/confStore';
+import { Provider } from 'react-redux';
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   uri: `${process.env.REACT_APP_BACKEND_URL}`,
@@ -87,13 +88,16 @@ h4 {
 }`;
 
 function App() {
+  const store = confStore();
   return (
-    <ApolloProvider client={client}>
-      <BrowserRouter>
-        <GlobalStyles />
-        <Main />
-      </BrowserRouter>
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <GlobalStyles />
+          <Main />
+        </BrowserRouter>
+      </ApolloProvider>
+    </Provider>
   );
 }
 

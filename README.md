@@ -1,6 +1,66 @@
+<!-- prettier-ignore -->
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Project Structure:
+
+├── README.md - This file.
+├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
+├── public
+│   ├── favicon.ico # App Icon.
+│   └── index.html # DO NOT MODIFY
+└── src
+
+    ├── components # container for all the developped files.
+        ├── media # container for the images/icons.
+        └── svg # container for all the SVG icons.
+            ├── cart.svg # Black cart Icon.
+            ├── EmptyCart-whote.svg # White cart icon.
+            ├── logo.svg # Website Logo.
+            └── arrow.svg # Currency arrow svg.
+        ├── http # Container for HTTP requests.
+            └── graphql.js # Contain All The GraphQL Queries.
+        ├── layout # container for the Layout design components.
+            ├── Pages # Contain the pages componenets.
+                ├── Cart.js # Full View Cart Page.
+                ├── PDP.js # Product Description Page.
+                ├── PLP.js # Product List Page.
+                └── 404.js Not Found Page.
+            ├── store # REDUX Store files.
+                ├── confStore.js # Configuration of Redux Store.
+                ├── RootReducer.js # Combining All The Reducers.
+                └── currency.js # Currency State Reducer.
+            ├── Header.js # Containing the Header Components.
+            └── Main.js # Containing the Body Components.
+        ├── Currencies.js # The List of Currencies UL in the Header.
+        ├── NavBar.js # Container for the Components in the Navbar.
+        ├── ProductCard.js # Displaying the Product Into a Card.
+        └── Products.js # Container for all the Products.
+    ├── App.css # Styles for your app. Feel free to customize this as you desire.
+    ├── App.js # This is the root of your app. Contains static HTML right now.
+    ├── components # container for all the components.
+        ├── LoginPage.js #
+            ├── NavBar.js #
+            ├── Dashboard.js #
+                ├── Questions.js #
+                    ├── AnsweredQ.js #
+                    └──  UnAnsweredQ.js #
+                        └──RenderQ.js
+                └── QUESTION DETAILS....
+            └── LeaderBoard.js #
+        ├── store # container for the redux store's files
+                └── middleware.js #
+                    └── api.js # file for calling backend functions.
+            ├── confStore.js # Redux Store
+            ├── rootReducer.js # Combining users/questions reducers
+            ├── users.js # users reducer
+            ├── auth.js # authentication & logged in user reducer
+            └── questions.js # questions reducer
+    ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
+    ├── _DATA.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
+    ├── index.css # Global styles. You probably won't need to change anything here.
+    └── index.js # You should not need to modify this file. It is used for DOM rendering only.
 
 ## Available Scripts
 
