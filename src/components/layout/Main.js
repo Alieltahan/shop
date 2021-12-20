@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Routes, Route, useLocation } from 'react-router';
+import { Routes, Route } from 'react-router';
 import { QUERY_CATEGORIES } from '../http/graphql';
 import Header from './Header';
 import PDP from './pages/PDP';

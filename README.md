@@ -5,20 +5,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Project Structure:
 
+<!-- prettier-ignore -->
 ├── README.md - This file.
 ├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
 ├── public
 │   ├── favicon.ico # App Icon.
 │   └── index.html # DO NOT MODIFY
 └── src
-
-    ├── components # container for all the developped files.
-        ├── media # container for the images/icons.
+    ├── media # container for the images/icons.
         └── svg # container for all the SVG icons.
             ├── cart.svg # Black cart Icon.
             ├── EmptyCart-whote.svg # White cart icon.
             ├── logo.svg # Website Logo.
             └── arrow.svg # Currency arrow svg.
+    ├── components # container for all the developped files.
         ├── http # Container for HTTP requests.
             └── graphql.js # Contain All The GraphQL Queries.
         ├── layout # container for the Layout design components.
@@ -39,24 +39,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
         └── Products.js # Container for all the Products.
     ├── App.css # Styles for your app. Feel free to customize this as you desire.
     ├── App.js # This is the root of your app. Contains static HTML right now.
-    ├── components # container for all the components.
-        ├── LoginPage.js #
-            ├── NavBar.js #
-            ├── Dashboard.js #
-                ├── Questions.js #
-                    ├── AnsweredQ.js #
-                    └──  UnAnsweredQ.js #
-                        └──RenderQ.js
-                └── QUESTION DETAILS....
-            └── LeaderBoard.js #
-        ├── store # container for the redux store's files
-                └── middleware.js #
-                    └── api.js # file for calling backend functions.
-            ├── confStore.js # Redux Store
-            ├── rootReducer.js # Combining users/questions reducers
-            ├── users.js # users reducer
-            ├── auth.js # authentication & logged in user reducer
-            └── questions.js # questions reducer
     ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
     ├── _DATA.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
     ├── index.css # Global styles. You probably won't need to change anything here.
