@@ -64,7 +64,7 @@ const ProductContainerStyle = styled.div`
           top: 1.6rem;
           width: 35.4rem;
           height: 33rem;
-          object-fit: cover;
+          object-fit: contain;
           background-size: 100% 100%;
         }
 
@@ -126,29 +126,9 @@ const ProductContainerStyle = styled.div`
       }
     }
   }
-  .EUR:before {
-    content: '\u20AC';
-  }
-  .USD:before {
-    content: '\u0024';
-  }
-  .GBP:before {
-    content: '£';
-  }
-  .RUB:before {
-    content: '₽';
-  }
-  .JPY:before {
-    content: '¥';
-  }
-  /* For Scability, Just add className with Currency Symbol & Add It To The CONST Symbol */
-  .AUD:before {
-    content: 'A$';
-  }
 `;
 
 const ProductCard = ({ products }) => {
-  console.log(products);
   // Getting Current Currency.
   const CurrentCcy = useSelector((state) => state.ccy.currency);
   const Navigate = useNavigate();

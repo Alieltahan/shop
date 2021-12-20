@@ -90,6 +90,7 @@ export const QUERY_SINGLE_PRODUCT = gql`
       gallery
       description
       category
+      brand
       attributes {
         id
         name

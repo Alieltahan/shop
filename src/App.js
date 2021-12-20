@@ -84,7 +84,25 @@ h4 {
     color: var(--c-primary);
     border-bottom: 2px solid var(--c-primary);
   }
-
+  .EUR:before {
+    content: '\u20AC';
+  }
+  .USD:before {
+    content: '\u0024';
+  }
+  .GBP:before {
+    content: '£';
+  }
+  .RUB:before {
+    content: '₽';
+  }
+  .JPY:before {
+    content: '¥';
+  }
+  /* For Scability, Just add className with Currency Symbol & Add It To The CONST Symbol */
+  .AUD:before {
+    content: 'A$';
+  }
 }`;
 
 function App() {
