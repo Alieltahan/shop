@@ -46,7 +46,6 @@ li {
         &__counters{
           display: flex;
           min-height: 18.5rem;
-
           &-container{
             display: flex;
             align-items: center;
@@ -61,8 +60,8 @@ li {
               text-align: center;
             }
             &-op{
+              display: flex;
                 justify-content: center;
-                display: flex;
                 align-items: center;
                 width: 4.5rem;
                 height: 4.5rem;

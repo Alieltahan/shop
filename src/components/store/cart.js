@@ -14,3 +14,11 @@ const cartSlice = createSlice({
 
 export const { addProduct, removeProduct } = cartSlice.actions;
 export default cartSlice.reducer;
+
+export const SelectorTotalProductsNum = (state) => {
+  // Guard Clause
+  if (state.length === 0) return;
+  return state
+    .map((product) => product.quantity)
+    .reduce((acc, cur) => acc + cur);
+};

@@ -6,6 +6,8 @@ import logo from '../media/svg/logo.svg';
 import cartLogo from '../media/svg/cart.svg';
 import Currencies from './Currencies';
 import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+import { SelectorTotalProductsNum } from './store/cart';
 
 const HeaderStyles = styled.div`
   display: flex;
@@ -49,6 +51,19 @@ const CartCurrencyWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   flex-direction: row;
+  .count {
+    position: absolute;
+    top: 4.25%;
+    right: -6.3%;
+    color: #fff;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 6rem;
+    background-color: #1d1f22;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 const CartStyle = styled.div`
   position: static;
@@ -69,6 +84,9 @@ const NavBar = () => {
   const { data: dataCategories, loading: catLoading } =
     useQuery(QUERY_CATEGORIES);
 
+  const cartItems = useSelector((state) => state.cart);
+  let CartCount = SelectorTotalProductsNum(cartItems);
+
   // TODO Remove
   const Navigate = useNavigate();
   const handleCartClicked = () => {
@@ -85,8 +103,14 @@ const NavBar = () => {
         <Currencies ccy={dataCurrencies?.currencies} />
         {/* Cart */}
         <CartStyle>
-          <img onClick={handleCartClicked} className="cart" src={cartLogo} />
+          <img
+            alt="cart logo"
+            onClick={handleCartClicked}
+            className="cart"
+            src={cartLogo}
+          />
         </CartStyle>
+        {CartCount ? <div className="count">{CartCount}</div> : ''}
       </CartCurrencyWrapper>
       {/* Categories */}
       <HeaderStyles>

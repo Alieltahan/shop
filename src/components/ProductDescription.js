@@ -141,28 +141,34 @@ const ProductDescription = ({ id }) => {
   });
   const currentCcy = useSelector((state) => state.ccy);
 
-  console.log(data);
   const ProductImages = data?.product?.gallery?.map((image) => image);
   const dispatch = useDispatch();
+
   const handleImageChange = (index) => {
     setThumbnail(index);
   };
 
-  const handleAddToCart = (product) => {
-    dispatch(addProduct({ product }));
+  /* Storing the Product */
+  let Product = {};
+  if (data) {
+    Product = data.product;
+  }
+  console.log(Product);
+  const handleAddToCart = (Product) => {
+    dispatch(addProduct({ ...Product, quantity: 1 }));
   };
 
   if (loading) return <h3>Loading...</h3>;
   if (error) return <h3>{error.message}</h3>;
   return (
     <ProductContainer>
-      {data?.product?.gallery?.map((image, index) => (
+      {Product.gallery?.map((image, index) => (
         <img
           onClick={() => handleImageChange(index)}
           className={`product__sideImage- product__sideImage-${index}`}
           key={`${image}` + index}
           src={image}
-          alt={`${data?.product?.name} pic ${index}`}
+          alt={`${Product.name} pic ${index}`}
         />
       ))}
       <div className="product__details">
@@ -177,7 +183,7 @@ const ProductDescription = ({ id }) => {
           <h4 className="product__details__brand">{data?.product.brand}</h4>
           <p>{data?.product.name}</p>
           <div className="product__details__attribute">
-            {data?.product?.attributes.map((att) => (
+            {Product.attributes.map((att) => (
               <div key={att.id}>
                 <p className="product__details__attribute-text">{att.id}:</p>
                 {att.type === 'swatch'
@@ -202,7 +208,7 @@ const ProductDescription = ({ id }) => {
           <div className="product__details__attribute-price">
             <p>price:</p>
             <div>
-              {data?.product?.prices
+              {Product.prices
                 .filter((price) => price.currency === currentCcy.currency)
                 .map((ccy) => (
                   <p className={ccy.currency}>{ccy.amount}</p>
@@ -210,7 +216,7 @@ const ProductDescription = ({ id }) => {
             </div>
           </div>
           <div
-            onClick={(product) => handleAddToCart(product)}
+            onClick={() => handleAddToCart(Product)}
             className="product__details-btn"
           >
             add to cart
@@ -222,7 +228,7 @@ const ProductDescription = ({ id }) => {
               fontSize: '1.6rem',
               lineHeight: '2.6rem',
             }}
-            dangerouslySetInnerHTML={{ __html: data?.product?.description }}
+            dangerouslySetInnerHTML={{ __html: Product.description }}
           ></div>
         </div>
       </div>
