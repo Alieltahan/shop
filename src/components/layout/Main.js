@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { Routes, Route } from 'react-router';
 import { QUERY_CATEGORIES } from '../http/graphql';
 import Header from './Header';
+import CartPage from './pages/CartPage';
 import PDP from './pages/PDP';
 import PLP from './pages/PLP';
 import SpecificCategory from './pages/SpecificCategory';
@@ -20,6 +21,7 @@ const Main = () => {
             element={<SpecificCategory category={`${category?.name}`} />}
           />
         ))}
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/" element={<PLP />} />
       </Routes>
     </>

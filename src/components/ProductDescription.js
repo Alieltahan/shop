@@ -1,8 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { QUERY_SINGLE_PRODUCT } from './http/graphql';
+import { addProduct } from './store/cart';
 
 const ProductContainer = styled.div`
   width: 144rem;
@@ -108,6 +109,15 @@ const ProductContainer = styled.div`
         font-weight: 600;
         font-size: 1.6rem;
         line-height: 120%;
+        cursor: pointer;
+        &:hover{
+          transform: translateY(-2px);
+          box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        }
+        &:active{
+          transform: translateY(0);
+          box-shadow: none;
+        }
       }
     }
     &__sideImage- {
@@ -133,9 +143,13 @@ const ProductDescription = ({ id }) => {
 
   console.log(data);
   const ProductImages = data?.product?.gallery?.map((image) => image);
-
+  const dispatch = useDispatch();
   const handleImageChange = (index) => {
     setThumbnail(index);
+  };
+
+  const handleAddToCart = (product) => {
+    dispatch(addProduct({ product }));
   };
 
   if (loading) return <h3>Loading...</h3>;
@@ -195,7 +209,12 @@ const ProductDescription = ({ id }) => {
                 ))}
             </div>
           </div>
-          <div className="product__details-btn">add to cart</div>
+          <div
+            onClick={(product) => handleAddToCart(product)}
+            className="product__details-btn"
+          >
+            add to cart
+          </div>
           <div
             style={{
               marginTop: '4rem',

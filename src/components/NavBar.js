@@ -5,6 +5,7 @@ import { QUERY_CATEGORIES, QUERY_CURRENCIES } from './http/graphql';
 import logo from '../media/svg/logo.svg';
 import cartLogo from '../media/svg/cart.svg';
 import Currencies from './Currencies';
+import { useNavigate } from 'react-router';
 
 const HeaderStyles = styled.div`
   display: flex;
@@ -67,6 +68,12 @@ const NavBar = () => {
     useQuery(QUERY_CURRENCIES);
   const { data: dataCategories, loading: catLoading } =
     useQuery(QUERY_CATEGORIES);
+
+  // TODO Remove
+  const Navigate = useNavigate();
+  const handleCartClicked = () => {
+    Navigate('/cart');
+  };
   return (
     <>
       {/* Logo - Center */}
@@ -78,7 +85,7 @@ const NavBar = () => {
         <Currencies ccy={dataCurrencies?.currencies} />
         {/* Cart */}
         <CartStyle>
-          <img className="cart" src={cartLogo} />
+          <img onClick={handleCartClicked} className="cart" src={cartLogo} />
         </CartStyle>
       </CartCurrencyWrapper>
       {/* Categories */}
