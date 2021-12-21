@@ -8,9 +8,7 @@ const CategoryNameStyle = styled.h3`
 `;
 // TODO Add Responsive Media Q
 const ProductsContainer = styled.div`
-  margin-top: 8.762rem;
-  margin-left: 10rem;
-  margin: 8.762rem 11.6rem 3rem 10rem;
+  margin: 8.762rem 11.6rem 10rem 10rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(38.4rem, 1fr));
   column-gap: 4rem;

@@ -1,7 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { addProduct, decrementProduct } from './store/cart';
 
 const ContainerStyles = styled.div`
+.emptyCart{
+  text-align: center;
+}
 .lists-container{
   display: flex;
   flex-direction: column;
@@ -60,12 +64,14 @@ li {
               text-align: center;
             }
             &-op{
-              display: flex;
+              cursor: pointer;
+                display: flex;
                 justify-content: center;
                 align-items: center;
                 width: 4.5rem;
                 height: 4.5rem;
                 border: 1px solid  #1D1F22;
+               
             }
         }
       &__brand {
@@ -114,61 +120,82 @@ li {
   }
 `;
 const Cart = () => {
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart.products);
   const currentCcy = useSelector((state) => state.ccy);
-  console.log(cartItems);
+  const dispatch = useDispatch();
+
+  /* console.log(cartItems); */
   return (
     <ContainerStyles>
       <header>CART</header>
-      <ul>
-        {cartItems.map((item) => (
-          <li key={item.id}>
-            <div className="lists-container">
-              <div className="item__brand">{item.brand}</div>
-              <div className="item__name">{item.name}</div>
-              <div className="item__price">
-                {item.prices
-                  .filter((price) => price.currency === currentCcy.currency)
-                  .map((ccy) => (
-                    <p className={ccy.currency}>{ccy.amount}</p>
-                  ))}
+      {cartItems.length === 0 ? (
+        <h5 className="emptyCart">
+          There is no items in your cart yet!, go and grap some!
+        </h5>
+      ) : (
+        <ul>
+          {cartItems.map((item) => (
+            <li key={item.id}>
+              <div className="lists-container">
+                <div className="item__brand">{item.brand}</div>
+                <div className="item__name">{item.name}</div>
+                <div className="item__price">
+                  {item.prices
+                    .filter((price) => price.currency === currentCcy.currency)
+                    .map((ccy) => (
+                      <p key={ccy.currency} className={ccy.currency}>
+                        {ccy.amount}
+                      </p>
+                    ))}
+                </div>
+                {item.attributes.map((att) => (
+                  <>
+                    <div key={att.id} className="item__att">
+                      {att.type === 'swatch'
+                        ? att.items.map((item) => (
+                            <div
+                              key={item.id}
+                              style={{
+                                backgroundColor: `${item.value}`,
+                              }}
+                              className="item__att-boxes item__att-boxes-colored"
+                            ></div>
+                          ))
+                        : att.items.map((item) => (
+                            <>
+                              <span key={item.id} className="item__att-boxes">
+                                <p>{item.displayValue}</p>
+                              </span>
+                            </>
+                          ))}
+                    </div>
+                  </>
+                ))}
               </div>
-              {item.attributes.map((att) => (
-                <>
-                  <div className="item__att">
-                    {att.type === 'swatch'
-                      ? att.items.map((item) => (
-                          <div
-                            style={{
-                              backgroundColor: `${item.value}`,
-                            }}
-                            className="item__att-boxes item__att-boxes-colored"
-                          ></div>
-                        ))
-                      : att.items.map((item) => (
-                          <>
-                            <span className="item__att-boxes">
-                              <p>{item.displayValue}</p>
-                            </span>
-                          </>
-                        ))}
+              <div className="item__counters-container">
+                <div className="item__counters">
+                  <div
+                    onClick={() => dispatch(addProduct(item))}
+                    className="item__counters-op"
+                  >
+                    +
                   </div>
-                </>
-              ))}
-            </div>
-            <div className="item__counters-container">
-              <div className="item__counters">
-                <div className="item__counters-op">+</div>
-                <div className="item__counters-count">Q</div>
-                <div className="item__counters-op">-</div>
+                  <div className="item__counters-count">{item.quantity}</div>
+                  <div
+                    onClick={() => dispatch(decrementProduct(item))}
+                    className="item__counters-op"
+                  >
+                    -
+                  </div>
+                </div>
+                <div className="item__img">
+                  <img src={item.gallery[0]} alt={item.name} />
+                </div>
               </div>
-              <div className="item__img">
-                <img src={item.gallery[0]} alt={item.name} />
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      )}
     </ContainerStyles>
   );
 };

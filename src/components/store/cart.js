@@ -2,23 +2,47 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: [],
+  initialState: {
+    products: [],
+    totalAmount: 0,
+    totalCount: 0,
+  },
   reducers: {
     // Actions => action handler
     addProduct: (state, action) => {
-      state.push(action.payload);
+      let existingCartProductIndex = state.products.findIndex(
+        (product) => product.id === action.payload.id
+      );
+
+      let existingProduct = state.products[existingCartProductIndex];
+      if (existingProduct) {
+        state.products[existingCartProductIndex] = {
+          ...existingProduct,
+          quantity: existingProduct.quantity + 1,
+        };
+      } else {
+        state.products.push(action.payload);
+      }
+      state.totalCount++;
     },
-    removeProduct: (state, action) => {},
+    decrementProduct: (state, action) => {
+      let existingCartProductIndex = state.products.findIndex(
+        (product) => product.id === action.payload.id
+      );
+      let existingProduct = state.products[existingCartProductIndex];
+      state.products[existingCartProductIndex] = {
+        ...existingProduct,
+        quantity: existingProduct.quantity - 1,
+      };
+      state.totalCount--;
+      if (existingProduct.quantity === 1)
+        state.products = state.products.filter(
+          (product) => product.id !== existingProduct.id
+        );
+    },
   },
 });
 
-export const { addProduct, removeProduct } = cartSlice.actions;
+export const { addProduct, removeProduct, decrementProduct } =
+  cartSlice.actions;
 export default cartSlice.reducer;
-
-export const SelectorTotalProductsNum = (state) => {
-  // Guard Clause
-  if (state.length === 0) return;
-  return state
-    .map((product) => product.quantity)
-    .reduce((acc, cur) => acc + cur);
-};

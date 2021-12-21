@@ -8,6 +8,7 @@ import Currencies from './Currencies';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { SelectorTotalProductsNum } from './store/cart';
+import MiniCart from './MiniCart';
 
 const HeaderStyles = styled.div`
   display: flex;
@@ -84,8 +85,7 @@ const NavBar = () => {
   const { data: dataCategories, loading: catLoading } =
     useQuery(QUERY_CATEGORIES);
 
-  const cartItems = useSelector((state) => state.cart);
-  let CartCount = SelectorTotalProductsNum(cartItems);
+  let CartCount = useSelector((state) => state.cart.totalCount);
 
   // TODO Remove
   const Navigate = useNavigate();
@@ -96,7 +96,7 @@ const NavBar = () => {
     <>
       {/* Logo - Center */}
       <LogoStyle>
-        <img src={logo}></img>
+        <img src={logo} alt="logo"></img>
       </LogoStyle>
       <CartCurrencyWrapper>
         {/* Curencies */}
@@ -119,6 +119,7 @@ const NavBar = () => {
             <HeaderCategoryStyles>{cat?.name}</HeaderCategoryStyles>
           </NavLink>
         ))}
+        <MiniCart />
       </HeaderStyles>
     </>
   );

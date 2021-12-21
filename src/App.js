@@ -16,7 +16,9 @@ const GlobalStyles = createGlobalStyle`
   --c-primary: #5ECE7B;
   --c-black: #1D1F22;
   --c-info-variant: #B4D2F4;
-  --product-card-box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+  --product-card-box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  /* given Shadow box effect  */
+  /* --product-card-box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19); */
   --button-box-shadow: drop-shadow(0px 4px 11px rgba(29, 31, 34, 0.1));
 }
  *,

@@ -29,7 +29,7 @@ const ProductContainerStyle = styled.div`
 
     &__outOfStock {
       position: absolute;
-      height: 44.4rem;
+      height: 42.4rem;
       width: 100%;
       background-color: #ffffff;
       opacity: 0.5;
@@ -78,6 +78,10 @@ const ProductContainerStyle = styled.div`
           border-radius: 50%;
           transition: all 0.3s;
           opacity: 0;
+          &:hover {
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            transform: translateY(-2px);
+          }
           img {
             width: 2.4rem;
             height: 2.4rem;
@@ -135,7 +139,7 @@ const ProductCard = ({ products }) => {
   const dispatch = useDispatch();
   // Add Product to Cart
   const handleAddToCart = (product) => {
-    dispatch(addProduct(product));
+    dispatch(addProduct({ ...product, quantity: 1 }));
   };
   const handleProductDescription = (id) => {
     Navigate(`/product/${id}`);
