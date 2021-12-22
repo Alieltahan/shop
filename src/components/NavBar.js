@@ -7,7 +7,6 @@ import cartLogo from '../media/svg/cart.svg';
 import Currencies from './Currencies';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
-import { SelectorTotalProductsNum } from './store/cart';
 import MiniCart from './MiniCart';
 
 const HeaderStyles = styled.div`
@@ -36,6 +35,7 @@ const LogoStyle = styled.div`
   align-items: center;
   position: absolute;
   width: 100%;
+
   img {
     justify-content: center;
     width: 3.118rem;
@@ -72,6 +72,11 @@ const CartStyle = styled.div`
   height: 2rem;
   right: 0;
   top: calc(50% -20px / 2);
+  &:hover {
+    > .miniCart {
+      display: block;
+    }
+  }
   img {
     cursor: pointer;
     width: 2rem;
@@ -109,6 +114,7 @@ const NavBar = () => {
             className="cart"
             src={cartLogo}
           />
+          <MiniCart />
         </CartStyle>
         {CartCount ? <div className="count">{CartCount}</div> : ''}
       </CartCurrencyWrapper>
@@ -119,7 +125,6 @@ const NavBar = () => {
             <HeaderCategoryStyles>{cat?.name}</HeaderCategoryStyles>
           </NavLink>
         ))}
-        <MiniCart />
       </HeaderStyles>
     </>
   );

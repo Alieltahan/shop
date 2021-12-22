@@ -21,6 +21,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     ├── components # container for all the developped files.
         ├── http # Container for HTTP requests.
             └── graphql.js # Contain All The GraphQL Queries.
+        ├── NavBar.js # Container for the Components in the Navbar.
+            ├── Currencies.js # The List of Currencies UL in the Header.
+            └── MiniCart.js # MiniCart.
+            &logo / categories.
         ├── layout # container for the Layout design components.
             ├── Pages # Contain the pages componenets.
                 ├── Cart.js # Full View Cart Page.
@@ -33,8 +37,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
                 └── currency.js # Currency State Reducer.
             ├── Header.js # Containing the Header Components.
             └── Main.js # Containing the Body Components.
-        ├── Currencies.js # The List of Currencies UL in the Header.
-        ├── NavBar.js # Container for the Components in the Navbar.
         ├── ProductCard.js # Displaying the Product Into a Card.
         └── Products.js # Container for all the Products.
     ├── App.css # Styles for your app. Feel free to customize this as you desire.

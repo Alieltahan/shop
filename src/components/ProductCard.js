@@ -134,12 +134,12 @@ const ProductContainerStyle = styled.div`
 
 const ProductCard = ({ products }) => {
   // Getting Current Currency.
-  const CurrentCcy = useSelector((state) => state.ccy.currency);
+  const currentCcy = useSelector((state) => state.ccy);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   // Add Product to Cart
   const handleAddToCart = (product) => {
-    dispatch(addProduct({ ...product, quantity: 1 }));
+    dispatch(addProduct({ ...product, quantity: 1, currentCcy }));
   };
   const handleProductDescription = (id) => {
     Navigate(`/product/${id}`);
@@ -175,10 +175,10 @@ const ProductCard = ({ products }) => {
               ></img>
               <div className="product__content">
                 <p>{product.name}</p>
-                <div className={CurrentCcy}>
+                <div className={currentCcy.currency}>
                   {Number(
                     product.prices
-                      .filter((price) => price.currency === CurrentCcy)
+                      .filter((price) => price.currency === currentCcy.currency)
                       .map((price) => price.amount)
                       .join()
                   )}

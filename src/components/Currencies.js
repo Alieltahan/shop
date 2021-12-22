@@ -42,6 +42,8 @@ const SymbolFrame = styled.div`
 `;
 // TODO Add Font
 const CcyStyle = styled.span`
+  z-index: 10;
+
   span {
     /* TODO Add Font */
     font-family: Raleway;
@@ -62,6 +64,7 @@ const CcyStyle = styled.span`
   }
 `;
 const CcySwitcherStyle = styled.ul`
+  background-color: var(--c-white);
   position: absolute;
   list-style: none;
   top: 4rem;
