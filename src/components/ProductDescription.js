@@ -9,6 +9,7 @@ const ProductContainer = styled.div`
   width: 144rem;
   height: 74.5rem;
   position: relative;
+  margin-top:11.341rem;
   .product {
     &__details {
       display: grid;
@@ -153,9 +154,8 @@ const ProductDescription = ({ id }) => {
   if (data) {
     Product = data.product;
   }
-  console.log(Product);
   const handleAddToCart = (Product) => {
-    dispatch(addProduct({ ...Product, quantity: 1 }));
+    dispatch(addProduct({ ...Product, quantity: 1, currentCcy }));
   };
 
   if (loading) return <h3>Loading...</h3>;

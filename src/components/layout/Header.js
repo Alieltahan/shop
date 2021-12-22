@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import NavBar from '../NavBar';
 
 const HeaderContainer = styled.div`
+  position: fixed;
+  top: 0;
   display: flex;
   height: 8rem;
   width: 100%;
@@ -10,7 +12,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   /* --c-white */
   background: var(--c-white);
-  position: relative;
+  z-index: 4;
 `;
 
 const Header = () => {

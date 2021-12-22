@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import cart, { addProduct, decrementProduct } from './store/cart';
+import { addProduct, decrementProduct, miniCartToggle } from './store/cart';
+import ArrowImg from '../media/svg/ArrowImg.svg';
 
 const ContainerStyles = styled.div`
   .emptyCart {
@@ -9,7 +11,7 @@ const ContainerStyles = styled.div`
     margin: 3rem 0;
   }
   header {
-    margin-top: 8rem;
+    margin-top: 16rem;
     font-family: Raleway;
     font-size: 3.2rem;
     font-weight: bold;
@@ -55,8 +57,23 @@ const ContainerStyles = styled.div`
         width: 14.1rem;
         display: flex;
         align-items: center;
+        position: relative;
         &-mini {
           width: 13.7rem;
+        }
+        &-arrow {
+          height: 2rem;
+          width: 2rem;
+          z-index: 2;
+          position: absolute;
+          width: 100%;
+          display: flex;
+          gap: 20%;
+          &-rt {
+          }
+          &-lf {
+            transform: rotate(180deg);
+          }
         }
         img {
           object-fit: contain;
@@ -230,23 +247,31 @@ const ContainerStyles = styled.div`
   }
 `;
 const Cart = ({ mini }) => {
-  const cartItems = useSelector((state) => state.cart);
+  const cartStore = useSelector((state) => state.cart);
   const currentCcy = useSelector((state) => state.ccy);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
+  const [galleryNumber, setGalleryNumber] = useState(0);
 
-  console.log(cartItems);
+  const handleChangeImage = (item) => {
+    if (galleryNumber === item.gallery.length) setGalleryNumber(0);
+    else {
+      setGalleryNumber(galleryNumber + 1);
+    }
+    console.log(galleryNumber);
+  };
+  console.log(cartStore);
   return (
     <>
       <ContainerStyles>
         {!mini && <header>CART</header>}
-        {cartItems.products.length === 0 ? (
+        {cartStore.products.length === 0 ? (
           <h5 className="emptyCart">
             There is no items in your cart yet!, go and grap some!
           </h5>
         ) : (
           <ul className={!mini ? 'u-list' : 'u-list u-list-mini'}>
-            {cartItems.products.map((item) => (
+            {cartStore.products.map((item) => (
               <li className={!mini ? 'list' : 'list list-mini'} key={item.id}>
                 <div>
                   <div
@@ -367,7 +392,26 @@ const Cart = ({ mini }) => {
                   <div
                     className={!mini ? 'item__img' : 'item__img item__img-mini'}
                   >
-                    <img src={item.gallery[0]} alt={item.name} />
+                    <span className="item__img-arrow">
+                      <img
+                        src={ArrowImg}
+                        className="item__img-arrow-lf"
+                        alt="arrow"
+                      />
+                      <div></div>
+                      <img
+                        src={ArrowImg}
+                        className="item__img-arrow-rt"
+                        alt="arrow"
+                      />
+                    </span>
+                    <img
+                      onClick={() => handleChangeImage(item)}
+                      src={item.gallery[galleryNumber]}
+                      alt={item.name}
+                    />
+                    {/* <span className="item__img-arrow-lf">
+                    </span> */}
                   </div>
                 </div>
               </li>
@@ -379,19 +423,22 @@ const Cart = ({ mini }) => {
             <div className="footer">
               <div className="footer__total"> Total</div>
               <div className={`footer__amount ${currentCcy.currency}`}>
-                {Math.floor(cartItems.totalAmount * 100) / 100 || 0}
+                {Math.floor(cartStore.totalAmount * 100) / 100 || 0}
               </div>
             </div>
             <div className="footer__btns">
               <button
-                onClick={() => Navigate('/cart')}
+                onClick={() => {
+                  Navigate('/cart');
+                  dispatch(miniCartToggle());
+                }}
                 type="button"
                 className="footer__btn footer__btn-white"
               >
                 view bag
               </button>
               <button
-                disabled={!cartItems.products.length}
+                disabled={!cartStore.products.length}
                 type="button"
                 className="footer__btn footer__btn-co-primary"
               >

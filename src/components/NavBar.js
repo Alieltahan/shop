@@ -103,14 +103,13 @@ const NavBar = () => {
         {/* Curencies */}
         <Currencies ccy={dataCurrencies?.currencies} />
         {/* Cart */}
-        <CartStyle onClick={handleToggleCart}>
+        <CartStyle>
           <img
             alt="cart logo"
-            // onClick={handleCartClicked}
+            onClick={handleToggleCart}
             className="cart"
             src={cartLogo}
           />
-          <MiniCart />
         </CartStyle>
         {CartCount ? <div className="count">{CartCount}</div> : ''}
       </CartCurrencyWrapper>
@@ -122,6 +121,7 @@ const NavBar = () => {
           </NavLink>
         ))}
       </HeaderStyles>
+      <MiniCart />
     </>
   );
 };

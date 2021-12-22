@@ -9,8 +9,8 @@ const Container = styled.div`
   max-height: 54rem;
   background-color: #FFFFFF;
   position: absolute;
-  top: 5.583rem;
-  right: 0rem;
+  top: 7.8rem;
+  right: 8.7rem;
   z-index: 5;
   header {
     margin: 0.8rem auto 0 1.6rem;
