@@ -6,8 +6,9 @@ import logo from '../media/svg/logo.svg';
 import cartLogo from '../media/svg/cart.svg';
 import Currencies from './Currencies';
 import { useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MiniCart from './MiniCart';
+import { miniCartToggle } from './store/cart';
 
 const HeaderStyles = styled.div`
   display: flex;
@@ -72,11 +73,6 @@ const CartStyle = styled.div`
   height: 2rem;
   right: 0;
   top: calc(50% -20px / 2);
-  &:hover {
-    > .miniCart {
-      display: block;
-    }
-  }
   img {
     cursor: pointer;
     width: 2rem;
@@ -90,13 +86,13 @@ const NavBar = () => {
   const { data: dataCategories, loading: catLoading } =
     useQuery(QUERY_CATEGORIES);
 
-  let CartCount = useSelector((state) => state.cart.totalCount);
+  const dispatch = useDispatch();
 
-  // TODO Remove
-  const Navigate = useNavigate();
-  const handleCartClicked = () => {
-    Navigate('/cart');
+  let CartCount = useSelector((state) => state.cart.totalCount);
+  const handleToggleCart = () => {
+    dispatch(miniCartToggle());
   };
+
   return (
     <>
       {/* Logo - Center */}
@@ -107,10 +103,10 @@ const NavBar = () => {
         {/* Curencies */}
         <Currencies ccy={dataCurrencies?.currencies} />
         {/* Cart */}
-        <CartStyle>
+        <CartStyle onClick={handleToggleCart}>
           <img
             alt="cart logo"
-            onClick={handleCartClicked}
+            // onClick={handleCartClicked}
             className="cart"
             src={cartLogo}
           />

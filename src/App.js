@@ -82,10 +82,6 @@ h3 {
 h4 {
   font-size: 3rem;
 }
-.miniCart{
-    display: none;
-    transition: all .3s;
-  }
 .active{
     color: var(--c-primary);
     border-bottom: 2px solid var(--c-primary);

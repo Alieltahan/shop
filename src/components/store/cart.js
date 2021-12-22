@@ -6,6 +6,7 @@ const cartSlice = createSlice({
     products: [],
     totalAmount: 0,
     totalCount: 0,
+    miniCartToggle: false,
   },
   reducers: {
     // Actions => action handler
@@ -57,9 +58,14 @@ const cartSlice = createSlice({
           (product) => product.id !== existingProduct.id
         );
     },
+    //
+    // Toggle Mini Cart
+    miniCartToggle: (state, action) => {
+      state.miniCartToggle = !state.miniCartToggle;
+    },
   },
 });
 
-export const { addProduct, removeProduct, decrementProduct } =
+export const { addProduct, decrementProduct, miniCartToggle } =
   cartSlice.actions;
 export default cartSlice.reducer;

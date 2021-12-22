@@ -10,7 +10,7 @@ const Container = styled.div`
   background-color: #FFFFFF;
   position: absolute;
   top: 5.583rem;
-  right: -1rem;
+  right: 0rem;
   z-index: 5;
   header {
     margin: 0.8rem auto 0 1.6rem;
@@ -28,13 +28,15 @@ const MiniCart = () => {
   let TotalProducts = storeCart.totalCount;
   return (
     <div className="miniCart">
-      <Container>
-        <header>
-          <span>My Bag</span>, {TotalProducts} item{TotalProducts > 1 && 's'}
-        </header>
-        {/* default option is true */}
-        <Cart mini />
-      </Container>
+      {storeCart.miniCartToggle && (
+        <Container>
+          <header>
+            <span>My Bag</span>, {TotalProducts} item{TotalProducts > 1 && 's'}
+          </header>
+          {/* default option is true */}
+          <Cart mini />
+        </Container>
+      )}
     </div>
   );
 };
