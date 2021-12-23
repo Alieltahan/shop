@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { addProduct, decrementProduct, miniCartToggle } from './store/cart';
 import ArrowImg from '../media/svg/ArrowImg.svg';
+import { useState } from 'react';
 
 const ContainerStyles = styled.div`
   .emptyCart {
@@ -62,16 +62,34 @@ const ContainerStyles = styled.div`
           width: 13.7rem;
         }
         &-arrow {
-          height: 2rem;
+          height: 100%;
           width: 2rem;
           z-index: 2;
           position: absolute;
           width: 100%;
           display: flex;
-          gap: 20%;
+          justify-content: center;
+          align-items: center;
+          gap: 30%;
+          > img {
+            height: 2rem;
+            width: 2rem;
+          }
+          &-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+            height: 100%;
+            width: 100%;
+          }
           &-rt {
+            height: 2rem;
+            width: 2rem;
           }
           &-lf {
+            height: 2rem;
+            width: 2rem;
             transform: rotate(180deg);
           }
         }
@@ -182,7 +200,7 @@ const ContainerStyles = styled.div`
           &-mini {
             width: 2.4rem;
             height: 2.4rem;
-            /* due to iPhone 12 pro properties is too big for the box added padding */
+            /* due to iPhone 12 pro attributes is too big for the box added padding */
             padding: 0 1.5rem;
             > p {
               font-size: 1.4rem;
@@ -251,16 +269,28 @@ const Cart = ({ mini }) => {
   const currentCcy = useSelector((state) => state.ccy);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
-  const [galleryNumber, setGalleryNumber] = useState(0);
+  const [inputs, setInputs] = useState({});
 
-  const handleChangeImage = (item) => {
-    if (galleryNumber === item.gallery.length) setGalleryNumber(0);
+  const handleNextImg = (product) => {
+    let { id, gallery } = product;
+    let [existingItem] = Object.keys(inputs).filter((input) => input === id);
+    if (existingItem && gallery.length - 1 > inputs[existingItem])
+      setInputs({ ...inputs, [id]: inputs[existingItem] + 1 });
     else {
-      setGalleryNumber(galleryNumber + 1);
+      setInputs({ ...inputs, [id]: 0 });
     }
-    console.log(galleryNumber);
   };
-  console.log(cartStore);
+  const handlePrevImg = (product) => {
+    let currentIds = { ...inputs };
+    let { id, gallery } = product;
+    let [existingItem] = Object.keys(inputs).filter((input) => input === id);
+    if (existingItem && inputs[existingItem] !== 0)
+      setInputs({ ...inputs, [id]: inputs[existingItem] - 1 });
+    else {
+      setInputs({ ...currentIds, [id]: gallery.length - 1 });
+    }
+  };
+  console.log(cartStore.products);
   return (
     <>
       <ContainerStyles>
@@ -392,26 +422,37 @@ const Cart = ({ mini }) => {
                   <div
                     className={!mini ? 'item__img' : 'item__img item__img-mini'}
                   >
-                    <span className="item__img-arrow">
-                      <img
-                        src={ArrowImg}
-                        className="item__img-arrow-lf"
-                        alt="arrow"
-                      />
-                      <div></div>
-                      <img
-                        src={ArrowImg}
-                        className="item__img-arrow-rt"
-                        alt="arrow"
-                      />
-                    </span>
+                    {/* Rendering the Arrows only if there is more than 1 pic */}
+                    {item.gallery.length !== 1 && (
+                      <span className="item__img-arrow">
+                        <span
+                          onClick={() => handlePrevImg(item)}
+                          className="item__img-arrow-container"
+                        >
+                          <img
+                            src={ArrowImg}
+                            className="item__img-arrow-lf"
+                            alt="arrow"
+                          />
+                        </span>
+                        <div></div>
+                        <span
+                          onClick={() => handleNextImg(item)}
+                          className="item__img-arrow-container"
+                        >
+                          <img
+                            src={ArrowImg}
+                            className="item__img-arrow-rt"
+                            alt="arrow"
+                          />
+                        </span>
+                      </span>
+                    )}
+
                     <img
-                      onClick={() => handleChangeImage(item)}
-                      src={item.gallery[galleryNumber]}
+                      src={item.gallery[inputs[item.id]] || item.gallery[0]}
                       alt={item.name}
                     />
-                    {/* <span className="item__img-arrow-lf">
-                    </span> */}
                   </div>
                 </div>
               </li>

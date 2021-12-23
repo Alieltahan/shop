@@ -154,9 +154,13 @@ const ProductDescription = ({ id }) => {
   if (data) {
     Product = data.product;
   }
+  const [productWithAtt, setProductWithAtt] = useState([]);
+
   const handleAddToCart = (Product) => {
     dispatch(addProduct({ ...Product, quantity: 1, currentCcy }));
   };
+
+  const handleAttributes = (product, option) => {};
 
   if (loading) return <h3>Loading...</h3>;
   if (error) return <h3>{error.message}</h3>;
@@ -187,20 +191,22 @@ const ProductDescription = ({ id }) => {
               <div key={att.id}>
                 <p className="product__details__attribute-text">{att.id}:</p>
                 {att.type === 'swatch'
-                  ? att.items.map((item) => (
-                      <>
-                        <span
-                          style={{ backgroundColor: `${item.value}` }}
-                          className="product__details__attribute-boxes"
-                        ></span>
-                      </>
+                  ? att.items.map((option) => (
+                      <span
+                        onClick={() => handleAttributes(Product, option)}
+                        key={option.id}
+                        style={{ backgroundColor: `${option.value}` }}
+                        className="product__details__attribute-boxes"
+                      ></span>
                     ))
-                  : att.items.map((item) => (
-                      <>
-                        <span className="product__details__attribute-boxes">
-                          <p>{item.displayValue}</p>
-                        </span>
-                      </>
+                  : att.items.map((option) => (
+                      <span
+                        onClick={() => handleAttributes(Product, option)}
+                        key={option.id}
+                        className="product__details__attribute-boxes"
+                      >
+                        <p>{option.displayValue}</p>
+                      </span>
                     ))}
               </div>
             ))}
@@ -211,7 +217,9 @@ const ProductDescription = ({ id }) => {
               {Product.prices
                 .filter((price) => price.currency === currentCcy.currency)
                 .map((ccy) => (
-                  <p className={ccy.currency}>{ccy.amount}</p>
+                  <p key={ccy.currency} className={ccy.currency}>
+                    {ccy.amount}
+                  </p>
                 ))}
             </div>
           </div>
