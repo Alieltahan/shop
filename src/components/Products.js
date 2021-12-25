@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ProductCard from './ProductCard';
 
 const CategoryNameStyle = styled.h3`
-  margin-top: 8rem;
+  margin-top: 16rem;
   margin-left: 10.1rem;
   text-transform: capitalize;
 `;

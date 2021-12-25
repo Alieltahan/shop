@@ -5,7 +5,6 @@ import { QUERY_CATEGORIES, QUERY_CURRENCIES } from './http/graphql';
 import logo from '../media/svg/logo.svg';
 import cartLogo from '../media/svg/cart.svg';
 import Currencies from './Currencies';
-import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import MiniCart from './MiniCart';
 import { miniCartToggle } from './store/cart';
@@ -115,6 +114,11 @@ const NavBar = () => {
       </CartCurrencyWrapper>
       {/* Categories */}
       <HeaderStyles>
+        <NavLink to="/">
+          <HeaderCategoryStyles>
+            <div>All</div>
+          </HeaderCategoryStyles>
+        </NavLink>
         {dataCategories?.categories?.map((cat) => (
           <NavLink key={cat?.name} to={cat?.name}>
             <HeaderCategoryStyles>{cat?.name}</HeaderCategoryStyles>

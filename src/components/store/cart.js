@@ -17,13 +17,13 @@ const cartSlice = createSlice({
       const priceDetails = action.payload.prices.filter(
         (price) => price.currency === `${currentCcy}`
       );
-      // Getting Existing Product if any
+      // Getting Existing Product Index if any
       let existingCartProductIndex = state.products.findIndex(
         (product) => product.id === action.payload.id
       );
       // Updating Quantity of existing Product.
-      let existingProduct = state.products[existingCartProductIndex];
-      if (existingProduct) {
+      if (existingCartProductIndex >= 0) {
+        let existingProduct = state.products[existingCartProductIndex];
         state.products[existingCartProductIndex] = {
           ...existingProduct,
           quantity: existingProduct.quantity + 1,

@@ -138,6 +138,9 @@ const ContainerStyles = styled.div`
         }
       }
       &__brand {
+        &-container {
+          cursor: pointer;
+        }
         font-weight: 600;
         height: 2.7rem;
         &-mini {
@@ -181,7 +184,25 @@ const ContainerStyles = styled.div`
 
           &-colored {
             display: block;
-            &-mini {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            > div {
+              font-size: 1.6rem;
+              background-color: var(--c-white);
+              border-radius: 50%;
+              height: 100%;
+            }
+            &-selected {
+              background-color: #1d1f22;
+              border: 1px solid #1d1f22;
+              color: #ffffff;
+              &-mini {
+                opacity: 0.5;
+                background-color: #ffffff;
+                color: #1d1f22;
+              }
             }
           }
           > p {
@@ -198,10 +219,11 @@ const ContainerStyles = styled.div`
             font-style: normal;
           }
           &-mini {
+            position: relative;
             width: 2.4rem;
             height: 2.4rem;
             /* due to iPhone 12 pro attributes is too big for the box added padding */
-            padding: 0 1.5rem;
+            padding: 0 2rem;
             > p {
               font-size: 1.4rem;
             }
@@ -277,7 +299,7 @@ const Cart = ({ mini }) => {
     if (existingItem && gallery.length - 1 > inputs[existingItem])
       setInputs({ ...inputs, [id]: inputs[existingItem] + 1 });
     else {
-      setInputs({ ...inputs, [id]: 0 });
+      setInputs({ ...inputs, [id]: 1 });
     }
   };
   const handlePrevImg = (product) => {
@@ -304,20 +326,28 @@ const Cart = ({ mini }) => {
             {cartStore.products.map((item) => (
               <li className={!mini ? 'list' : 'list list-mini'} key={item.id}>
                 <div>
-                  <div
-                    className={
-                      !mini ? 'item__brand' : 'item__brand item__brand-mini '
-                    }
+                  <span
+                    className="item__brand-container"
+                    onClick={() => {
+                      Navigate(`product/${item.id}`);
+                      dispatch(miniCartToggle());
+                    }}
                   >
-                    {item.brand}
-                  </div>
-                  <div
-                    className={
-                      !mini ? 'item__name' : 'item__name item__name-mini'
-                    }
-                  >
-                    {item.name}
-                  </div>
+                    <div
+                      className={
+                        !mini ? 'item__brand' : 'item__brand item__brand-mini '
+                      }
+                    >
+                      {item.brand}
+                    </div>
+                    <div
+                      className={
+                        !mini ? 'item__name' : 'item__name item__name-mini'
+                      }
+                    >
+                      {item.name}
+                    </div>
+                  </span>
                   <div
                     className={
                       !mini ? 'item__price' : 'item__price item__price-mini'
@@ -340,30 +370,59 @@ const Cart = ({ mini }) => {
                         }
                       >
                         {att.type === 'swatch'
-                          ? att.items.map((item) => (
+                          ? att.items.map((option) => (
                               <div
-                                key={item.id}
+                                key={option.id}
                                 style={{
-                                  backgroundColor: `${item.value}`,
+                                  backgroundColor: `${option.value}`,
                                 }}
                                 className={
                                   !mini
-                                    ? 'item__att-boxes item__att-boxes-colored'
-                                    : 'item__att-boxes item__att-boxes-colored item__att-boxes-mini item__att-boxes-colored-mini'
+                                    ? `${
+                                        item.selectedOptions.some(
+                                          (opt) => opt.option === option.id
+                                        )
+                                          ? 'item__att-boxes item__att-boxes-colored item__att-boxes-colored-selected'
+                                          : 'item__att-boxes item__att-boxes-colored'
+                                      }`
+                                    : `${
+                                        item.selectedOptions.some(
+                                          (opt) => opt.option === option.id
+                                        )
+                                          ? 'item__att-boxes item__att-boxes-colored item__att-boxes-mini item__att-boxes-colored-selected'
+                                          : 'item__att-boxes item__att-boxes-colored item__att-boxes-mini item__att-boxes-colored-selected-mini'
+                                      }`
                                 }
-                              ></div>
+                              >
+                                {/* To Render "✔" on Selected Color */}
+                                {/* {item.selectedOptions.some(
+                                  (opt) => opt.option === option.id
+                                ) && <div>✔</div>} */}
+                              </div>
                             ))
-                          : att.items.map((item) => (
+                          : att.items.map((option) => (
                               <>
                                 <span
-                                  key={item.id}
+                                  key={option.id}
                                   className={
                                     !mini
-                                      ? 'item__att-boxes'
-                                      : 'item__att-boxes item__att-boxes-mini'
+                                      ? `${
+                                          item.selectedOptions.some(
+                                            (opt) => opt.option === option.id
+                                          )
+                                            ? 'item__att-boxes selected '
+                                            : 'item__att-boxes'
+                                        }`
+                                      : `${
+                                          item.selectedOptions.some(
+                                            (opt) => opt.option === option.id
+                                          )
+                                            ? 'item__att-boxes item__att-boxes-mini item__att-boxes-mini selected-mini '
+                                            : 'item__att-boxes item__att-boxes-mini'
+                                        }`
                                   }
                                 >
-                                  <p>{item.displayValue}</p>
+                                  <p>{option.value}</p>
                                 </span>
                               </>
                             ))}

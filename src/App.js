@@ -105,7 +105,16 @@ h4 {
   .AUD:before {
     content: 'A$';
   }
-}`;
+  .selected{
+    background-color: #000;
+    color: white;
+    &-mini{
+      background-color: #fff;
+      opacity: 0.5;
+      color: #000;
+    }
+  }
+`;
 
 function App() {
   const store = confStore();

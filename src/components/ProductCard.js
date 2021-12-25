@@ -3,6 +3,7 @@ import { addProduct } from './store/cart';
 import styled from 'styled-components';
 import cartLogo from '../media/svg/EmptyCart-white.svg';
 import { useNavigate } from 'react-router';
+import AddToCartChkr from './lib/AddToCartChkr';
 
 const ProductContainerStyle = styled.div`
   position: static;
@@ -138,9 +139,10 @@ const ProductCard = ({ products }) => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   // Add Product to Cart
-  const handleAddToCart = (product) => {
-    dispatch(addProduct({ ...product, quantity: 1, currentCcy }));
-  };
+  // const handleAddToCart = (product) => {
+  //   console.log(product);
+  //   // dispatch(addProduct({ ...product, quantity: 1, currentCcy }));
+  // };
   const handleProductDescription = (id) => {
     Navigate(`/product/${id}`);
   };
@@ -162,7 +164,13 @@ const ProductCard = ({ products }) => {
               {/* Won't render the Cart Icon if Product out of Stock */}
               {product.inStock && (
                 <span
-                  onClick={() => handleAddToCart(product)}
+                  onClick={() => {
+                    AddToCartChkr(product)
+                      ? dispatch(
+                          addProduct({ ...product, currentCcy, quantity: 1 })
+                        )
+                      : Navigate(`../product/${product.id}`);
+                  }}
                   className="product__image-container-carticon"
                 >
                   <img alt="cartLogo" src={cartLogo} />

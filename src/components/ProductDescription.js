@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { QUERY_SINGLE_PRODUCT } from './http/graphql';
+import AddToCartChkr from './lib/AddToCartChkr';
 import { addProduct } from './store/cart';
 
 const ProductContainer = styled.div`
@@ -20,6 +21,16 @@ const ProductContainer = styled.div`
       left: 21.9rem;
       top: 3.3rem;
       margin: 4.859rem 0 0 2.542rem;
+      &-att{
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+        background-color: #ccc;
+        padding: 1rem;
+        border-radius: 5%;
+        color:red;
+
+      }
       & img {
         height: 51.1rem;
         width: 61rem;
@@ -62,6 +73,15 @@ const ProductContainer = styled.div`
           justify-content: center;
           align-items: center;
           margin: 0.8rem 1.2rem 0 0;
+          position: relative;
+          &-slctd{
+            background-color: #000;
+            color: white;
+          }
+          &-slctdColor{
+            opacity: 0.5;
+            border: 3px solid #000;
+          }
           > p {
             display:flex;
             align-items: center;
@@ -75,6 +95,7 @@ const ProductContainer = styled.div`
             font-family: 'Source Sans Pro';
             font-style: normal;
           }
+          &-mini
           &-active {
             background-color: #1d1f22;
           }
@@ -141,6 +162,7 @@ const ProductDescription = ({ id }) => {
     variables: { id },
   });
   const currentCcy = useSelector((state) => state.ccy);
+  const [selectAttribute, setSelectAttribute] = useState(false);
 
   const ProductImages = data?.product?.gallery?.map((image) => image);
   const dispatch = useDispatch();
@@ -154,13 +176,29 @@ const ProductDescription = ({ id }) => {
   if (data) {
     Product = data.product;
   }
-  const [productWithAtt, setProductWithAtt] = useState([]);
+  const [productOptionSelected, setProductOptionSelected] = useState([]);
 
-  const handleAddToCart = (Product) => {
-    dispatch(addProduct({ ...Product, quantity: 1, currentCcy }));
+  const handleAttributes = (product, att, option) => {
+    let newProductOption = [];
+    let attId = att.id;
+    let optionId = option.id;
+    let existingProductIndex = productOptionSelected.findIndex(
+      (product) => product.id === attId
+    );
+    console.log(existingProductIndex);
+    if (existingProductIndex >= 0) {
+      newProductOption = productOptionSelected.filter(
+        (productOption) => productOption.id !== att.id
+      );
+      newProductOption.push({ id: attId, option: optionId });
+      setProductOptionSelected(newProductOption);
+    } else {
+      let SelectedOptions = [];
+      SelectedOptions.push({ id: attId, option: optionId });
+      setProductOptionSelected([...productOptionSelected, ...SelectedOptions]);
+    }
+    console.log(...productOptionSelected, 'STATE');
   };
-
-  const handleAttributes = (product, option) => {};
 
   if (loading) return <h3>Loading...</h3>;
   if (error) return <h3>{error.message}</h3>;
@@ -193,19 +231,31 @@ const ProductDescription = ({ id }) => {
                 {att.type === 'swatch'
                   ? att.items.map((option) => (
                       <span
-                        onClick={() => handleAttributes(Product, option)}
+                        onClick={() => handleAttributes(Product, att, option)}
                         key={option.id}
                         style={{ backgroundColor: `${option.value}` }}
-                        className="product__details__attribute-boxes"
+                        className={
+                          productOptionSelected.some(
+                            (slctd) => slctd.option === option.id
+                          )
+                            ? 'product__details__attribute-boxes product__details__attribute-boxes-slctdColor'
+                            : 'product__details__attribute-boxes'
+                        }
                       ></span>
                     ))
-                  : att.items.map((option) => (
+                  : att.items.map((option2) => (
                       <span
-                        onClick={() => handleAttributes(Product, option)}
-                        key={option.id}
-                        className="product__details__attribute-boxes"
+                        onClick={() => handleAttributes(Product, att, option2)}
+                        key={`${att.id}${option2.id}`}
+                        className={
+                          productOptionSelected
+                            .filter((prodOpt) => prodOpt.id === att.id)
+                            .some((slctd) => slctd.option === option2.id)
+                            ? 'product__details__attribute-boxes product__details__attribute-boxes-slctd'
+                            : 'product__details__attribute-boxes'
+                        }
                       >
-                        <p>{option.displayValue}</p>
+                        <p>{option2.value}</p>
                       </span>
                     ))}
               </div>
@@ -224,11 +274,31 @@ const ProductDescription = ({ id }) => {
             </div>
           </div>
           <div
-            onClick={() => handleAddToCart(Product)}
+            onClick={() => {
+              setSelectAttribute(false);
+              AddToCartChkr({
+                ...Product,
+                selectedOptions: productOptionSelected,
+              })
+                ? dispatch(
+                    addProduct({
+                      ...Product,
+                      selectedOptions: productOptionSelected,
+                      currentCcy,
+                      quantity: 1,
+                    })
+                  )
+                : setSelectAttribute(true);
+            }}
             className="product__details-btn"
           >
             add to cart
           </div>
+          {selectAttribute && (
+            <div className="product__details-att">
+              ! Please select all available options for the product!
+            </div>
+          )}
           <div
             style={{
               marginTop: '4rem',
