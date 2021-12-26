@@ -15,15 +15,18 @@ const HeaderStyles = styled.div`
   height: 5.6rem;
   position: absolute;
   bottom: 0;
+  font-family: Raleway;
 `;
 
 const HeaderCategoryStyles = styled.div`
+  font-family: inhert;
   text-transform: uppercase;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 120%;
   padding: 1.6rem;
   margin-bottom: 2px;
   height: 100%;
-  font-size: 1.6rem;
-  font-weight: 600;
   justify-content: center;
   align-items: center;
 `;
@@ -108,9 +111,7 @@ const NavBar = () => {
       {/* Categories */}
       <HeaderStyles>
         <NavLink to="/">
-          <HeaderCategoryStyles>
-            <div>All</div>
-          </HeaderCategoryStyles>
+          <HeaderCategoryStyles>All</HeaderCategoryStyles>
         </NavLink>
         {dataCategories?.categories?.map((cat) => (
           <NavLink key={cat?.name} to={cat?.name}>

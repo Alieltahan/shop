@@ -165,7 +165,7 @@ const ProductDescription = ({ id }) => {
   const [selectAttribute, setSelectAttribute] = useState(false);
   const dispatch = useDispatch();
 
-  let ProductImages = data?.product?.gallery;
+  let ProductImages = data?.product?.gallery.map((image) => image);
 
   const handleImageChange = (index) => {
     setThumbnail(index);
@@ -181,7 +181,6 @@ const ProductDescription = ({ id }) => {
   const handleAttributes = (att, option) => {
     let attId = att.id;
     let optionId = option.id;
-    console.log(optionId, 'OPTION ID');
     let existingProductIndex = productOptionSelected.findIndex(
       (product) => product.id === attId
     );
@@ -270,7 +269,7 @@ const ProductDescription = ({ id }) => {
                 .filter((price) => price.currency === currentCcy.currency)
                 .map((ccy) => (
                   <p key={ccy.currency} className={ccy.currency}>
-                    {ccy.amount}
+                    {ccy.amount.toFixed(2)}
                   </p>
                 ))}
             </div>
@@ -288,7 +287,7 @@ const ProductDescription = ({ id }) => {
                       /* Making a unique ID for each product based on the attributes combined so user can get quantity of each specific attributes. */
                       id: `${Product.id}${productOptionSelected
                         .map((opt) => Object.values(opt))
-                        .join('')}`,
+                        .join('-')}`,
                       selectedOptions: productOptionSelected,
                       currentCcy,
                       quantity: 1,

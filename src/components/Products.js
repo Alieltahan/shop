@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import ProductCard from './ProductCard';
 
 const CategoryNameStyle = styled.h3`
+  font-family: Raleway;
+  font-weight: 400;
+  font-size: 4.2rem;
+  line-height: 160%;
+  color: var(--c-text);
   padding-top: 16rem;
   margin-left: 10.1rem;
   text-transform: capitalize;
@@ -18,7 +23,7 @@ const ProductsContainer = styled.div`
 const Products = ({ data }) => {
   return (
     <>
-      <CategoryNameStyle>{data?.category.name} Categories</CategoryNameStyle>
+      <CategoryNameStyle>{data?.category.name}</CategoryNameStyle>
       <ProductsContainer>
         <ProductCard products={data.category?.products} />
       </ProductsContainer>

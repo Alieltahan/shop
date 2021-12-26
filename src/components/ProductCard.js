@@ -118,7 +118,13 @@ const ProductContainerStyle = styled.div`
         left: 0;
         top: 0;
       }
-      div {
+      > div {
+        font-family: var(--price-regular-font);
+        color: var(--c-black);
+        font-weight: 500;
+        font-size: 1.8rem;
+        line-height: 160%;
+        font-style: normal;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -184,12 +190,10 @@ const ProductCard = ({ products }) => {
               <div className="product__content">
                 <p>{product.name}</p>
                 <div className={currentCcy.currency}>
-                  {Number(
-                    product.prices
-                      .filter((price) => price.currency === currentCcy.currency)
-                      .map((price) => price.amount)
-                      .join()
-                  )}
+                  {product.prices
+                    .filter((price) => price.currency === currentCcy.currency)
+                    .map((price) => price.amount.toFixed(2))
+                    .join()}
                 </div>
               </div>
             </div>

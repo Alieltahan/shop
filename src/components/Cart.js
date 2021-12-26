@@ -32,6 +32,7 @@ const ContainerStyles = styled.div`
     }
   }
   .list {
+    font-family: Raleway;
     display: flex;
     justify-content: space-between;
     margin-bottom: 2rem;
@@ -359,7 +360,7 @@ const Cart = ({ mini }) => {
                       .filter((price) => price.currency === currentCcy.currency)
                       .map((ccy) => (
                         <p key={ccy.currency} className={ccy.currency}>
-                          {ccy.amount}
+                          {ccy.amount.toFixed(2)}
                         </p>
                       ))}
                   </div>

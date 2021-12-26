@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// initialState
+const initialState = {
+  products: [],
+  totalAmount: 0,
+  totalCount: 0,
+  miniCartToggle: false,
+};
 const cartSlice = createSlice({
   name: 'cart',
-  initialState: {
-    products: [],
-    totalAmount: 0,
-    totalCount: 0,
-    miniCartToggle: false,
-  },
+  initialState,
   reducers: {
     // Actions => action handler
     // Add Product

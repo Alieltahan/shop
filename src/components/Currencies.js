@@ -12,6 +12,7 @@ const WrapperCcyArrowStyle = styled.div`
   height: 2.9rem;
   left: 12.4rem;
   top: 0.55rem;
+  z-index: 10;
   cursor: pointer;
   & > img {
     transition: all 0.3s;
@@ -41,12 +42,9 @@ const SymbolFrame = styled.div`
   left: 12.4rem;
   top: 0.55rem;
 `;
-// TODO Add Font
 const CcyStyle = styled.span`
   z-index: 10;
-
   span {
-    /* TODO Add Font */
     font-family: Raleway;
     font-style: normal;
     weight: 500;

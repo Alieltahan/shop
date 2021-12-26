@@ -9,7 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ├── README.md - This file.
 ├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
 ├── public
-│   ├── favicon.ico # App Icon.
+│   ├── wlogo.svg # App Icon.
 │   └── index.html # DO NOT MODIFY
 └── src
     ├── media # container for the images/icons.
@@ -17,6 +17,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
             ├── cart.svg # Black cart Icon.
             ├── EmptyCart-whote.svg # White cart icon.
             ├── logo.svg # Website Logo.
+            ├── wlogo.svg # Browser logo.
+            ├── ArrowImg.svg # Arrow to turn the Images.
             └── arrow.svg # Currency arrow svg.
     ├── components # container for all the developped files.
         ├── http # Container for HTTP requests.
@@ -27,16 +29,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
             &logo / categories.
         ├── layout # container for the Layout design components.
             ├── Pages # Contain the pages componenets.
-                ├── Cart.js # Full View Cart Page.
+                ├── Cart.js # Mini/Cart Page.
                 ├── PDP.js # Product Description Page.
                 ├── PLP.js # Product List Page.
-                └── 404.js Not Found Page.
+                └── SpeficicCategory.js Showing only the selected Category.
+            ├── Header.js # Containing the Header Components.
+            └── Main.js # Containing the Body Components.
+            ├── Lib # Supporting functions.
+                ├── AddToCartChkr.js # Function checks if the Product has all attributes selected.
             ├── store # REDUX Store files.
                 ├── confStore.js # Configuration of Redux Store.
                 ├── RootReducer.js # Combining All The Reducers.
+                ├── cart.js # cart reducer (has the products, total amount and total quantity).
                 └── currency.js # Currency State Reducer.
-            ├── Header.js # Containing the Header Components.
-            └── Main.js # Containing the Body Components.
+        ├── ProductCard.js # Displaying the Product Into a Card.
+        ├── Cart.js # Cart Component.
+        ├── MiniCart.js # Mini Cart Component.
         ├── ProductCard.js # Displaying the Product Into a Card.
         └── Products.js # Container for all the Products.
     ├── App.css # Styles for your app. Feel free to customize this as you desire.

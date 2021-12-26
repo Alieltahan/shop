@@ -12,10 +12,12 @@ const client = new ApolloClient({
 
 const GlobalStyles = createGlobalStyle`
 :root{
+  --c-text: #1D1F22;
   --c-white: #FFFFFF;
   --c-primary: #5ECE7B;
   --c-black: #1D1F22;
   --c-info-variant: #B4D2F4;
+  --price-regular-font: Raleway;
   --product-card-box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
   /* given Shadow box effect  */
   /* --product-card-box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19); */
@@ -82,6 +84,9 @@ h3 {
 h4 {
   font-size: 3rem;
 }
+a:visited{
+  color: var(--c-text);
+}
 .active{
     color: var(--c-primary);
     border-bottom: 2px solid var(--c-primary);
@@ -118,6 +123,12 @@ h4 {
 
 function App() {
   const store = confStore();
+  store.subscribe(() =>
+    setTimeout(
+      () => localStorage.setItem('ecom', JSON.stringify(store.getState())),
+      800
+    )
+  );
   return (
     <Provider store={store}>
       <ApolloProvider client={client}>
