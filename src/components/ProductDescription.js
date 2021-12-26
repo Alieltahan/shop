@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { QUERY_SINGLE_PRODUCT } from './http/graphql';
@@ -165,7 +165,7 @@ const ProductDescription = ({ id }) => {
   const [selectAttribute, setSelectAttribute] = useState(false);
   const dispatch = useDispatch();
 
-  const ProductImages = data?.product?.gallery?.map((image) => image);
+  let ProductImages = data?.product?.gallery?.map((image) => image);
 
   const handleImageChange = (index) => {
     setThumbnail(index);
@@ -215,6 +215,9 @@ const ProductDescription = ({ id }) => {
         {ProductImages && (
           <img
             src={ProductImages[thumbnail]}
+            onError={(e) => {
+              setThumbnail(0);
+            }}
             className="product__image-main"
             alt={`product pic ${thumbnail + 1}`}
           />

@@ -52,6 +52,7 @@ const CartCurrencyWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   flex-direction: row;
+  cursor: pointer;
   .count {
     position: absolute;
     top: 4.25%;
@@ -73,17 +74,14 @@ const CartStyle = styled.div`
   right: 0;
   top: calc(50% -20px / 2);
   img {
-    cursor: pointer;
     width: 2rem;
     height: 2rem;
   }
 `;
 
 const NavBar = () => {
-  const { data: dataCurrencies, loading: ccyLoading } =
-    useQuery(QUERY_CURRENCIES);
-  const { data: dataCategories, loading: catLoading } =
-    useQuery(QUERY_CATEGORIES);
+  const { data: dataCurrencies } = useQuery(QUERY_CURRENCIES);
+  const { data: dataCategories } = useQuery(QUERY_CATEGORIES);
 
   const dispatch = useDispatch();
 
@@ -102,15 +100,10 @@ const NavBar = () => {
         {/* Curencies */}
         <Currencies ccy={dataCurrencies?.currencies} />
         {/* Cart */}
-        <CartStyle>
-          <img
-            alt="cart logo"
-            onClick={handleToggleCart}
-            className="cart"
-            src={cartLogo}
-          />
+        <CartStyle onClick={handleToggleCart}>
+          <img alt="cart logo" className="cart" src={cartLogo} />
+          {CartCount ? <div className="count">{CartCount}</div> : ''}
         </CartStyle>
-        {CartCount ? <div className="count">{CartCount}</div> : ''}
       </CartCurrencyWrapper>
       {/* Categories */}
       <HeaderStyles>
