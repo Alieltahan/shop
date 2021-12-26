@@ -215,9 +215,10 @@ const ProductDescription = ({ id }) => {
         {ProductImages && (
           <img
             src={ProductImages[thumbnail]}
-            onError={(e) => {
+            /* not safe due to endless loop */
+            /* onError={(e) => {
               setThumbnail(0);
-            }}
+            }} */
             className="product__image-main"
             alt={`product pic ${thumbnail + 1}`}
           />

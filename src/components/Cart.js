@@ -505,10 +505,11 @@ const Cart = ({ mini }) => {
                     <img
                       src={item.gallery[inputs[item.id]] || item.gallery[0]}
                       alt={item.name}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = `${item.gallery[0]}`;
-                      }}
+                      // Not safe as may lead to endless loop
+                      // onError={(e) => {
+                      //   e.target.onerror = null;
+                      //   e.target.src = `${item.gallery[0]}`;
+                      // }}
                     />
                   </div>
                 </div>
