@@ -68,10 +68,17 @@ const cartSlice = createSlice({
     changeTotalCcy: (state, action) => {
       const { StoreProducts } = action.payload;
       const { newCcy } = action.payload;
-      let newAmount = StoreProducts.map((product) =>
+      // Getting the Quantity of Each Product.
+      let ProductQuantity = StoreProducts.map((product) => product.quantity);
+      // Getting the Amount of Each Product.
+      let newAmount = StoreProducts.map((product, i) =>
         product.prices
+          // Getting the amount based on the new Ccy
           .filter((price) => price.currency === `${newCcy}`)
-          .map((price) => price.amount)
+          // Multiple The Price of Eacy Product x Quantity using Index in each new loop for Product Quantity
+          .map((price) => {
+            return price.amount * ProductQuantity[i];
+          })
       );
       let TotalAmount = newAmount
         .map((arr) => arr.shift())
