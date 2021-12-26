@@ -322,8 +322,11 @@ const Cart = ({ mini }) => {
           </h5>
         ) : (
           <ul className={!mini ? 'u-list' : 'u-list u-list-mini'}>
-            {cartStore.products.map((item) => (
-              <li className={!mini ? 'list' : 'list list-mini'} key={item.id}>
+            {cartStore.products.map((item, i) => (
+              <li
+                className={!mini ? 'list' : 'list list-mini'}
+                key={`${item.id}` + i}
+              >
                 <div>
                   <span
                     className="item__brand-container"
@@ -363,7 +366,7 @@ const Cart = ({ mini }) => {
                   {item.attributes.map((att) => (
                     <>
                       <div
-                        key={att.id}
+                        key={att.id + Math.random()}
                         className={
                           !mini ? 'item__att' : 'item__att item__att-mini'
                         }
@@ -371,7 +374,7 @@ const Cart = ({ mini }) => {
                         {att.type === 'swatch'
                           ? att.items.map((option) => (
                               <div
-                                key={option.id}
+                                key={option.id + Math.random()}
                                 style={{
                                   backgroundColor: `${option.value}`,
                                 }}
@@ -397,7 +400,7 @@ const Cart = ({ mini }) => {
                           : att.items.map((option) => (
                               <>
                                 <span
-                                  key={option.id}
+                                  key={option.id + Math.random()}
                                   className={
                                     !mini
                                       ? `${
@@ -505,11 +508,11 @@ const Cart = ({ mini }) => {
                     <img
                       src={item.gallery[inputs[item.id]] || item.gallery[0]}
                       alt={item.name}
-                      // Not safe as may lead to endless loop
-                      // onError={(e) => {
-                      //   e.target.onerror = null;
-                      //   e.target.src = `${item.gallery[0]}`;
-                      // }}
+                      // Not safe as may lead to endless loop if all images not available
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `${handleNextImg(item)}`;
+                      }}
                     />
                   </div>
                 </div>

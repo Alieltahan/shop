@@ -33,6 +33,7 @@ const Main = () => {
         <Route path="/product/:id" element={<PDP />} />
         {data?.categories.map((category) => (
           <Route
+            key={category.name}
             path={`/${category?.name}`}
             element={<SpecificCategory category={`${category?.name}`} />}
           />

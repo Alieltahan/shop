@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { QUERY_SINGLE_PRODUCT } from './http/graphql';
@@ -165,7 +165,7 @@ const ProductDescription = ({ id }) => {
   const [selectAttribute, setSelectAttribute] = useState(false);
   const dispatch = useDispatch();
 
-  let ProductImages = data?.product?.gallery?.map((image) => image);
+  let ProductImages = data?.product?.gallery;
 
   const handleImageChange = (index) => {
     setThumbnail(index);
@@ -178,13 +178,13 @@ const ProductDescription = ({ id }) => {
   }
   const [productOptionSelected, setProductOptionSelected] = useState([]);
 
-  const handleAttributes = (product, att, option) => {
+  const handleAttributes = (att, option) => {
     let attId = att.id;
     let optionId = option.id;
+    console.log(optionId, 'OPTION ID');
     let existingProductIndex = productOptionSelected.findIndex(
       (product) => product.id === attId
     );
-    console.log(existingProductIndex);
     if (existingProductIndex >= 0) {
       let newProductOption = productOptionSelected.filter(
         (productOption) => productOption.id !== att.id
@@ -216,9 +216,9 @@ const ProductDescription = ({ id }) => {
           <img
             src={ProductImages[thumbnail]}
             /* not safe due to endless loop */
-            /* onError={(e) => {
+            onError={(e) => {
               setThumbnail(0);
-            }} */
+            }}
             className="product__image-main"
             alt={`product pic ${thumbnail + 1}`}
           />
@@ -228,13 +228,13 @@ const ProductDescription = ({ id }) => {
           <p>{data?.product.name}</p>
           <div className="product__details__attribute">
             {Product.attributes.map((att) => (
-              <div key={att.id}>
+              <div key={att.id + Math.random()}>
                 <p className="product__details__attribute-text">{att.id}:</p>
                 {att.type === 'swatch'
                   ? att.items.map((option) => (
                       <span
-                        onClick={() => handleAttributes(Product, att, option)}
-                        key={option.id}
+                        onClick={() => handleAttributes(att, option)}
+                        key={option.id + Math.random()}
                         style={{ backgroundColor: `${option.value}` }}
                         className={
                           productOptionSelected.some(
@@ -247,8 +247,8 @@ const ProductDescription = ({ id }) => {
                     ))
                   : att.items.map((option2) => (
                       <span
-                        onClick={() => handleAttributes(Product, att, option2)}
-                        key={`${att.id}${option2.id}`}
+                        onClick={() => handleAttributes(att, option2)}
+                        key={option2.id + Math.random()}
                         className={
                           productOptionSelected
                             .filter((prodOpt) => prodOpt.id === att.id)
@@ -285,6 +285,10 @@ const ProductDescription = ({ id }) => {
                 ? dispatch(
                     addProduct({
                       ...Product,
+                      /* Making a unique ID for each product based on the attributes combined so user can get quantity of each specific attributes. */
+                      id: `${Product.id}${productOptionSelected
+                        .map((opt) => Object.values(opt))
+                        .join('')}`,
                       selectedOptions: productOptionSelected,
                       currentCcy,
                       quantity: 1,

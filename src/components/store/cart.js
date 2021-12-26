@@ -22,8 +22,8 @@ const cartSlice = createSlice({
         (product) => product.id === action.payload.id
       );
       // Updating Quantity of existing Product.
+      let existingProduct = state.products[existingCartProductIndex];
       if (existingCartProductIndex >= 0) {
-        let existingProduct = state.products[existingCartProductIndex];
         state.products[existingCartProductIndex] = {
           ...existingProduct,
           quantity: existingProduct.quantity + 1,
