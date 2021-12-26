@@ -7,7 +7,7 @@ import confStore from './components/store/confStore';
 import { Provider } from 'react-redux';
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: `${process.env.REACT_APP_BACKEND_URL}`,
+  uri: `${process.env.REACT_APP_BACKEND_URL}` || 'http://localhost:4000/',
 });
 
 const GlobalStyles = createGlobalStyle`
