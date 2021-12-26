@@ -25,7 +25,7 @@ const Products = ({ data }) => {
     <>
       <CategoryNameStyle>{data?.category.name}</CategoryNameStyle>
       <ProductsContainer>
-        <ProductCard products={data.category?.products} />
+        <ProductCard products={data?.category?.products} />
       </ProductsContainer>
     </>
   );
