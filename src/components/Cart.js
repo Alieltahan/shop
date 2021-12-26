@@ -196,10 +196,10 @@ const ContainerStyles = styled.div`
             }
             &-selected {
               background-color: #1d1f22;
-              border: 1px solid #1d1f22;
+              border: 3px solid #1d1f22;
               color: #ffffff;
+              opacity: 0.5;
               &-mini {
-                opacity: 0.5;
                 background-color: #ffffff;
                 color: #1d1f22;
               }
@@ -393,12 +393,7 @@ const Cart = ({ mini }) => {
                                           : 'item__att-boxes item__att-boxes-colored item__att-boxes-mini item__att-boxes-colored-selected-mini'
                                       }`
                                 }
-                              >
-                                {/* To Render "✔" on Selected Color */}
-                                {/* {item.selectedOptions.some(
-                                  (opt) => opt.option === option.id
-                                ) && <div>✔</div>} */}
-                              </div>
+                              ></div>
                             ))
                           : att.items.map((option) => (
                               <>

@@ -63,9 +63,24 @@ const cartSlice = createSlice({
     miniCartToggle: (state, action) => {
       state.miniCartToggle = !state.miniCartToggle;
     },
+    //
+    // Update Products Total While Changing Ccy
+    changeTotalCcy: (state, action) => {
+      const { StoreProducts } = action.payload;
+      const { newCcy } = action.payload;
+      let newAmount = StoreProducts.map((product) =>
+        product.prices
+          .filter((price) => price.currency === `${newCcy}`)
+          .map((price) => price.amount)
+      );
+      let TotalAmount = newAmount
+        .map((arr) => arr.shift())
+        .reduce((acc, cur) => acc + cur);
+      state.totalAmount = TotalAmount;
+    },
   },
 });
 
-export const { addProduct, decrementProduct, miniCartToggle } =
+export const { addProduct, decrementProduct, miniCartToggle, changeTotalCcy } =
   cartSlice.actions;
 export default cartSlice.reducer;

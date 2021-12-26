@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import ProductCard from './ProductCard';
 
 const CategoryNameStyle = styled.h3`
-  margin-top: 16rem;
+  padding-top: 16rem;
   margin-left: 10.1rem;
   text-transform: capitalize;
 `;
-// TODO Add Responsive Media Q
+
 const ProductsContainer = styled.div`
   margin: 8.762rem 11.6rem 10rem 10rem;
   display: grid;

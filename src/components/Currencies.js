@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import arrow from '../media/svg/arrow.svg';
+import { changeTotalCcy } from './store/cart';
 import { updateCcy } from './store/currency';
 
 // Currency & Arrow Wrapper
@@ -140,6 +141,7 @@ const Symbols = {
 const Currencies = ({ ccy }) => {
   const [showCcy, setShowCcy] = useState(false);
   const CurrentCcy = useSelector((state) => state.ccy.currency);
+  const StoreProducts = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
   // For Un/Collapse Ccy list By Adding/Removing Class
   const ccy_list = showCcy ? '' : 'collapse';
@@ -147,6 +149,7 @@ const Currencies = ({ ccy }) => {
   // Handling Ccy Change
   const handleCcyChange = (cc) => {
     dispatch(updateCcy({ currency: `${cc}` }));
+    dispatch(changeTotalCcy({ StoreProducts, newCcy: cc }));
   };
 
   return (

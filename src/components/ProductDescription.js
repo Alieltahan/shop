@@ -163,9 +163,9 @@ const ProductDescription = ({ id }) => {
   });
   const currentCcy = useSelector((state) => state.ccy);
   const [selectAttribute, setSelectAttribute] = useState(false);
+  const dispatch = useDispatch();
 
   const ProductImages = data?.product?.gallery?.map((image) => image);
-  const dispatch = useDispatch();
 
   const handleImageChange = (index) => {
     setThumbnail(index);
@@ -179,7 +179,6 @@ const ProductDescription = ({ id }) => {
   const [productOptionSelected, setProductOptionSelected] = useState([]);
 
   const handleAttributes = (product, att, option) => {
-    let newProductOption = [];
     let attId = att.id;
     let optionId = option.id;
     let existingProductIndex = productOptionSelected.findIndex(
@@ -187,7 +186,7 @@ const ProductDescription = ({ id }) => {
     );
     console.log(existingProductIndex);
     if (existingProductIndex >= 0) {
-      newProductOption = productOptionSelected.filter(
+      let newProductOption = productOptionSelected.filter(
         (productOption) => productOption.id !== att.id
       );
       newProductOption.push({ id: attId, option: optionId });
@@ -197,7 +196,6 @@ const ProductDescription = ({ id }) => {
       SelectedOptions.push({ id: attId, option: optionId });
       setProductOptionSelected([...productOptionSelected, ...SelectedOptions]);
     }
-    console.log(...productOptionSelected, 'STATE');
   };
 
   if (loading) return <h3>Loading...</h3>;
