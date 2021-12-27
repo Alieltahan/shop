@@ -285,7 +285,7 @@ const ProductDescription = ({ id }) => {
                     addProduct({
                       ...Product,
                       /* Making a unique ID for each product based on the attributes combined so user can get quantity of each specific attributes. */
-                      id: `${Product.id}${productOptionSelected
+                      id: `${Product.id},${productOptionSelected
                         .map((opt) => Object.values(opt))
                         .join('-')}`,
                       selectedOptions: productOptionSelected,

@@ -332,7 +332,7 @@ const Cart = ({ mini }) => {
                   <span
                     className="item__brand-container"
                     onClick={() => {
-                      Navigate(`product/${item.id}`);
+                      Navigate(`product/${item.id.split(',')[0]}`);
                       dispatch(miniCartToggle());
                     }}
                   >
