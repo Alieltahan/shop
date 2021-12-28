@@ -406,16 +406,20 @@ const Cart = ({ mini }) => {
                                   className={
                                     !mini
                                       ? `${
-                                          item.selectedOptions.some(
-                                            (opt) => opt.option === option.id
-                                          )
+                                          item.selectedOptions
+                                            .filter((arr) => arr.id === att.id)
+                                            .some(
+                                              (opt) => opt.option === option.id
+                                            )
                                             ? 'item__att-boxes selected '
                                             : 'item__att-boxes'
                                         }`
                                       : `${
-                                          item.selectedOptions.some(
-                                            (opt) => opt.option === option.id
-                                          )
+                                          item.selectedOptions
+                                            .filter((arr) => arr.id === att.id)
+                                            .some(
+                                              (opt) => opt.option === option.id
+                                            )
                                             ? 'item__att-boxes item__att-boxes-mini item__att-boxes-mini selected-mini '
                                             : 'item__att-boxes item__att-boxes-mini'
                                         }`
