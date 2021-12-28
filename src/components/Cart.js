@@ -294,6 +294,7 @@ const Cart = ({ mini }) => {
   const Navigate = useNavigate();
   const [inputs, setInputs] = useState({});
 
+  console.log(cartStore.products, 'PRODUCTS');
   const handleNextImg = (product) => {
     let { id, gallery } = product;
     let [existingItem] = Object.keys(inputs).filter((input) => input === id);
