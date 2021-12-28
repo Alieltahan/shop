@@ -7,7 +7,7 @@ import confStore from './components/store/confStore';
 import { Provider } from 'react-redux';
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: 'http://localhost:4000/',
+  uri: 'https://shopbescandi.herokuapp.com/',
 });
 
 const GlobalStyles = createGlobalStyle`
