@@ -18,6 +18,10 @@ const ProductsContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(38.4rem, 1fr));
   column-gap: 4rem;
   row-gap: 10.3rem;
+  @media only screen and (max-width: 65.625em) {
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    justify-items: center;
+  }
 `;
 
 const Products = ({ data }) => {

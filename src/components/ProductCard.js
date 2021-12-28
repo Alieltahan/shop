@@ -105,6 +105,10 @@ const ProductContainerStyle = styled.div`
       height: 5.8rem;
       left: 1.6rem;
       top: 37rem;
+      @media only screen and (max-width: 65.625em) {
+        align-items: center;
+      }
+
       p {
         display: flex;
         align-items: center;
