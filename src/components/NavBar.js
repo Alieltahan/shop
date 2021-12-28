@@ -16,6 +16,9 @@ const HeaderStyles = styled.div`
   position: absolute;
   bottom: 0;
   font-family: Raleway;
+  @media only screen and (max-width: 50em) {
+    margin-left: 2rem;
+  }
 `;
 
 const HeaderCategoryStyles = styled.div`
@@ -38,6 +41,9 @@ const LogoStyle = styled.div`
   align-items: center;
   position: absolute;
   width: 100%;
+  @media only screen and (max-width: 50em) {
+    display: none;
+  }
 
   img {
     justify-content: center;
@@ -56,6 +62,9 @@ const CartCurrencyWrapper = styled.div`
   align-items: center;
   flex-direction: row;
   cursor: pointer;
+  @media only screen and (max-width: 33.125em) {
+    right: 2rem;
+  }
   .count {
     position: absolute;
     top: 4.25%;
