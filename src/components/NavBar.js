@@ -97,11 +97,14 @@ const NavBar = () => {
 
   const dispatch = useDispatch();
 
-  let CartCount = useSelector((state) => state.cart.totalCount);
+  let cart = useSelector((state) => state.cart);
   const handleToggleCart = () => {
     dispatch(miniCartToggle());
   };
 
+  let actvCategory = useSelector(
+    (state) => state.activeCategory.activeCategory
+  );
   return (
     <>
       {/* Logo - Center */}
@@ -114,16 +117,24 @@ const NavBar = () => {
         {/* Cart */}
         <CartStyle onClick={handleToggleCart}>
           <img alt="cart logo" className="cart" src={cartLogo} />
-          {CartCount ? <div className="count">{CartCount}</div> : ''}
+          {cart.totalCount ? (
+            <div className="count">{cart.totalCount}</div>
+          ) : (
+            ''
+          )}
         </CartStyle>
       </CartCurrencyWrapper>
       {/* Categories */}
       <HeaderStyles>
-        <NavLink to="/">
+        <NavLink className={actvCategory === '' ? 'active' : null} to="/">
           <HeaderCategoryStyles>All</HeaderCategoryStyles>
         </NavLink>
         {dataCategories?.categories?.map((cat) => (
-          <NavLink key={cat?.name} to={cat?.name}>
+          <NavLink
+            className={actvCategory === cat.name ? 'active' : ''}
+            key={cat?.name}
+            to={cat?.name}
+          >
             <HeaderCategoryStyles>{cat?.name}</HeaderCategoryStyles>
           </NavLink>
         ))}

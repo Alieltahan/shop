@@ -13,9 +13,9 @@ const CategoryNameStyle = styled.h3`
 `;
 
 const ProductsContainer = styled.div`
-  margin: 8.762rem 11.6rem 10rem 10rem;
+  margin: 8.762rem 10.2rem 10rem 10rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(38.4rem, 1fr));
+  grid-template-columns: repeat(auto-fit, 38.6rem);
   column-gap: 4rem;
   row-gap: 10.3rem;
   @media only screen and (max-width: 65.625em) {

@@ -148,11 +148,7 @@ const ProductCard = ({ products }) => {
   const currentCcy = useSelector((state) => state.ccy);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  // Add Product to Cart
-  // const handleAddToCart = (product) => {
-  //   console.log(product);
-  //   // dispatch(addProduct({ ...product, quantity: 1, currentCcy }));
-  // };
+
   const handleProductDescription = (id) => {
     Navigate(`/product/${id}`);
   };
@@ -163,6 +159,7 @@ const ProductCard = ({ products }) => {
           <div className="product">
             <div className="product__image-container">
               <div
+                onClick={() => handleProductDescription(product.id)}
                 className={
                   !product.inStock
                     ? 'product__outOfStock'

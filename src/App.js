@@ -53,6 +53,12 @@ a,
 a:link:active:hover {
   text-decoration: none;
 }
+a:visited, a {
+  color: var(--c-text);
+  > div{
+    color: inherit;
+  }
+}
 
 img {
   width: 100%;
@@ -84,12 +90,14 @@ h3 {
 h4 {
   font-size: 3rem;
 }
-a:visited{
-  color: var(--c-text);
-}
+
 .active{
     color: var(--c-primary);
     border-bottom: 2px solid var(--c-primary);
+    > div{
+      color: var(--c-primary);
+
+    }
   }
   .EUR:before {
     content: '\u20AC';

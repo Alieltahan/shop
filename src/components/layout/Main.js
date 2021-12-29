@@ -1,8 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route } from 'react-router';
+import { Routes, Route, useLocation } from 'react-router';
 import styled from 'styled-components';
 import { QUERY_CATEGORIES } from '../http/graphql';
+import { routeCategory } from '../store/activeCategory';
 import { miniCartToggle } from '../store/cart';
 import Header from './Header';
 import CartPage from './pages/CartPage';
@@ -21,6 +22,9 @@ const Modal = styled.div`
 const Main = () => {
   const dispatch = useDispatch();
   const StoreCart = useSelector((state) => state.cart);
+  const Location = useLocation().pathname;
+  // Updating current Active Category when route Changes
+  dispatch(routeCategory(Location));
   // Getting All The Categories Dynamically (For Scalability in the Future)
   const { data } = useQuery(QUERY_CATEGORIES);
   return (

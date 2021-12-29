@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { QUERY_SINGLE_PRODUCT } from './http/graphql';
 import AddToCartChkr from './lib/AddToCartChkr';
+import { currCategory } from './store/activeCategory';
 import { addProduct } from './store/cart';
 
 const ProductContainer = styled.div`
@@ -55,7 +56,6 @@ const ProductContainer = styled.div`
         }
       }
       &__attribute {
-        /* TODO Font */
         &-text {
           margin-top: 4.3rem;
           text-transform: uppercase;
@@ -74,6 +74,7 @@ const ProductContainer = styled.div`
           align-items: center;
           margin: 0.8rem 1.2rem 0 0;
           position: relative;
+          cursor: pointer;
           &-slctd{
             background-color: #000;
             color: white;
@@ -125,14 +126,24 @@ const ProductContainer = styled.div`
         display: flex;
         justify-content: center;
         padding: 1.6rem 3.2rem;
+        width: 100%;
         text-transform: uppercase;
         color: var(--c-white);
         font-family: Raleway;
         font-weight: 600;
         font-size: 1.6rem;
         line-height: 120%;
-        cursor: pointer;
+        border: none;
+        &:disabled{
+          opacity: 0.5;
+          pointer-events:none;
+          &:hover{
+            box-shadow: none;
+            transform: translateY(0);
+          }
+        }
         &:hover{
+          cursor: pointer;
           transform: translateY(-2px);
           box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
         }
@@ -176,6 +187,9 @@ const ProductDescription = ({ id }) => {
   if (data) {
     Product = data.product;
   }
+  /* Updating Active Category */
+  dispatch(currCategory(Product.category));
+
   const [productOptionSelected, setProductOptionSelected] = useState([]);
 
   const handleAttributes = (att, option) => {
@@ -274,30 +288,33 @@ const ProductDescription = ({ id }) => {
                 ))}
             </div>
           </div>
-          <div
-            onClick={() => {
-              setSelectAttribute(false);
-              AddToCartChkr({
-                ...Product,
-                selectedOptions: productOptionSelected,
-              })
-                ? dispatch(
-                    addProduct({
-                      ...Product,
-                      /* Making a unique ID for each product based on the attributes combined so user can get quantity of each specific attributes. */
-                      id: `${Product.id},${productOptionSelected
-                        .map((opt) => Object.values(opt))
-                        .join('-')}`,
-                      selectedOptions: productOptionSelected,
-                      currentCcy,
-                      quantity: 1,
-                    })
-                  )
-                : setSelectAttribute(true);
-            }}
-            className="product__details-btn"
-          >
-            add to cart
+          <div>
+            <button
+              disabled={!Product.inStock}
+              onClick={() => {
+                setSelectAttribute(false);
+                AddToCartChkr({
+                  ...Product,
+                  selectedOptions: productOptionSelected,
+                })
+                  ? dispatch(
+                      addProduct({
+                        ...Product,
+                        /* Making a unique ID for each product based on the attributes combined so user can get quantity of each specific attributes. */
+                        id: `${Product.id},${productOptionSelected
+                          .map((opt) => Object.values(opt))
+                          .join('-')}`,
+                        selectedOptions: productOptionSelected,
+                        currentCcy,
+                        quantity: 1,
+                      })
+                    )
+                  : setSelectAttribute(true);
+              }}
+              className="product__details-btn"
+            >
+              add to cart
+            </button>
           </div>
           {selectAttribute && (
             <div className="product__details-att">
