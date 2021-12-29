@@ -313,7 +313,7 @@ const ProductDescription = ({ id }) => {
               }}
               className="product__details-btn"
             >
-              add to cart
+              {!Product.inStock ? 'out of stock' : 'add to cart'}
             </button>
           </div>
           {selectAttribute && (
