@@ -3,7 +3,9 @@ import { addProduct } from './store/cart';
 import styled from 'styled-components';
 import cartLogo from '../media/svg/EmptyCart-white.svg';
 import { useNavigate } from 'react-router';
-import AddToCartChkr from './lib/AddToCartChkr';
+import AddToCartChkr from './common/AddToCartChkr';
+import ProdAttributesOverlay from './common/ProdAttributesOverlay';
+import useForm from './lib/useForm';
 
 const ProductContainerStyle = styled.div`
   position: static;
@@ -29,6 +31,7 @@ const ProductContainerStyle = styled.div`
     position: relative;
 
     &__outOfStock {
+      cursor: pointer;
       position: absolute;
       height: 42.4rem;
       width: 100%;
@@ -49,6 +52,19 @@ const ProductContainerStyle = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+    }
+    &__attributes {
+      position: absolute;
+      top: 4rem;
+      border-radius: 50%;
+      padding: 1rem;
+      background-color: #eee;
+      &-container {
+        background-color: #ccc;
+        position: absolute;
+        height: 100%;
+        width: 50%;
       }
     }
     &__image {
@@ -79,6 +95,7 @@ const ProductContainerStyle = styled.div`
           border-radius: 50%;
           transition: all 0.3s;
           opacity: 0;
+          z-index: 2;
           &:hover {
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             transform: translateY(-2px);
@@ -148,6 +165,7 @@ const ProductCard = ({ products }) => {
   const currentCcy = useSelector((state) => state.ccy);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
+  const { handleAttributes, productOptionSelected } = useForm();
 
   const handleProductDescription = (id) => {
     Navigate(`/product/${id}`);
@@ -183,6 +201,11 @@ const ProductCard = ({ products }) => {
                   <img alt="cartLogo" src={cartLogo} />
                 </span>
               )}
+              <ProdAttributesOverlay
+                Product={product}
+                handleAttributes={handleAttributes}
+                productOptionSelected={productOptionSelected}
+              />
               <img
                 onClick={() => handleProductDescription(product.id)}
                 src={product.gallery[0]}

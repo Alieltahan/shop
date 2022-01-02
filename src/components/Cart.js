@@ -323,16 +323,16 @@ const Cart = ({ mini }) => {
           </h5>
         ) : (
           <ul className={!mini ? 'u-list' : 'u-list u-list-mini'}>
-            {cartStore.products.map((item, i) => (
+            {cartStore.products.map((product, i) => (
               <li
                 className={!mini ? 'list' : 'list list-mini'}
-                key={`${item.id}` + i}
+                key={`${product.id}` + i}
               >
                 <div>
                   <span
                     className="item__brand-container"
                     onClick={() => {
-                      Navigate(`product/${item.id.split(',')[0]}`);
+                      Navigate(`product/${product.id.split(',')[0]}`);
                       dispatch(miniCartToggle());
                     }}
                   >
@@ -341,14 +341,14 @@ const Cart = ({ mini }) => {
                         !mini ? 'item__brand' : 'item__brand item__brand-mini '
                       }
                     >
-                      {item.brand}
+                      {product.brand}
                     </div>
                     <div
                       className={
                         !mini ? 'item__name' : 'item__name item__name-mini'
                       }
                     >
-                      {item.name}
+                      {product.name}
                     </div>
                   </span>
                   <div
@@ -356,7 +356,7 @@ const Cart = ({ mini }) => {
                       !mini ? 'item__price' : 'item__price item__price-mini'
                     }
                   >
-                    {item.prices
+                    {product.prices
                       .filter((price) => price.currency === currentCcy.currency)
                       .map((ccy) => (
                         <p key={ccy.currency} className={ccy.currency}>
@@ -364,7 +364,7 @@ const Cart = ({ mini }) => {
                         </p>
                       ))}
                   </div>
-                  {item.attributes.map((att) => (
+                  {product.attributes.map((att) => (
                     <>
                       <div
                         key={att.id + Math.random()}
@@ -382,14 +382,14 @@ const Cart = ({ mini }) => {
                                 className={
                                   !mini
                                     ? `${
-                                        item.selectedOptions.some(
+                                        product.selectedOptions[0].attributes.some(
                                           (opt) => opt.option === option.id
                                         )
                                           ? 'item__att-boxes item__att-boxes-colored item__att-boxes-colored-selected'
                                           : 'item__att-boxes item__att-boxes-colored'
                                       }`
                                     : `${
-                                        item.selectedOptions.some(
+                                        product.selectedOptions[0].attributes.some(
                                           (opt) => opt.option === option.id
                                         )
                                           ? 'item__att-boxes item__att-boxes-colored item__att-boxes-mini item__att-boxes-colored-selected'
@@ -405,7 +405,7 @@ const Cart = ({ mini }) => {
                                   className={
                                     !mini
                                       ? `${
-                                          item.selectedOptions
+                                          product.selectedOptions[0].attributes
                                             .filter((arr) => arr.id === att.id)
                                             .some(
                                               (opt) => opt.option === option.id
@@ -414,7 +414,7 @@ const Cart = ({ mini }) => {
                                             : 'item__att-boxes'
                                         }`
                                       : `${
-                                          item.selectedOptions
+                                          product.selectedOptions[0].attributes
                                             .filter((arr) => arr.id === att.id)
                                             .some(
                                               (opt) => opt.option === option.id
@@ -448,7 +448,7 @@ const Cart = ({ mini }) => {
                   >
                     <div
                       onClick={() =>
-                        dispatch(addProduct({ ...item, currentCcy }))
+                        dispatch(addProduct({ ...product, currentCcy }))
                       }
                       className={
                         !mini
@@ -465,11 +465,11 @@ const Cart = ({ mini }) => {
                           : 'item__counters-count item__counters-count-mini'
                       }
                     >
-                      {item.quantity}
+                      {product.quantity}
                     </div>
                     <div
                       onClick={() =>
-                        dispatch(decrementProduct({ ...item, currentCcy }))
+                        dispatch(decrementProduct({ ...product, currentCcy }))
                       }
                       className={
                         !mini
@@ -484,10 +484,10 @@ const Cart = ({ mini }) => {
                     className={!mini ? 'item__img' : 'item__img item__img-mini'}
                   >
                     {/* Rendering the Arrows only if there is more than 1 pic */}
-                    {item.gallery.length !== 1 && (
+                    {product.gallery.length !== 1 && (
                       <span className="item__img-arrow">
                         <span
-                          onClick={() => handlePrevImg(item)}
+                          onClick={() => handlePrevImg(product)}
                           className="item__img-arrow-container"
                         >
                           <img
@@ -498,7 +498,7 @@ const Cart = ({ mini }) => {
                         </span>
                         <div></div>
                         <span
-                          onClick={() => handleNextImg(item)}
+                          onClick={() => handleNextImg(product)}
                           className="item__img-arrow-container"
                         >
                           <img
@@ -511,12 +511,15 @@ const Cart = ({ mini }) => {
                     )}
 
                     <img
-                      src={item.gallery[inputs[item.id]] || item.gallery[0]}
-                      alt={item.name}
+                      src={
+                        product.gallery[inputs[product.id]] ||
+                        product.gallery[0]
+                      }
+                      alt={product.name}
                       // Not safe as may lead to endless loop if all images not available
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = `${handleNextImg(item)}`;
+                        e.target.src = `${handleNextImg(product)}`;
                       }}
                     />
                   </div>

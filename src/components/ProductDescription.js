@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { QUERY_SINGLE_PRODUCT } from './http/graphql';
-import AddToCartChkr from './lib/AddToCartChkr';
+import AddToCartChkr from './common/AddToCartChkr';
+import useForm from './lib/useForm';
 import { currCategory } from './store/activeCategory';
 import { addProduct } from './store/cart';
+import ProductAttributes from './common/ProductAttributes';
 
 const ProductContainer = styled.div`
   width: 144rem;
@@ -136,8 +138,8 @@ const ProductContainer = styled.div`
         border: none;
         &:disabled{
           opacity: 0.5;
-          pointer-events:none;
           &:hover{
+            cursor: not-allowed;
             box-shadow: none;
             transform: translateY(0);
           }
@@ -189,27 +191,9 @@ const ProductDescription = ({ id }) => {
   }
   /* Updating Active Category */
   dispatch(currCategory(Product.category));
-
-  const [productOptionSelected, setProductOptionSelected] = useState([]);
-
-  const handleAttributes = (att, option) => {
-    let attId = att.id;
-    let optionId = option.id;
-    let existingProductIndex = productOptionSelected.findIndex(
-      (product) => product.id === attId
-    );
-    if (existingProductIndex >= 0) {
-      let newProductOption = productOptionSelected.filter(
-        (productOption) => productOption.id !== att.id
-      );
-      newProductOption.push({ id: attId, option: optionId });
-      setProductOptionSelected(newProductOption);
-    } else {
-      let SelectedOptions = [];
-      SelectedOptions.push({ id: attId, option: optionId });
-      setProductOptionSelected([...productOptionSelected, ...SelectedOptions]);
-    }
-  };
+  /* Custom Hook to handle the Products Attributes */
+  const { handleAttributes, productOptionSelected, clearProductAtt } =
+    useForm();
 
   if (loading) return <h3>Loading...</h3>;
   if (error) return <h3>{error.message}</h3>;
@@ -239,43 +223,11 @@ const ProductDescription = ({ id }) => {
         <div className="product__details__content">
           <h4 className="product__details__brand">{data?.product.brand}</h4>
           <p>{data?.product.name}</p>
-          <div className="product__details__attribute">
-            {Product.attributes.map((att) => (
-              <div key={att.id + Math.random()}>
-                <p className="product__details__attribute-text">{att.id}:</p>
-                {att.type === 'swatch'
-                  ? att.items.map((option) => (
-                      <span
-                        onClick={() => handleAttributes(att, option)}
-                        key={option.id + Math.random()}
-                        style={{ backgroundColor: `${option.value}` }}
-                        className={
-                          productOptionSelected.some(
-                            (slctd) => slctd.option === option.id
-                          )
-                            ? 'product__details__attribute-boxes product__details__attribute-boxes-slctdColor'
-                            : 'product__details__attribute-boxes'
-                        }
-                      ></span>
-                    ))
-                  : att.items.map((option2) => (
-                      <span
-                        onClick={() => handleAttributes(att, option2)}
-                        key={option2.id + Math.random()}
-                        className={
-                          productOptionSelected
-                            .filter((prodOpt) => prodOpt.id === att.id)
-                            .some((slctd) => slctd.option === option2.id)
-                            ? 'product__details__attribute-boxes product__details__attribute-boxes-slctd'
-                            : 'product__details__attribute-boxes'
-                        }
-                      >
-                        <p>{option2.value}</p>
-                      </span>
-                    ))}
-              </div>
-            ))}
-          </div>
+          <ProductAttributes
+            Product={Product}
+            handleAttributes={handleAttributes}
+            productOptionSelected={productOptionSelected}
+          />
           <div className="product__details__attribute-price">
             <p>price:</p>
             <div>
@@ -301,7 +253,9 @@ const ProductDescription = ({ id }) => {
                       addProduct({
                         ...Product,
                         /* Making a unique ID for each product based on the attributes combined so user can get quantity of each specific attributes. */
-                        id: `${Product.id},${productOptionSelected
+                        id: `${
+                          Product.id
+                        },${productOptionSelected[0]?.attributes
                           .map((opt) => Object.values(opt))
                           .join('-')}`,
                         selectedOptions: productOptionSelected,
