@@ -8,23 +8,19 @@ import useForm from './lib/useForm';
 import { currCategory } from './store/activeCategory';
 import { addProduct } from './store/cart';
 import ProductAttributes from './common/ProductAttributes';
-import SelectAllAttributes from './common/SelectAllAttributes';
 
 const ProductContainer = styled.div`
   width: 144rem;
   height: 74.5rem;
-  position: relative;
-  margin-top:11.341rem;
+  padding-top:16rem;
   .product {
     &__details {
       display: grid;
       grid-template-columns: 61rem 29.2rem;
-      position: absolute;
+      padding-top:16rem;
+      margin-left:2.542rem;
       width: 100.2rem;
       height: 51.3rem;
-      left: 21.9rem;
-      top: 3.3rem;
-      margin: 4.859rem 0 0 2.542rem;
       &-att{
         display: flex;
         justify-content: center;
@@ -76,7 +72,6 @@ const ProductContainer = styled.div`
           justify-content: center;
           align-items: center;
           margin: 0.8rem 1.2rem 0 0;
-          position: relative;
           cursor: pointer;
           &-slctd{
             background-color: #000;
@@ -172,19 +167,18 @@ const ProductContainer = styled.div`
 `;
 const ProductDescription = ({ id }) => {
   const [thumbnail, setThumbnail] = useState(0);
+  const [selectAttribute, setSelectAttribute] = useState(false);
   const { data, loading, error } = useQuery(QUERY_SINGLE_PRODUCT, {
     variables: { id },
   });
   const currentCcy = useSelector((state) => state.ccy);
-  const [selectAttribute, setSelectAttribute] = useState(false);
   const dispatch = useDispatch();
 
-  let ProductImages = data?.product?.gallery.map((image) => image);
+  const ProductImages = data?.product?.gallery.map((image) => image);
 
   const handleImageChange = (index) => {
     setThumbnail(index);
   };
-
   /* Storing the Product */
   let Product = {};
   if (data) {
@@ -195,6 +189,22 @@ const ProductDescription = ({ id }) => {
   /* Custom Hook to handle the Products Attributes */
   const { handleAttributes, productOptionSelected, clearProductAtt } =
     useForm();
+
+  const handleAddToCart = (Product, productOptionSelected) => {
+    dispatch(
+      addProduct({
+        ...Product,
+        /* Making a unique ID for each product based on the attributes combined so user can get quantity of each specific attributes. */
+        id: `${Product.id},${productOptionSelected[0]?.attributes
+          .map((opt) => Object.values(opt))
+          .join('-')}`,
+        selectedOptions: productOptionSelected,
+        currentCcy,
+        quantity: 1,
+      })
+    );
+    clearProductAtt();
+  };
 
   if (loading) return <h3>Loading...</h3>;
   if (error) return <h3>{error.message}</h3>;
@@ -250,20 +260,7 @@ const ProductDescription = ({ id }) => {
                   ...Product,
                   selectedOptions: productOptionSelected,
                 })
-                  ? dispatch(
-                      addProduct({
-                        ...Product,
-                        /* Making a unique ID for each product based on the attributes combined so user can get quantity of each specific attributes. */
-                        id: `${
-                          Product.id
-                        },${productOptionSelected[0]?.attributes
-                          .map((opt) => Object.values(opt))
-                          .join('-')}`,
-                        selectedOptions: productOptionSelected,
-                        currentCcy,
-                        quantity: 1,
-                      })
-                    )
+                  ? handleAddToCart(Product, productOptionSelected)
                   : setSelectAttribute(true);
               }}
               className="product__details-btn"
@@ -271,7 +268,11 @@ const ProductDescription = ({ id }) => {
               {!Product.inStock ? 'out of stock' : 'add to cart'}
             </button>
           </div>
-          {selectAttribute && <SelectAllAttributes />}
+          {selectAttribute && (
+            <div className="product__details-att">
+              !Please select all available options for the product!
+            </div>
+          )}
           <div
             style={{
               marginTop: '4rem',

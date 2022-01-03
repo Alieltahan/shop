@@ -193,7 +193,6 @@ const ProductCard = ({ products }) => {
   const handleAddToCartFalse = (product) => {
     if (cartOverlay.isOpen) {
       setSelectAttributes(true);
-      setTimeout(() => setSelectAttributes(false), 3000);
     } else {
       dispatch(
         setCartOverlayProd({
@@ -228,6 +227,7 @@ const ProductCard = ({ products }) => {
               {product.inStock && (
                 <span
                   onClick={() => {
+                    setSelectAttributes(false);
                     AddToCartChkr({
                       ...product,
                       selectedOptions: productOptionSelected,

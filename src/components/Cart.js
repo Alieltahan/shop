@@ -365,71 +365,69 @@ const Cart = ({ mini }) => {
                       ))}
                   </div>
                   {product.attributes.map((att) => (
-                    <>
-                      <div
-                        key={att.id}
-                        className={
-                          !mini ? 'item__att' : 'item__att item__att-mini'
-                        }
-                      >
-                        {att.type === 'swatch'
-                          ? att.items.map((option) => (
-                              <div
+                    <div
+                      key={att.id}
+                      className={
+                        !mini ? 'item__att' : 'item__att item__att-mini'
+                      }
+                    >
+                      {att.type === 'swatch'
+                        ? att.items.map((option) => (
+                            <div
+                              key={option.id}
+                              style={{
+                                backgroundColor: `${option.value}`,
+                              }}
+                              className={
+                                !mini
+                                  ? `${
+                                      product.selectedOptions[0].attributes.some(
+                                        (opt) => opt.option === option.id
+                                      )
+                                        ? 'item__att-boxes item__att-boxes-colored item__att-boxes-colored-selected'
+                                        : 'item__att-boxes item__att-boxes-colored'
+                                    }`
+                                  : `${
+                                      product.selectedOptions[0].attributes.some(
+                                        (opt) => opt.option === option.id
+                                      )
+                                        ? 'item__att-boxes item__att-boxes-colored item__att-boxes-mini item__att-boxes-colored-selected'
+                                        : 'item__att-boxes item__att-boxes-colored item__att-boxes-mini item__att-boxes-colored-selected-mini'
+                                    }`
+                              }
+                            ></div>
+                          ))
+                        : att.items.map((option) => (
+                            <>
+                              <span
                                 key={option.id}
-                                style={{
-                                  backgroundColor: `${option.value}`,
-                                }}
                                 className={
                                   !mini
                                     ? `${
-                                        product.selectedOptions[0].attributes.some(
-                                          (opt) => opt.option === option.id
-                                        )
-                                          ? 'item__att-boxes item__att-boxes-colored item__att-boxes-colored-selected'
-                                          : 'item__att-boxes item__att-boxes-colored'
+                                        product.selectedOptions[0].attributes
+                                          .filter((arr) => arr.id === att.id)
+                                          .some(
+                                            (opt) => opt.option === option.id
+                                          )
+                                          ? 'item__att-boxes selected '
+                                          : 'item__att-boxes'
                                       }`
                                     : `${
-                                        product.selectedOptions[0].attributes.some(
-                                          (opt) => opt.option === option.id
-                                        )
-                                          ? 'item__att-boxes item__att-boxes-colored item__att-boxes-mini item__att-boxes-colored-selected'
-                                          : 'item__att-boxes item__att-boxes-colored item__att-boxes-mini item__att-boxes-colored-selected-mini'
+                                        product.selectedOptions[0].attributes
+                                          .filter((arr) => arr.id === att.id)
+                                          .some(
+                                            (opt) => opt.option === option.id
+                                          )
+                                          ? 'item__att-boxes item__att-boxes-mini item__att-boxes-mini selected-mini '
+                                          : 'item__att-boxes item__att-boxes-mini'
                                       }`
                                 }
-                              ></div>
-                            ))
-                          : att.items.map((option) => (
-                              <>
-                                <span
-                                  key={option.id}
-                                  className={
-                                    !mini
-                                      ? `${
-                                          product.selectedOptions[0].attributes
-                                            .filter((arr) => arr.id === att.id)
-                                            .some(
-                                              (opt) => opt.option === option.id
-                                            )
-                                            ? 'item__att-boxes selected '
-                                            : 'item__att-boxes'
-                                        }`
-                                      : `${
-                                          product.selectedOptions[0].attributes
-                                            .filter((arr) => arr.id === att.id)
-                                            .some(
-                                              (opt) => opt.option === option.id
-                                            )
-                                            ? 'item__att-boxes item__att-boxes-mini item__att-boxes-mini selected-mini '
-                                            : 'item__att-boxes item__att-boxes-mini'
-                                        }`
-                                  }
-                                >
-                                  <p>{option.value}</p>
-                                </span>
-                              </>
-                            ))}
-                      </div>
-                    </>
+                              >
+                                <p>{option.value}</p>
+                              </span>
+                            </>
+                          ))}
+                    </div>
                   ))}
                 </div>
                 <div
