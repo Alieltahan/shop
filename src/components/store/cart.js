@@ -6,6 +6,7 @@ const initialState = {
   totalAmount: 0,
   totalCount: 0,
   miniCartToggle: false,
+  cartOverlay: {},
 };
 const cartSlice = createSlice({
   name: 'cart',
@@ -66,30 +67,47 @@ const cartSlice = createSlice({
       state.miniCartToggle = !state.miniCartToggle;
     },
     //
-    // Update Products Total While Changing Ccy
+    // Update Products Total Amount While Changing Ccy
     changeTotalCcy: (state, action) => {
-      const { StoreProducts } = action.payload;
+      const { StoreProducts } = action?.payload;
+      // Guard Clause if changing the Ccy & No Products in Cart.
+      if (StoreProducts.length === 0) return;
       const { newCcy } = action.payload;
       // Getting the Quantity of Each Product.
-      let ProductQuantity = StoreProducts.map((product) => product.quantity);
+      let ProductQuantity = StoreProducts?.map((product) => product.quantity);
       // Getting the Amount of Each Product.
       let newAmount = StoreProducts.map((product, i) =>
         product.prices
           // Getting the amount based on the new Ccy
-          .filter((price) => price.currency === `${newCcy}`)
+          .filter((price) => price?.currency === `${newCcy}`)
           // Multiple The Price of Eacy Product x Quantity using Index in each new loop for Product Quantity
           .map((price) => {
-            return price.amount * ProductQuantity[i];
+            return price?.amount * ProductQuantity[i];
           })
       );
       let TotalAmount = newAmount
-        .map((arr) => arr.shift())
+        ?.map((arr) => arr.shift())
         .reduce((acc, cur) => acc + cur);
       state.totalAmount = TotalAmount;
+    },
+    //
+    // Close cartOverlay
+    cartOverlayClose: (state, action) => {
+      state.cartOverlay = {};
+    },
+    // Opening cartOverlay & assign prod.id
+    setCartOverlayProd: (state, action) => {
+      state.cartOverlay = action.payload;
     },
   },
 });
 
-export const { addProduct, decrementProduct, miniCartToggle, changeTotalCcy } =
-  cartSlice.actions;
+export const {
+  addProduct,
+  decrementProduct,
+  miniCartToggle,
+  changeTotalCcy,
+  cartOverlayClose,
+  setCartOverlayProd,
+} = cartSlice.actions;
 export default cartSlice.reducer;

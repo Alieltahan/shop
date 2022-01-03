@@ -5,7 +5,6 @@ const ProductAttributes = ({
   handleAttributes,
   productOptionSelected = [],
 }) => {
-  // console.log(...productOptionSelected);
   return (
     <>
       <div className="product__details__attribute">

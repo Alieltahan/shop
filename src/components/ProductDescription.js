@@ -8,6 +8,7 @@ import useForm from './lib/useForm';
 import { currCategory } from './store/activeCategory';
 import { addProduct } from './store/cart';
 import ProductAttributes from './common/ProductAttributes';
+import SelectAllAttributes from './common/SelectAllAttributes';
 
 const ProductContainer = styled.div`
   width: 144rem;
@@ -270,11 +271,7 @@ const ProductDescription = ({ id }) => {
               {!Product.inStock ? 'out of stock' : 'add to cart'}
             </button>
           </div>
-          {selectAttribute && (
-            <div className="product__details-att">
-              ! Please select all available options for the product!
-            </div>
-          )}
+          {selectAttribute && <SelectAllAttributes />}
           <div
             style={{
               marginTop: '4rem',

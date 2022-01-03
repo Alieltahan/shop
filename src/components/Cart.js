@@ -367,7 +367,7 @@ const Cart = ({ mini }) => {
                   {product.attributes.map((att) => (
                     <>
                       <div
-                        key={att.id + Math.random()}
+                        key={att.id}
                         className={
                           !mini ? 'item__att' : 'item__att item__att-mini'
                         }
@@ -375,7 +375,7 @@ const Cart = ({ mini }) => {
                         {att.type === 'swatch'
                           ? att.items.map((option) => (
                               <div
-                                key={option.id + Math.random()}
+                                key={option.id}
                                 style={{
                                   backgroundColor: `${option.value}`,
                                 }}
@@ -401,7 +401,7 @@ const Cart = ({ mini }) => {
                           : att.items.map((option) => (
                               <>
                                 <span
-                                  key={option.id + Math.random()}
+                                  key={option.id}
                                   className={
                                     !mini
                                       ? `${

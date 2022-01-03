@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from './store/cart';
+import { addProduct, cartOverlayClose, setCartOverlayProd } from './store/cart';
 import styled from 'styled-components';
 import cartLogo from '../media/svg/EmptyCart-white.svg';
 import { useNavigate } from 'react-router';
 import AddToCartChkr from './common/AddToCartChkr';
 import ProdAttributesOverlay from './common/ProdAttributesOverlay';
 import useForm from './lib/useForm';
+import { useState } from 'react';
+import SelectAllAttributes from './common/SelectAllAttributes';
 
 const ProductContainerStyle = styled.div`
   position: static;
@@ -24,7 +26,7 @@ const ProductContainerStyle = styled.div`
     & .product__image-container-carticon {
       cursor: pointer;
       opacity: 1;
-      z-index: 2;
+      z-index: 5;
     }
   }
   .product {
@@ -161,11 +163,47 @@ const ProductContainerStyle = styled.div`
 `;
 
 const ProductCard = ({ products }) => {
+  const [selectAttributes, setSelectAttributes] = useState(false);
   // Getting Current Currency.
   const currentCcy = useSelector((state) => state.ccy);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const { handleAttributes, productOptionSelected } = useForm();
+  const { handleAttributes, productOptionSelected, clearProductAtt } =
+    useForm();
+
+  const cartOverlay = useSelector((state) => state.cart.cartOverlay);
+
+  const handleAddToCart = (product) => {
+    dispatch(
+      addProduct({
+        ...product,
+        /* Making a unique ID for each product based on the attributes combined so user can get quantity of each specific attributes. */
+        id: `${product.id},${productOptionSelected[0]?.attributes
+          .map((opt) => Object.values(opt))
+          .join('-')}`,
+        selectedOptions: productOptionSelected,
+        currentCcy,
+        quantity: 1,
+      })
+    );
+    dispatch(cartOverlayClose());
+    setSelectAttributes(false);
+  };
+
+  const handleAddToCartFalse = (product) => {
+    if (cartOverlay.isOpen) {
+      setSelectAttributes(true);
+      setTimeout(() => setSelectAttributes(false), 3000);
+    } else {
+      dispatch(
+        setCartOverlayProd({
+          id: product.id,
+          isOpen: true,
+        })
+      );
+      setSelectAttributes(false);
+    }
+  };
 
   const handleProductDescription = (id) => {
     Navigate(`/product/${id}`);
@@ -190,22 +228,29 @@ const ProductCard = ({ products }) => {
               {product.inStock && (
                 <span
                   onClick={() => {
-                    AddToCartChkr(product)
-                      ? dispatch(
-                          addProduct({ ...product, currentCcy, quantity: 1 })
-                        )
-                      : Navigate(`../product/${product.id}`);
+                    AddToCartChkr({
+                      ...product,
+                      selectedOptions: productOptionSelected,
+                    })
+                      ? handleAddToCart(product)
+                      : handleAddToCartFalse(product);
+                    clearProductAtt();
                   }}
                   className="product__image-container-carticon"
                 >
                   <img alt="cartLogo" src={cartLogo} />
                 </span>
               )}
-              <ProdAttributesOverlay
-                Product={product}
-                handleAttributes={handleAttributes}
-                productOptionSelected={productOptionSelected}
-              />
+              {product.id === cartOverlay.id && cartOverlay.isOpen && (
+                <>
+                  {selectAttributes && <SelectAllAttributes />}
+                  <ProdAttributesOverlay
+                    Product={product}
+                    handleAttributes={handleAttributes}
+                    productOptionSelected={productOptionSelected}
+                  />
+                </>
+              )}
               <img
                 onClick={() => handleProductDescription(product.id)}
                 src={product.gallery[0]}

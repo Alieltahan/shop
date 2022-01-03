@@ -48,11 +48,12 @@ export default function useForm() {
     }
   };
   // TODO
-  const clearProductAtt = (ProductId) => {
-    const allProducts = productOptionSelected.filter(
-      (prod) => prod.id !== ProductId
+  const clearProductAtt = () => {
+    setProductOptionSelected(
+      produce((draft) => {
+        draft.pop();
+      })
     );
-    setProductOptionSelected(allProducts);
   };
   return {
     handleAttributes,

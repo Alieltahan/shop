@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import arrow from '../media/svg/arrow.svg';
 import { changeTotalCcy } from './store/cart';
-import { updateCcy } from './store/currency';
+import { toggleSwitcher, updateCcy } from './store/currency';
 
 // Currency & Arrow Wrapper
 const WrapperCcyArrowStyle = styled.div`
@@ -137,12 +137,13 @@ const Symbols = {
 };
 
 const Currencies = ({ ccy }) => {
-  const [showCcy, setShowCcy] = useState(false);
-  const CurrentCcy = useSelector((state) => state.ccy.currency);
+  const StoreCcy = useSelector((state) => state.ccy);
+  const CurrentCcy = StoreCcy.currency;
+
   const StoreProducts = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
   // For Un/Collapse Ccy list By Adding/Removing Class
-  const ccy_list = showCcy ? '' : 'collapse';
+  const ccy_list = StoreCcy.showSwitcher ? '' : 'collapse';
 
   // Handling Ccy Change
   const handleCcyChange = (cc) => {
@@ -151,13 +152,13 @@ const Currencies = ({ ccy }) => {
   };
 
   return (
-    <CcyStyle onClick={() => setShowCcy(!showCcy)}>
+    <CcyStyle onClick={() => dispatch(toggleSwitcher())}>
       <WrapperCcyArrowStyle>
         <SymbolFrame>
           <span>{Symbols[CurrentCcy]}</span>
         </SymbolFrame>
         <img
-          className={showCcy ? 'rotate' : ''}
+          className={StoreCcy.showSwitcher ? 'rotate' : ''}
           alt="currency expand"
           src={arrow}
         ></img>

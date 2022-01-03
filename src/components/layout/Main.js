@@ -4,7 +4,8 @@ import { Routes, Route, useLocation } from 'react-router';
 import styled from 'styled-components';
 import { QUERY_CATEGORIES } from '../http/graphql';
 import { routeCategory } from '../store/activeCategory';
-import { miniCartToggle } from '../store/cart';
+import { cartOverlayClose, miniCartToggle } from '../store/cart';
+import { toggleSwitcher } from '../store/currency';
 import Header from './Header';
 import CartPage from './pages/CartPage';
 import PDP from './pages/PDP';
@@ -22,6 +23,7 @@ const Modal = styled.div`
 const Main = () => {
   const dispatch = useDispatch();
   const StoreCart = useSelector((state) => state.cart);
+  const StoreCcy = useSelector((state) => state.ccy);
   const Location = useLocation().pathname;
   // Updating current Active Category when route Changes
   dispatch(routeCategory(Location));
@@ -32,6 +34,13 @@ const Main = () => {
       {StoreCart.miniCartToggle && (
         <Modal onClick={() => dispatch(miniCartToggle())} />
       )}
+      {StoreCart.cartOverlay.isOpen && (
+        <Modal onClick={() => dispatch(cartOverlayClose())} />
+      )}
+      {StoreCcy.showSwitcher && (
+        <Modal onClick={() => dispatch(toggleSwitcher())} />
+      )}
+
       <Header />
       <Routes>
         <Route path="/product/:id" element={<PDP />} />
