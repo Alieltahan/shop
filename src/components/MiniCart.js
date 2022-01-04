@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import Cart from './Cart';
+import { Cart } from './Cart';
 
 const Container = styled.div`
   padding: 0 1.6rem; 0 1.6rem;
@@ -23,7 +23,7 @@ const Container = styled.div`
     }
   }
 `;
-const MiniCart = () => {
+export const MiniCart = () => {
   const storeCart = useSelector((state) => state.cart);
   let TotalProducts = storeCart.totalCount;
   return (
@@ -40,5 +40,3 @@ const MiniCart = () => {
     </div>
   );
 };
-
-export default MiniCart;

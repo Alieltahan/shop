@@ -2,7 +2,7 @@
 import produce from 'immer';
 import { useState } from 'react';
 
-export default function useForm() {
+export function useForm() {
   const [productOptionSelected, setProductOptionSelected] = useState([]);
 
   const handleAttributes = (ProductId, att, option) => {

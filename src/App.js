@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import './App.css';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
-import Main from './components/layout/Main';
+import { Main } from './components/layout/Main';
 import confStore from './components/store/confStore';
 import { Provider } from 'react-redux';
 const client = new ApolloClient({
@@ -96,7 +96,6 @@ h4 {
     border-bottom: 2px solid var(--c-primary);
     > div{
       color: var(--c-primary);
-
     }
   }
   .EUR:before {

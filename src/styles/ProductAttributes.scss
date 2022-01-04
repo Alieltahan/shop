@@ -2,11 +2,9 @@
   &__details {
     display: grid;
     grid-template-columns: 61rem 29.2rem;
-    position: absolute;
+    column-gap: 10rem;
     width: 100.2rem;
     height: 51.3rem;
-    left: 21.9rem;
-    top: 3.3rem;
     &-att {
       display: flex;
       justify-content: center;
@@ -15,6 +13,11 @@
       padding: 1rem;
       border-radius: 5%;
       color: red;
+    }
+    & img {
+      height: 51.1rem;
+      width: 61rem;
+      object-fit: contain;
     }
     &__content {
       width: 29.2rem;
@@ -33,6 +36,12 @@
         color: #1d1f22;
         line-height: 2.7rem;
       }
+    }
+    &-description {
+      margin-top: 4rem;
+      font-family: Roboto;
+      font-size: 1.6rem;
+      line-height: 2.6rem;
     }
     &__attribute {
       &-text {
@@ -54,6 +63,9 @@
         margin: 0.8rem 1.2rem 0 0;
         position: relative;
         cursor: pointer;
+        &:last-of-type {
+          margin-right: 0;
+        }
         &-slctd {
           background-color: #000;
           color: white;
@@ -89,6 +101,9 @@
           text-transform: uppercase;
         }
         > div {
+          height: 4.6rem;
+          display: flex;
+          align-items: center;
           margin-top: 1rem;
           font-family: Raleway;
           font-weight: bold;

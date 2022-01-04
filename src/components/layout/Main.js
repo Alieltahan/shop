@@ -2,15 +2,16 @@ import { useQuery } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useLocation } from 'react-router';
 import styled from 'styled-components';
+import { NotificationCart } from '../common/NotificationCart';
 import { QUERY_CATEGORIES } from '../http/graphql';
 import { routeCategory } from '../store/activeCategory';
 import { cartOverlayClose, miniCartToggle } from '../store/cart';
 import { toggleSwitcher } from '../store/currency';
-import Header from './Header';
-import CartPage from './pages/CartPage';
-import PDP from './pages/PDP';
-import PLP from './pages/PLP';
-import SpecificCategory from './pages/SpecificCategory';
+import { Header } from './Header';
+import { CartPage } from './pages/CartPage';
+import { PDP } from './pages/PDP';
+import { PLP } from './pages/PLP';
+import { SpecificCategory } from './pages/SpecificCategory';
 
 const Modal = styled.div`
   background-color: #ccc;
@@ -20,7 +21,7 @@ const Modal = styled.div`
   z-index: 4;
   opacity: 0.5;
 `;
-const Main = () => {
+export const Main = () => {
   const dispatch = useDispatch();
   const StoreCart = useSelector((state) => state.cart);
   const StoreCcy = useSelector((state) => state.ccy);
@@ -42,6 +43,7 @@ const Main = () => {
       )}
 
       <Header />
+      <NotificationCart />
       <Routes>
         <Route path="/product/:id" element={<PDP />} />
         {data?.categories.map((category) => (
@@ -57,5 +59,3 @@ const Main = () => {
     </>
   );
 };
-
-export default Main;

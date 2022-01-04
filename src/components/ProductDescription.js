@@ -3,102 +3,25 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { QUERY_SINGLE_PRODUCT } from './http/graphql';
-import AddToCartChkr from './common/AddToCartChkr';
-import useForm from './lib/useForm';
+import { AddToCartChkr } from './common/AddToCartChkr';
+import { useForm } from './lib/useForm';
 import { currCategory } from './store/activeCategory';
 import { addProduct } from './store/cart';
-import ProductAttributes from './common/ProductAttributes';
+import { ProductAttributes } from './common/ProductAttributes';
 const createDOMPurify = require('dompurify');
 const DOMPurify = createDOMPurify(window);
 
 const ProductContainer = styled.div`
-  /* width: 144rem;
-  height: 74.5rem; */
-  padding-top:16rem;
+  padding-top: 16rem;
+  display: grid;
+  grid-template-columns: 8rem 100.2rem;
+  column-gap: 4rem;
+  margin-left: 9.671rem;
   .product {
     &__details {
-      display: grid;
-      grid-template-columns: 61rem 29.2rem;
-      padding-top:16rem;
-      margin-left:2.542rem;
-      width: 100.2rem;
-      height: 51.3rem;
-      &-att{
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-        background-color: #ccc;
-        padding: 1rem;
-        border-radius: 5%;
-        color:red;
-
-      }
-      & img {
-        height: 51.1rem;
-        width: 61rem;
-        object-fit:contain;
-      }
-      &__content {
-        width: 29.2rem;
-        height: 51.3rem;
-        margin-left: 10rem;
-        h4 {
-          font-family: Raleway;
-          font-weight: 600;
-          font-size: 3rem;
-          line-height: 2.7rem;
-        }
-        > p {
-          font-family: Raleway;
-          margin-top: 1.6rem;
-          font-weight: normal;
-          font-size: 3rem;
-          color: #1d1f22;
-          line-height: 2.7rem;
-        }
-      }
-      &-description{
-        margin-top: 4rem;
-        font-family: Roboto;
-        font-size: 1.6rem;
-        line-height: 2.6rem;
-      }
-      &__attribute {
-        &-text {
-          margin-top: 4.3rem;
-          text-transform: uppercase;
-          font-size: 1.8rem;
-          font-family: 'Roboto Condensed';
-          line-height: 1.8rem;
-          font-weight: bold;
-          font-style: normal;
-        }
-        
-        &-price{
-           > p {
-             margin-top: 4rem;
-             font-size:1.8rem;
-             line-height: 1.8rem;
-             font-weight: bold;
-             font-family: 'Robot Condensed';
-             text-transform: uppercase;
-          }
-          > div {
-            height: 4.6rem;
-            display: flex;
-            align-items: center;
-            margin-top: 1rem;
-            font-family: Raleway;
-            font-weight: bold;
-            font-size: 2.4rem;
-            line-height: 1.8rem;
-
-          }
-        }
-      }
-      &-btn{
+      &-btn {
         margin-top: 2rem;
-        background-color: #5ECE7B;
+        background-color: #5ece7b;
         display: flex;
         justify-content: center;
         padding: 1.6rem 3.2rem;
@@ -110,20 +33,21 @@ const ProductContainer = styled.div`
         font-size: 1.6rem;
         line-height: 120%;
         border: none;
-        &:disabled{
+        &:disabled {
           opacity: 0.5;
-          &:hover{
+          &:hover {
             cursor: not-allowed;
             box-shadow: none;
             transform: translateY(0);
           }
         }
-        &:hover{
+        &:hover {
           cursor: pointer;
           transform: translateY(-2px);
-          box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+          box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+            rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
         }
-        &:active{
+        &:active {
           transform: translateY(0);
           box-shadow: none;
         }
@@ -131,19 +55,19 @@ const ProductContainer = styled.div`
     }
     &__sideImage- {
       cursor: pointer;
-      position: relative;
       width: 7.9rem;
       height: 8rem;
-      left: 9.671rem;
-      top: 7.239rem;
       object-fit: contain;
       display: block;
       margin-bottom: 3.239rem;
       &main {
+      }
     }
   }
 `;
-const ProductDescription = ({ id }) => {
+
+/** @param {id} String of Product Id */
+export const ProductDescription = ({ id }) => {
   const [thumbnail, setThumbnail] = useState(0);
   const [selectAttribute, setSelectAttribute] = useState(false);
   const { data, loading, error } = useQuery(QUERY_SINGLE_PRODUCT, {
@@ -188,15 +112,18 @@ const ProductDescription = ({ id }) => {
   if (error) return <h3>{error.message}</h3>;
   return (
     <ProductContainer>
-      {Product.gallery?.map((image, index) => (
-        <img
-          onClick={() => handleImageChange(index)}
-          className={`product__sideImage- product__sideImage-${index}`}
-          key={`${image}` + index}
-          src={image}
-          alt={`${Product.name} pic ${index}`}
-        />
-      ))}
+      <div>
+        {Product.gallery?.map((image, index) => (
+          <img
+            onClick={() => handleImageChange(index)}
+            className={`product__sideImage- product__sideImage-${index}`}
+            key={`${image}` + index}
+            src={image}
+            alt={`${Product.name} pic ${index}`}
+          />
+        ))}
+      </div>
+
       <div className="product__details">
         {ProductImages && (
           <img
@@ -262,5 +189,3 @@ const ProductDescription = ({ id }) => {
     </ProductContainer>
   );
 };
-
-export default ProductDescription;

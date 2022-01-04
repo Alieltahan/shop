@@ -1,6 +1,12 @@
 import '../../styles/ProductAttributes.scss';
 
-const ProductAttributes = ({
+/**
+ * @param {Product} Object
+ * @param {handleAttributes} Function to handle adding Selected Attributes of Products
+ * @param {productOptionSelected} Array for selected Attributes of a Product
+ */
+
+export const ProductAttributes = ({
   Product,
   handleAttributes,
   productOptionSelected = [],
@@ -62,5 +68,3 @@ const ProductAttributes = ({
     </>
   );
 };
-
-export default ProductAttributes;

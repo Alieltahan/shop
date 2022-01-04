@@ -1,9 +1,7 @@
 import { useParams } from 'react-router';
-import ProductDescription from '../../ProductDescription';
+import { ProductDescription } from '../../ProductDescription';
 
-const PDP = () => {
+export const PDP = () => {
   const { id } = useParams();
   return <ProductDescription id={id} />;
 };
-
-export default PDP;

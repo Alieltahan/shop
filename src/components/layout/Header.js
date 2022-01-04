@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import NavBar from '../NavBar';
+import { NavBar } from '../NavBar';
 
 const HeaderContainer = styled.div`
   position: fixed;
@@ -15,12 +15,10 @@ const HeaderContainer = styled.div`
   z-index: 4;
 `;
 
-const Header = () => {
+export const Header = () => {
   return (
     <HeaderContainer>
       <NavBar />
     </HeaderContainer>
   );
 };
-
-export default Header;

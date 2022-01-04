@@ -1,6 +1,4 @@
-import Cart from '../../Cart';
-const CartPage = () => {
+import { Cart } from '../../Cart';
+export const CartPage = () => {
   return <Cart key={Math.random()} />;
 };
-
-export default CartPage;

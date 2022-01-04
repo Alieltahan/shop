@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ProductCard from './ProductCard';
+import { ProductCard } from './ProductCard';
 
 const CategoryNameStyle = styled.h3`
   font-family: Raleway;
@@ -24,7 +24,7 @@ const ProductsContainer = styled.div`
   }
 `;
 
-const Products = ({ data }) => {
+export const Products = ({ data }) => {
   return (
     <>
       <CategoryNameStyle>{data?.category.name}</CategoryNameStyle>
@@ -34,5 +34,3 @@ const Products = ({ data }) => {
     </>
   );
 };
-
-export default Products;

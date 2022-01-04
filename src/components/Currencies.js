@@ -135,14 +135,15 @@ const Symbols = {
   AUD: 'A$',
 };
 
-const Currencies = ({ ccy }) => {
-  const StoreCcy = useSelector((state) => state.ccy);
-  const CurrentCcy = StoreCcy.currency;
+/** @param {ccy} String the current active Currency from the Store Switcher */
+export const Currencies = ({ ccy }) => {
+  const { currency, showSwitcher } = useSelector((state) => state.ccy);
+  // const CurrentCcy = currency;
 
   const StoreProducts = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
   // For Un/Collapse Ccy list By Adding/Removing Class
-  const ccy_list = StoreCcy.showSwitcher ? '' : 'collapse';
+  const ccy_list = showSwitcher ? '' : 'collapse';
 
   // Handling Ccy Change
   const handleCcyChange = (cc) => {
@@ -154,10 +155,10 @@ const Currencies = ({ ccy }) => {
     <CcyStyle onClick={() => dispatch(toggleSwitcher())}>
       <WrapperCcyArrowStyle>
         <SymbolFrame>
-          <span>{Symbols[CurrentCcy]}</span>
+          <span>{Symbols[currency]}</span>
         </SymbolFrame>
         <img
-          className={StoreCcy.showSwitcher ? 'rotate' : ''}
+          className={showSwitcher ? 'rotate' : ''}
           alt="currency expand"
           src={arrow}
         ></img>
@@ -177,5 +178,3 @@ const Currencies = ({ ccy }) => {
     </CcyStyle>
   );
 };
-
-export default Currencies;

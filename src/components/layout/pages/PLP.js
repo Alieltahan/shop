@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
 import { QUERY_ALL_PRODUCTS } from '../../http/graphql';
-import Products from '../../Products';
+import { Products } from '../../Products';
 
-const PLP = () => {
+export const PLP = () => {
   const { data, loading } = useQuery(QUERY_ALL_PRODUCTS);
 
   if (loading)
@@ -11,5 +11,3 @@ const PLP = () => {
     );
   return <Products data={data} />;
 };
-
-export default PLP;

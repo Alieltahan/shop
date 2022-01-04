@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
 import { QUERY_SPECIFIC_CATEGORY_PRODUCTS } from '../../http/graphql';
-import Products from '../../Products';
+import { Products } from '../../Products';
 
-const SpecificCategory = ({ category }) => {
+export const SpecificCategory = ({ category }) => {
   const { data, loading, error } = useQuery(QUERY_SPECIFIC_CATEGORY_PRODUCTS, {
     variables: { category: `${category}` },
   });
@@ -10,5 +10,3 @@ const SpecificCategory = ({ category }) => {
   if (error) return <h3>{error.message}</h3>;
   return <Products data={data} />;
 };
-
-export default SpecificCategory;

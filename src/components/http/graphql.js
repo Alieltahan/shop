@@ -1,3 +1,5 @@
+// Container of all GQL Queries.
+
 import { gql } from '@apollo/client';
 
 // Getting the Categories

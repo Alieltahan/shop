@@ -11,7 +11,7 @@ const ContainerStyles = styled.div`
     margin: 3rem 0;
   }
   header {
-    margin-top: 16rem;
+    padding-top: 16rem;
     font-family: Raleway;
     font-size: 3.2rem;
     font-weight: bold;
@@ -287,7 +287,8 @@ const ContainerStyles = styled.div`
     }
   }
 `;
-const Cart = ({ mini }) => {
+/**@param {mini} Boolean to render the mini Cart or Cart Page */
+export const Cart = ({ mini }) => {
   const { products, totalAmount } = useSelector((state) => state.cart);
   const { currency } = useSelector((state) => state.ccy);
   const dispatch = useDispatch();
@@ -559,5 +560,3 @@ const Cart = ({ mini }) => {
     </>
   );
 };
-
-export default Cart;

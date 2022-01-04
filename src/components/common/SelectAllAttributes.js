@@ -12,12 +12,13 @@ const Container = styled.div`
   border-radius: 5%;
   color: red;
 `;
-const SelectAllAttributes = () => {
+
+/**@returns error Message to select all Product Attributes */
+
+export const SelectAllAttributes = () => {
   return (
     <Container className="product__details-att">
       Please select all available options for the product!
     </Container>
   );
 };
-
-export default SelectAllAttributes;

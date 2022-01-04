@@ -4,15 +4,15 @@ import styled from 'styled-components';
 import { QUERY_CATEGORIES, QUERY_CURRENCIES } from './http/graphql';
 import logo from '../media/svg/logo.svg';
 import cartLogo from '../media/svg/cart.svg';
-import Currencies from './Currencies';
+import { Currencies } from './Currencies';
 import { useDispatch, useSelector } from 'react-redux';
-import MiniCart from './MiniCart';
+import { MiniCart } from './MiniCart';
 import { miniCartToggle } from './store/cart';
 
 const HeaderStyles = styled.div`
   display: flex;
   margin-left: 10.1rem;
-  height: 5.6rem;
+  height: 8rem;
   position: absolute;
   bottom: 0;
   font-family: Raleway;
@@ -22,12 +22,14 @@ const HeaderStyles = styled.div`
 `;
 
 const HeaderCategoryStyles = styled.div`
+  display: flex;
+  align-items: center;
   font-family: inhert;
   text-transform: uppercase;
   font-size: 1.6rem;
   font-weight: 600;
   line-height: 120%;
-  padding: 1.6rem;
+  padding: 2.8rem 1.6rem 3.2rem 1.6rem;
   margin-bottom: 2px;
   height: 100%;
   justify-content: center;
@@ -91,13 +93,13 @@ const CartStyle = styled.div`
   }
 `;
 
-const NavBar = () => {
+export const NavBar = () => {
   const { data: dataCurrencies } = useQuery(QUERY_CURRENCIES);
   const { data: dataCategories } = useQuery(QUERY_CATEGORIES);
 
   const dispatch = useDispatch();
 
-  let cart = useSelector((state) => state.cart);
+  let { totalCount } = useSelector((state) => state.cart);
   const handleToggleCart = () => {
     dispatch(miniCartToggle());
   };
@@ -117,11 +119,7 @@ const NavBar = () => {
         {/* Cart */}
         <CartStyle onClick={handleToggleCart}>
           <img alt="cart logo" className="cart" src={cartLogo} />
-          {cart.totalCount ? (
-            <div className="count">{cart.totalCount}</div>
-          ) : (
-            ''
-          )}
+          {totalCount ? <div className="count">{totalCount}</div> : ''}
         </CartStyle>
       </CartCurrencyWrapper>
       {/* Categories */}
@@ -143,5 +141,3 @@ const NavBar = () => {
     </>
   );
 };
-
-export default NavBar;

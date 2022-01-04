@@ -1,7 +1,12 @@
-import ProductAttributes from './ProductAttributes';
+import { ProductAttributes } from './ProductAttributes';
 import '../../styles/ProdAttributesOverlay.scss';
 
-const ProductAttributesOverlay = ({
+/**
+ * @param {Product} Object
+ * @param {handleAttributes} Function to handle adding Selected Attributes of a Products
+ * @param {productOptionSelected} Array for selected Attributes of a Product
+ */
+export const ProductAttributesOverlay = ({
   Product,
   handleAttributes,
   productOptionSelected = [],
@@ -16,5 +21,3 @@ const ProductAttributesOverlay = ({
     </div>
   );
 };
-
-export default ProductAttributesOverlay;

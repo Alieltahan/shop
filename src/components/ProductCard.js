@@ -3,11 +3,11 @@ import { addProduct, cartOverlayClose, setCartOverlayProd } from './store/cart';
 import styled from 'styled-components';
 import cartLogo from '../media/svg/EmptyCart-white.svg';
 import { useNavigate } from 'react-router';
-import AddToCartChkr from './common/AddToCartChkr';
-import ProdAttributesOverlay from './common/ProdAttributesOverlay';
-import useForm from './lib/useForm';
+import { AddToCartChkr } from './common/AddToCartChkr';
+import { ProductAttributesOverlay } from './common/ProdAttributesOverlay';
+import { useForm } from './lib/useForm';
 import { useState } from 'react';
-import SelectAllAttributes from './common/SelectAllAttributes';
+import { SelectAllAttributes } from './common/SelectAllAttributes';
 
 const ProductContainerStyle = styled.div`
   position: static;
@@ -162,7 +162,8 @@ const ProductContainerStyle = styled.div`
   }
 `;
 
-const ProductCard = ({ products }) => {
+/** @param Array of the Products */
+export const ProductCard = ({ products }) => {
   const [selectAttributes, setSelectAttributes] = useState(false);
   // Getting Current Currency.
   const { currency } = useSelector((state) => state.ccy);
@@ -244,7 +245,7 @@ const ProductCard = ({ products }) => {
               {product.id === cartOverlay.id && cartOverlay.isOpen && (
                 <>
                   {selectAttributes && <SelectAllAttributes />}
-                  <ProdAttributesOverlay
+                  <ProductAttributesOverlay
                     Product={product}
                     handleAttributes={handleAttributes}
                     productOptionSelected={productOptionSelected}
@@ -272,5 +273,3 @@ const ProductCard = ({ products }) => {
     </>
   );
 };
-
-export default ProductCard;
