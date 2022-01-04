@@ -8,6 +8,8 @@ import useForm from './lib/useForm';
 import { currCategory } from './store/activeCategory';
 import { addProduct } from './store/cart';
 import ProductAttributes from './common/ProductAttributes';
+const createDOMPurify = require('dompurify');
+const DOMPurify = createDOMPurify(window);
 
 const ProductContainer = styled.div`
   /* width: 144rem;
@@ -55,6 +57,12 @@ const ProductContainer = styled.div`
           line-height: 2.7rem;
         }
       }
+      &-description{
+        margin-top: 4rem;
+        font-family: Roboto;
+        font-size: 1.6rem;
+        line-height: 2.6rem;
+      }
       &__attribute {
         &-text {
           margin-top: 4.3rem;
@@ -65,44 +73,7 @@ const ProductContainer = styled.div`
           font-weight: bold;
           font-style: normal;
         }
-        &-boxes {
-          width: 6.3rem;
-          height: 4.5rem;
-          border: 1px solid #1d1f22;
-          display: inline-flex;
-          justify-content: center;
-          align-items: center;
-          margin: 0.8rem 1.2rem 0 0;
-          cursor: pointer;
-          &:last-of-type{
-            margin-right: 0;
-          }
-          &-slctd{
-            background-color: #000;
-            color: white;
-          }
-          &-slctdColor{
-            opacity: 0.5;
-            border: 3px solid #000;
-          }
-          > p {
-            display:flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            width: 100%;
-            height: 100%;
-            line-height: 1.8rem;
-            font-size: 1.6rem;
-            font-weight: normal;
-            font-family: 'Source Sans Pro';
-            font-style: normal;
-          }
-          &-mini
-          &-active {
-            background-color: #1d1f22;
-          }
-        }
+        
         &-price{
            > p {
              margin-top: 4rem;
@@ -281,13 +252,10 @@ const ProductDescription = ({ id }) => {
             </div>
           )}
           <div
-            style={{
-              marginTop: '4rem',
-              fontFamily: 'Roboto',
-              fontSize: '1.6rem',
-              lineHeight: '2.6rem',
+            className="product__details-description"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(Product.description),
             }}
-            dangerouslySetInnerHTML={{ __html: Product.description }}
           ></div>
         </div>
       </div>

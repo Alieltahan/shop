@@ -38,6 +38,7 @@ const ProductAttributes = ({
                       handleAttributes(Product.id, att, option);
                     }}
                     key={option.id}
+                    // data-color={option.value}
                     style={{ backgroundColor: `${option.value}` }}
                     className={
                       productOptionSelected
@@ -50,8 +51,8 @@ const ProductAttributes = ({
                         .some(
                           (slctdOption) => slctdOption[0]?.option === option.id
                         )
-                        ? 'product__details__attribute-boxes product__details__attribute-boxes-slctdColor'
-                        : 'product__details__attribute-boxes'
+                        ? 'product__details__attribute-boxes product__details__attribute-boxes-color product__details__attribute-boxes-slctdColor'
+                        : 'product__details__attribute-boxes product__details__attribute-boxes-color'
                     }
                   ></span>
                 ))}
