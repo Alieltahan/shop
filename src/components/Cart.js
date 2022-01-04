@@ -288,8 +288,8 @@ const ContainerStyles = styled.div`
   }
 `;
 const Cart = ({ mini }) => {
-  const cartStore = useSelector((state) => state.cart);
-  const currentCcy = useSelector((state) => state.ccy);
+  const { products, totalAmount } = useSelector((state) => state.cart);
+  const { currency } = useSelector((state) => state.ccy);
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   const [inputs, setInputs] = useState({});
@@ -317,13 +317,13 @@ const Cart = ({ mini }) => {
     <>
       <ContainerStyles>
         {!mini && <header>CART</header>}
-        {cartStore.products.length === 0 ? (
+        {products.length === 0 ? (
           <h5 className="emptyCart">
             There is no items in your cart yet!, go and grap some!
           </h5>
         ) : (
           <ul className={!mini ? 'u-list' : 'u-list u-list-mini'}>
-            {cartStore.products.map((product, i) => (
+            {products.map((product, i) => (
               <li
                 className={!mini ? 'list' : 'list list-mini'}
                 key={`${product.id}` + i}
@@ -357,7 +357,7 @@ const Cart = ({ mini }) => {
                     }
                   >
                     {product.prices
-                      .filter((price) => price.currency === currentCcy.currency)
+                      .filter((price) => price.currency === currency)
                       .map((ccy) => (
                         <p key={ccy.currency} className={ccy.currency}>
                           {ccy.amount.toFixed(2)}
@@ -446,7 +446,7 @@ const Cart = ({ mini }) => {
                   >
                     <div
                       onClick={() =>
-                        dispatch(addProduct({ ...product, currentCcy }))
+                        dispatch(addProduct({ ...product, currency }))
                       }
                       className={
                         !mini
@@ -467,7 +467,7 @@ const Cart = ({ mini }) => {
                     </div>
                     <div
                       onClick={() =>
-                        dispatch(decrementProduct({ ...product, currentCcy }))
+                        dispatch(decrementProduct({ ...product, currency }))
                       }
                       className={
                         !mini
@@ -530,8 +530,8 @@ const Cart = ({ mini }) => {
           <>
             <div className="footer">
               <div className="footer__total"> Total</div>
-              <div className={`footer__amount ${currentCcy.currency}`}>
-                {Math.floor(cartStore.totalAmount * 100) / 100 || 0}
+              <div className={`footer__amount ${currency}`}>
+                {Math.floor(totalAmount * 100) / 100 || 0}
               </div>
             </div>
             <div className="footer__btns">
@@ -546,7 +546,7 @@ const Cart = ({ mini }) => {
                 view bag
               </button>
               <button
-                disabled={!cartStore.products.length}
+                disabled={!products.length}
                 type="button"
                 className="footer__btn footer__btn-co-primary"
               >

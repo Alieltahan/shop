@@ -165,13 +165,13 @@ const ProductContainerStyle = styled.div`
 const ProductCard = ({ products }) => {
   const [selectAttributes, setSelectAttributes] = useState(false);
   // Getting Current Currency.
-  const currentCcy = useSelector((state) => state.ccy);
+  const { currency } = useSelector((state) => state.ccy);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const { handleAttributes, productOptionSelected, clearProductAtt } =
     useForm();
 
-  const cartOverlay = useSelector((state) => state.cart.cartOverlay);
+  const { cartOverlay } = useSelector((state) => state.cart);
 
   const handleAddToCart = (product) => {
     dispatch(
@@ -182,7 +182,7 @@ const ProductCard = ({ products }) => {
           .map((opt) => Object.values(opt))
           .join('-')}`,
         selectedOptions: productOptionSelected,
-        currentCcy,
+        currency,
         quantity: 1,
       })
     );
@@ -258,9 +258,9 @@ const ProductCard = ({ products }) => {
               ></img>
               <div className="product__content">
                 <p>{product.name}</p>
-                <div className={currentCcy.currency}>
+                <div className={currency}>
                   {product.prices
-                    .filter((price) => price.currency === currentCcy.currency)
+                    .filter((price) => price.currency === currency)
                     .map((price) => price.amount.toFixed(2))
                     .join()}
                 </div>

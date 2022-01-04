@@ -10,8 +10,8 @@ import { addProduct } from './store/cart';
 import ProductAttributes from './common/ProductAttributes';
 
 const ProductContainer = styled.div`
-  width: 144rem;
-  height: 74.5rem;
+  /* width: 144rem;
+  height: 74.5rem; */
   padding-top:16rem;
   .product {
     &__details {
@@ -34,11 +34,12 @@ const ProductContainer = styled.div`
       & img {
         height: 51.1rem;
         width: 61rem;
-        object-fit: contain;
+        object-fit:contain;
       }
       &__content {
         width: 29.2rem;
         height: 51.3rem;
+        margin-left: 10rem;
         h4 {
           font-family: Raleway;
           font-weight: 600;
@@ -73,6 +74,9 @@ const ProductContainer = styled.div`
           align-items: center;
           margin: 0.8rem 1.2rem 0 0;
           cursor: pointer;
+          &:last-of-type{
+            margin-right: 0;
+          }
           &-slctd{
             background-color: #000;
             color: white;
@@ -109,6 +113,9 @@ const ProductContainer = styled.div`
              text-transform: uppercase;
           }
           > div {
+            height: 4.6rem;
+            display: flex;
+            align-items: center;
             margin-top: 1rem;
             font-family: Raleway;
             font-weight: bold;
@@ -171,7 +178,7 @@ const ProductDescription = ({ id }) => {
   const { data, loading, error } = useQuery(QUERY_SINGLE_PRODUCT, {
     variables: { id },
   });
-  const currentCcy = useSelector((state) => state.ccy);
+  const { currency } = useSelector((state) => state.ccy);
   const dispatch = useDispatch();
 
   const ProductImages = data?.product?.gallery.map((image) => image);
@@ -199,7 +206,7 @@ const ProductDescription = ({ id }) => {
           .map((opt) => Object.values(opt))
           .join('-')}`,
         selectedOptions: productOptionSelected,
-        currentCcy,
+        currency,
         quantity: 1,
       })
     );
@@ -243,7 +250,7 @@ const ProductDescription = ({ id }) => {
             <p>price:</p>
             <div>
               {Product.prices
-                .filter((price) => price.currency === currentCcy.currency)
+                .filter((price) => price.currency === currency)
                 .map((ccy) => (
                   <p key={ccy.currency} className={ccy.currency}>
                     {ccy.amount.toFixed(2)}

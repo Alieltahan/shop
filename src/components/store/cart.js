@@ -16,13 +16,13 @@ const cartSlice = createSlice({
     // Add Product
     addProduct: (state, action) => {
       // Getting Current Ccy & Arr of ccy
-      const currentCcy = action.payload.currentCcy.currency;
-      const priceDetails = action.payload.prices.filter(
-        (price) => price.currency === `${currentCcy}`
+      const { id, prices, currency } = action.payload;
+      const priceDetails = prices.filter(
+        (price) => price.currency === `${currency}`
       );
       // Getting Existing Product Index if any
       let existingCartProductIndex = state.products.findIndex(
-        (product) => product.id === action.payload.id
+        (product) => product.id === id
       );
       // Updating Quantity of existing Product.
       let existingProduct = state.products[existingCartProductIndex];
@@ -42,12 +42,12 @@ const cartSlice = createSlice({
     //
     // Decrement Product
     decrementProduct: (state, action) => {
-      const currentCcy = action.payload.currentCcy.currency;
-      const priceDetails = action.payload.prices.filter(
-        (price) => price.currency === `${currentCcy}`
+      const { prices, currency, id } = action.payload;
+      const priceDetails = prices.filter(
+        (price) => price.currency === `${currency}`
       );
       let existingCartProductIndex = state.products.findIndex(
-        (product) => product.id === action.payload.id
+        (product) => product.id === id
       );
       let existingProduct = state.products[existingCartProductIndex];
       state.products[existingCartProductIndex] = {
@@ -69,10 +69,9 @@ const cartSlice = createSlice({
     //
     // Update Products Total Amount While Changing Ccy
     changeTotalCcy: (state, action) => {
-      const { StoreProducts } = action?.payload;
+      const { StoreProducts, newCcy } = action?.payload;
       // Guard Clause if changing the Ccy & No Products in Cart.
       if (StoreProducts.length === 0) return;
-      const { newCcy } = action.payload;
       // Getting the Quantity of Each Product.
       let ProductQuantity = StoreProducts?.map((product) => product.quantity);
       // Getting the Amount of Each Product.
