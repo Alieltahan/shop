@@ -6,7 +6,7 @@ import { QUERY_SINGLE_PRODUCT } from './http/graphql';
 import { AddToCartChkr } from './common/AddToCartChkr';
 import { useForm } from './lib/useForm';
 import { currCategory } from './store/activeCategory';
-import { addProduct } from './store/cart';
+import { addProduct, productAddedToggle, setProductAdded } from './store/cart';
 import { ProductAttributes } from './common/ProductAttributes';
 const createDOMPurify = require('dompurify');
 const DOMPurify = createDOMPurify(window);
@@ -77,7 +77,6 @@ export const ProductDescription = ({ id }) => {
   const dispatch = useDispatch();
 
   const ProductImages = data?.product?.gallery.map((image) => image);
-
   const handleImageChange = (index) => {
     setThumbnail(index);
   };
@@ -86,8 +85,11 @@ export const ProductDescription = ({ id }) => {
   if (data) {
     Product = data.product;
   }
-  /* Updating Active Category */
+  /**
+   *  @param {Product.category} String of Category Name
+   *  Updating Product Category Store State */
   dispatch(currCategory(Product.category));
+
   /* Custom Hook to handle the Products Attributes */
   const { handleAttributes, productOptionSelected, clearProductAtt } =
     useForm();
@@ -106,6 +108,8 @@ export const ProductDescription = ({ id }) => {
       })
     );
     clearProductAtt();
+    dispatch(productAddedToggle());
+    setTimeout(() => dispatch(productAddedToggle()), 2000);
   };
 
   if (loading) return <h3>Loading...</h3>;

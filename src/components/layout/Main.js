@@ -23,8 +23,10 @@ const Modal = styled.div`
 `;
 export const Main = () => {
   const dispatch = useDispatch();
-  const StoreCart = useSelector((state) => state.cart);
-  const StoreCcy = useSelector((state) => state.ccy);
+  const { cartOverlay, productAdded, miniCartOpen } = useSelector(
+    (state) => state.cart
+  );
+  const { showSwitcher } = useSelector((state) => state.ccy);
   const Location = useLocation().pathname;
   // Updating current Active Category when route Changes
   dispatch(routeCategory(Location));
@@ -32,18 +34,15 @@ export const Main = () => {
   const { data } = useQuery(QUERY_CATEGORIES);
   return (
     <>
-      {StoreCart.miniCartToggle && (
-        <Modal onClick={() => dispatch(miniCartToggle())} />
-      )}
-      {StoreCart.cartOverlay.isOpen && (
+      {miniCartOpen && <Modal onClick={() => dispatch(miniCartToggle())} />}
+      {cartOverlay.isOpen && (
         <Modal onClick={() => dispatch(cartOverlayClose())} />
       )}
-      {StoreCcy.showSwitcher && (
-        <Modal onClick={() => dispatch(toggleSwitcher())} />
-      )}
+      {showSwitcher && <Modal onClick={() => dispatch(toggleSwitcher())} />}
 
       <Header />
-      <NotificationCart />
+      {productAdded && <NotificationCart />}
+
       <Routes>
         <Route path="/product/:id" element={<PDP />} />
         {data?.categories.map((category) => (

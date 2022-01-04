@@ -24,14 +24,13 @@ const Container = styled.div`
   }
 `;
 export const MiniCart = () => {
-  const storeCart = useSelector((state) => state.cart);
-  let TotalProducts = storeCart.totalCount;
+  const { totalCount, miniCartOpen } = useSelector((state) => state.cart);
   return (
     <div className="miniCart">
-      {storeCart.miniCartToggle && (
+      {miniCartOpen && (
         <Container>
           <header>
-            <span>My Bag</span>, {TotalProducts} item{TotalProducts > 1 && 's'}
+            <span>My Bag</span>, {totalCount} item{totalCount > 1 && 's'}
           </header>
           {/* default option is true */}
           <Cart mini />

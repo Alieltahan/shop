@@ -5,8 +5,9 @@ const initialState = {
   products: [],
   totalAmount: 0,
   totalCount: 0,
-  miniCartToggle: false,
+  miniCartOpen: false,
   cartOverlay: {},
+  productAdded: false,
 };
 const cartSlice = createSlice({
   name: 'cart',
@@ -64,7 +65,7 @@ const cartSlice = createSlice({
     //
     // Toggle Mini Cart
     miniCartToggle: (state, action) => {
-      state.miniCartToggle = !state.miniCartToggle;
+      state.miniCartOpen = !state.miniCartOpen;
     },
     //
     // Update Products Total Amount While Changing Ccy
@@ -98,6 +99,11 @@ const cartSlice = createSlice({
     setCartOverlayProd: (state, action) => {
       state.cartOverlay = action.payload;
     },
+    //
+    // Product Added Notifcation
+    productAddedToggle: (state, action) => {
+      state.productAdded = !state.productAdded;
+    },
   },
 });
 
@@ -108,5 +114,6 @@ export const {
   changeTotalCcy,
   cartOverlayClose,
   setCartOverlayProd,
+  productAddedToggle,
 } = cartSlice.actions;
 export default cartSlice.reducer;

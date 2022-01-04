@@ -1,0 +1,51 @@
+.notify {
+  &__container {
+    transition: all 0.3s;
+    animation-name: fadeOut;
+    animation-duration: 5s;
+    opacity: 0;
+  }
+  position: fixed;
+  top: 8rem;
+  right: 4rem;
+  background-color: lightgreen;
+  animation-name: example;
+  color: #000;
+  font-size: 2rem;
+  z-index: 10;
+  padding: 2rem;
+  border-radius: 10%;
+  animation-name: slideToRight;
+  animation-duration: 1s;
+  &:before {
+    content: '✓';
+    padding: 0.05rem;
+    margin-right: 1rem;
+  }
+}
+
+@keyframes slideToRight {
+  from {
+    transform: translate(30rem);
+    display: block;
+    visibility: visible;
+  }
+  to {
+    transform: translate(0rem);
+    display: none;
+    visibility: hidden;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    display: block;
+    visibility: visible;
+  }
+  100% {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+}

@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct, cartOverlayClose, setCartOverlayProd } from './store/cart';
+import {
+  addProduct,
+  cartOverlayClose,
+  productAddedToggle,
+  setCartOverlayProd,
+} from './store/cart';
 import styled from 'styled-components';
 import cartLogo from '../media/svg/EmptyCart-white.svg';
 import { useNavigate } from 'react-router';
@@ -189,6 +194,8 @@ export const ProductCard = ({ products }) => {
     );
     dispatch(cartOverlayClose());
     setSelectAttributes(false);
+    dispatch(productAddedToggle());
+    setTimeout(() => dispatch(productAddedToggle()), 2000);
   };
 
   const handleAddToCartFalse = (product) => {
