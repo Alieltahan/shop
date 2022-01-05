@@ -32,8 +32,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
             └── graphql.js # Contain All The GraphQL Queries.
         ├── NavBar.js # Container for the Components in the Navbar.
             ├── Currencies.js # The List of Currencies UL in the Header.
+            ├── logo - categories # within the component.
             └── MiniCart.js # MiniCart.
-            &logo / categories.
         ├── layout # container for the Layout design components.
             ├── Pages # Contain the pages componenets.
                 ├── Cart.js # Mini/Cart Page.
