@@ -6,7 +6,7 @@ import { QUERY_SINGLE_PRODUCT } from './http/graphql';
 import { AddToCartChkr } from './common/AddToCartChkr';
 import { useForm } from './lib/useForm';
 import { currCategory } from './store/activeCategory';
-import { addProduct, productAddedToggle, setProductAdded } from './store/cart';
+import { addProduct, productAddedToggle } from './store/cart';
 import { ProductAttributes } from './common/ProductAttributes';
 const createDOMPurify = require('dompurify');
 const DOMPurify = createDOMPurify(window);

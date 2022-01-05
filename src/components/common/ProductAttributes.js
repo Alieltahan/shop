@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import '../../styles/ProductAttributes.scss';
-import { QUERY_SINGLE_PRODUCT } from '../http/graphql';
+import { QUERY_PRODUCT_ATTRIBUTES } from '../http/graphql';
 
 /**
  * @param {Product} Object
@@ -13,7 +13,7 @@ export const ProductAttributes = ({
   handleAttributes,
   productOptionSelected = [],
 }) => {
-  const { data } = useQuery(QUERY_SINGLE_PRODUCT, {
+  const { data } = useQuery(QUERY_PRODUCT_ATTRIBUTES, {
     variables: { id },
     fetchPolicy: 'no-cache',
   });

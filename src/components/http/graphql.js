@@ -110,3 +110,21 @@ export const QUERY_SINGLE_PRODUCT = gql`
     }
   }
 `;
+
+// Query Product Attributes
+export const QUERY_PRODUCT_ATTRIBUTES = gql`
+  query QUERY_PRODUCT_ATTRIBUTES($id: String!) {
+    product(id: $id) {
+      id
+      attributes {
+        id
+        name
+        type
+        items {
+          value
+          id
+        }
+      }
+    }
+  }
+`;

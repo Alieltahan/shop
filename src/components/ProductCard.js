@@ -196,6 +196,7 @@ export const ProductCard = ({ products }) => {
     setSelectAttributes(false);
     dispatch(productAddedToggle());
     setTimeout(() => dispatch(productAddedToggle()), 2000);
+    clearProductAtt();
   };
 
   const handleAddToCartFalse = (product) => {
@@ -239,7 +240,7 @@ export const ProductCard = ({ products }) => {
                     AddToCartChkr({
                       ...product,
                       selectedOptions: productOptionSelected,
-                    })
+                    }) && cartOverlay.isOpen
                       ? handleAddToCart(product)
                       : handleAddToCartFalse(product);
                     clearProductAtt();
