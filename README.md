@@ -6,11 +6,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Project Structure:
 
 <!-- prettier-ignore -->
+```bash
 ├── README.md - This file.
 ├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
 ├── public
-│   ├── wlogo.svg # App Icon.
-│   └── index.html # DO NOT MODIFY
+│ ├── wlogo.svg # App Icon.
+│ └── index.html # DO NOT MODIFY
 └── src
     ├── media # container for the images/icons.
         └── svg # container for all the SVG icons.
@@ -21,6 +22,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
             ├── ArrowImg.svg # Arrow to turn the Images.
             └── arrow.svg # Currency arrow svg.
     ├── components # container for all the developped files.
+        ├── common # container folder for files used in various components.
+            ├── AddToCartChkr.js # Function Returns boolean.
+            ├── NotificationCart.js # Notification for a Product had been added to Cart.
+            ├── ProdAttributeOverlay.js # Container for Product's Attribute for the page PLP only.
+            ├── ProductAttributes.js # Component for product attributes.
+            └── SelectAllAtributes.js # Component gives notification to select All Product's attributes if not selected.
         ├── http # Container for HTTP requests.
             └── graphql.js # Contain All The GraphQL Queries.
         ├── NavBar.js # Container for the Components in the Navbar.
@@ -53,6 +60,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     ├── _DATA.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
     ├── index.css # Global styles. You probably won't need to change anything here.
     └── index.js # You should not need to modify this file. It is used for DOM rendering only.
+```
 
 ## Available Scripts
 
