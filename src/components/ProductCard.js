@@ -166,7 +166,16 @@ const ProductContainerStyle = styled.div`
     }
   }
 `;
-
+const Modal = styled.div`
+  background-color: #ccc;
+  position: fixed;
+  top: 8rem;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  opacity: 0.5;
+`;
 /** @param Array of the Products */
 export const ProductCard = ({ products }) => {
   const [selectAttributes, setSelectAttributes] = useState(false);
@@ -180,6 +189,7 @@ export const ProductCard = ({ products }) => {
   const { cartOverlay } = useSelector((state) => state.cart);
 
   const handleAddToCart = (product) => {
+    clearProductAtt();
     dispatch(
       addProduct({
         ...product,
@@ -196,7 +206,6 @@ export const ProductCard = ({ products }) => {
     setSelectAttributes(false);
     dispatch(productAddedToggle());
     setTimeout(() => dispatch(productAddedToggle()), 2000);
-    clearProductAtt();
   };
 
   const handleAddToCartFalse = (product) => {
@@ -216,8 +225,15 @@ export const ProductCard = ({ products }) => {
   const handleProductDescription = (id) => {
     Navigate(`/product/${id}`);
   };
+
+  const handleCloseCartOverlay = () => {
+    clearProductAtt();
+    dispatch(cartOverlayClose());
+  };
+
   return (
     <>
+      {cartOverlay.isOpen && <Modal onClick={() => handleCloseCartOverlay()} />}
       {products?.map((product) => (
         <ProductContainerStyle key={product.id}>
           <div className="product">
@@ -240,10 +256,9 @@ export const ProductCard = ({ products }) => {
                     AddToCartChkr({
                       ...product,
                       selectedOptions: productOptionSelected,
-                    }) && cartOverlay.isOpen
+                    })
                       ? handleAddToCart(product)
                       : handleAddToCartFalse(product);
-                    clearProductAtt();
                   }}
                   className="product__image-container-carticon"
                 >

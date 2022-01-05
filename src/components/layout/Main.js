@@ -4,6 +4,7 @@ import { Routes, Route, useLocation } from 'react-router';
 import styled from 'styled-components';
 import { NotificationCart } from '../common/NotificationCart';
 import { QUERY_CATEGORIES } from '../http/graphql';
+import { useForm } from '../lib/useForm';
 import { routeCategory } from '../store/activeCategory';
 import { cartOverlayClose, miniCartToggle } from '../store/cart';
 import { toggleSwitcher } from '../store/currency';
@@ -23,21 +24,19 @@ const Modal = styled.div`
 `;
 export const Main = () => {
   const dispatch = useDispatch();
-  const { cartOverlay, productAdded, miniCartOpen } = useSelector(
-    (state) => state.cart
-  );
+  const { productAdded, miniCartOpen } = useSelector((state) => state.cart);
+
   const { showSwitcher } = useSelector((state) => state.ccy);
   const Location = useLocation().pathname;
   // Updating current Active Category when route Changes
   dispatch(routeCategory(Location));
   // Getting All The Categories Dynamically (For Scalability in the Future)
   const { data } = useQuery(QUERY_CATEGORIES);
+
   return (
     <>
       {miniCartOpen && <Modal onClick={() => dispatch(miniCartToggle())} />}
-      {cartOverlay.isOpen && (
-        <Modal onClick={() => dispatch(cartOverlayClose())} />
-      )}
+
       {showSwitcher && <Modal onClick={() => dispatch(toggleSwitcher())} />}
 
       <Header />

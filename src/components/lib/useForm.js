@@ -47,7 +47,6 @@ export function useForm() {
       );
     }
   };
-  // TODO
   const clearProductAtt = () => {
     setProductOptionSelected(
       produce((draft) => {
@@ -55,6 +54,7 @@ export function useForm() {
       })
     );
   };
+
   return {
     handleAttributes,
     clearProductAtt,
