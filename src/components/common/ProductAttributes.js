@@ -13,14 +13,13 @@ export const ProductAttributes = ({
   handleAttributes,
   productOptionSelected = [],
 }) => {
-  console.log({ id });
   const { data } = useQuery(QUERY_SINGLE_PRODUCT, {
     variables: { id },
     fetchPolicy: 'no-cache',
   });
+  // Guard Clause
   if (!data) return null;
   let { product } = data;
-  console.log(product);
   return (
     <>
       <div className="product__details__attribute">
