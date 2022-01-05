@@ -1,4 +1,6 @@
+import { useQuery } from '@apollo/client';
 import '../../styles/ProductAttributes.scss';
+import { QUERY_SINGLE_PRODUCT } from '../http/graphql';
 
 /**
  * @param {Product} Object
@@ -7,24 +9,32 @@ import '../../styles/ProductAttributes.scss';
  */
 
 export const ProductAttributes = ({
-  Product,
+  id,
   handleAttributes,
   productOptionSelected = [],
 }) => {
+  console.log({ id });
+  const { data } = useQuery(QUERY_SINGLE_PRODUCT, {
+    variables: { id },
+    fetchPolicy: 'no-cache',
+  });
+  if (!data) return null;
+  let { product } = data;
+  console.log(product);
   return (
     <>
       <div className="product__details__attribute">
-        {Product.attributes.map((att) => (
+        {product?.attributes.map((att) => (
           <div key={att.id}>
             <p className="product__details__attribute-text">{att.id}:</p>
             {att.type !== 'swatch'
               ? att.items.map((option2) => (
                   <span
-                    onClick={() => handleAttributes(Product.id, att, option2)}
+                    onClick={() => handleAttributes(product?.id, att, option2)}
                     key={option2.id}
                     className={
                       productOptionSelected
-                        .filter((prod) => prod.id === Product.id)
+                        .filter((prod) => prod.id === product?.id)
                         .map((slctd) =>
                           slctd.attributes.filter(
                             (slctdAtt) => slctdAtt?.id === att.id
@@ -41,14 +51,14 @@ export const ProductAttributes = ({
               : att.items.map((option) => (
                   <span
                     onClick={() => {
-                      handleAttributes(Product.id, att, option);
+                      handleAttributes(product.id, att, option);
                     }}
                     key={option.id}
                     // data-color={option.value}
                     style={{ backgroundColor: `${option.value}` }}
                     className={
                       productOptionSelected
-                        .filter((prod) => prod.id === Product.id)
+                        .filter((prod) => prod.id === product.id)
                         .map((prodSlctd) =>
                           prodSlctd.attributes.filter(
                             (slctdAtt) => slctdAtt?.id === att.id

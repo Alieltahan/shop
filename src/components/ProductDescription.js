@@ -144,7 +144,7 @@ export const ProductDescription = ({ id }) => {
           <h4 className="product__details__brand">{data?.product.brand}</h4>
           <p>{data?.product.name}</p>
           <ProductAttributes
-            Product={Product}
+            id={Product.id}
             handleAttributes={handleAttributes}
             productOptionSelected={productOptionSelected}
           />

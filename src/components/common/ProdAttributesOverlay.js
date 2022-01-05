@@ -7,7 +7,7 @@ import '../../styles/ProdAttributesOverlay.scss';
  * @param {productOptionSelected} Array for selected Attributes of a Product
  */
 export const ProductAttributesOverlay = ({
-  Product,
+  id,
   handleAttributes,
   productOptionSelected = [],
 }) => {
@@ -16,7 +16,7 @@ export const ProductAttributesOverlay = ({
       <ProductAttributes
         handleAttributes={handleAttributes}
         productOptionSelected={productOptionSelected}
-        Product={Product}
+        id={id}
       />
     </div>
   );

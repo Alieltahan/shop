@@ -253,7 +253,7 @@ export const ProductCard = ({ products }) => {
                 <>
                   {selectAttributes && <SelectAllAttributes />}
                   <ProductAttributesOverlay
-                    Product={product}
+                    id={product.id}
                     handleAttributes={handleAttributes}
                     productOptionSelected={productOptionSelected}
                   />
