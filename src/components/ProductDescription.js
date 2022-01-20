@@ -9,7 +9,6 @@ import { currCategory } from './store/activeCategory';
 import { addProduct, productAddedToggle } from './store/cart';
 import { ProductAttributes } from './common/ProductAttributes';
 import parse from 'html-react-parser';
-import { checkIfImageExists } from './common/checkImage';
 
 const ProductContainer = styled.div`
   padding-top: 16rem;
@@ -80,19 +79,19 @@ export const ProductDescription = ({ id }) => {
   const { currency } = useSelector((state) => state.ccy);
   const dispatch = useDispatch();
 
-  // Ignores 404 Non exist images with helper Function checkIfImageExists
-  const ProductImages = data?.product?.gallery.filter(
-    (image) => checkIfImageExists(image) && image
-  );
+  // valid existing images of Product
+  const ProductImages = [];
 
-  const handleImageChange = (index) => {
-    setThumbnail(index);
-  };
   /* Storing the Product */
   let Product = {};
   if (data) {
     Product = data.product;
+    Product?.gallery.map((image) => ProductImages.push(image));
   }
+
+  const handleImageChange = (index) => {
+    setThumbnail(index);
+  };
   /**
    *  @param {Product.category} String of Category Name
    *  Updating Product Category Store State */
@@ -193,12 +192,6 @@ export const ProductDescription = ({ id }) => {
           <div className="product__details-description" id="details">
             {parse(Product.description)}
           </div>
-          {/* <div
-            className="product__details-description"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(Product.description),
-            }}
-          ></div> */}
         </div>
       </div>
     </ProductContainer>

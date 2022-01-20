@@ -318,13 +318,6 @@ export const Cart = ({ mini }) => {
     }
   };
 
-  // const productGallery = (product) => {
-  //   let validImages = product.gallery.filter(
-  //     (image) => checkIfImageExists(image) && image
-  //   );
-  //   return validImages;
-  // };
-
   return (
     <>
       <ContainerStyles>
@@ -338,7 +331,7 @@ export const Cart = ({ mini }) => {
             {products.map((product, i) => (
               <li
                 className={!mini ? 'list' : 'list list-mini'}
-                key={`${product.id}` + i}
+                key={`${mini ? product.id : product.id + i}`}
               >
                 <div>
                   <span

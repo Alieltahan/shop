@@ -136,7 +136,7 @@ function App() {
       800
     )
   );
-  console.log('Please clear LocalStorage if page didnt load');
+  console.warn('Please clear LocalStorage if page didnt load');
   return (
     <Provider store={store}>
       <ApolloProvider client={client}>
