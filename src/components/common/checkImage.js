@@ -1,4 +1,4 @@
-/** Helper function to confirm whether Image exists or not
+/** Helper function to confirm whether Image exists
  * @param {String} url
  * @returns {Boolean}
  */

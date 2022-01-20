@@ -96,6 +96,7 @@ const CartStyle = styled.div`
 export const NavBar = () => {
   const { data: dataCurrencies } = useQuery(QUERY_CURRENCIES);
   const { data: dataCategories } = useQuery(QUERY_CATEGORIES);
+  // const { activeCategory } = useSelector((state) => state.activeCategory);
 
   const dispatch = useDispatch();
 
@@ -104,7 +105,6 @@ export const NavBar = () => {
     dispatch(miniCartToggle());
   };
 
-  let { activeCategory } = useSelector((state) => state.activeCategory);
   return (
     <>
       {/* Logo - Center */}
@@ -122,12 +122,14 @@ export const NavBar = () => {
       </CartCurrencyWrapper>
       {/* Categories */}
       <HeaderStyles>
-        <NavLink className={activeCategory === '' ? 'active' : null} to="/">
+        {/* {activeCategory === '' ? 'active' : null} */}
+        <NavLink className="" to="/">
           <HeaderCategoryStyles>All</HeaderCategoryStyles>
         </NavLink>
         {dataCategories?.categories?.map((cat) => (
           <NavLink
-            className={activeCategory === cat.name ? 'active' : ''}
+            // {activeCategory === cat.name ? 'active' : ''}
+            className=""
             key={cat?.name}
             to={cat?.name}
           >
