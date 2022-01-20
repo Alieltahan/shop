@@ -8,8 +8,7 @@ import { useForm } from './lib/useForm';
 import { currCategory } from './store/activeCategory';
 import { addProduct, productAddedToggle } from './store/cart';
 import { ProductAttributes } from './common/ProductAttributes';
-const createDOMPurify = require('dompurify');
-const DOMPurify = createDOMPurify(window);
+import parse from 'html-react-parser';
 
 const ProductContainer = styled.div`
   padding-top: 16rem;
@@ -52,6 +51,8 @@ const ProductContainer = styled.div`
           box-shadow: none;
         }
       }
+      &-description {
+      }
     }
     &__sideImage- {
       cursor: pointer;
@@ -66,8 +67,11 @@ const ProductContainer = styled.div`
   }
 `;
 
-/** @param {id} String of Product Id */
+/**
+ * @param {id} String of Product Id
+ *  */
 export const ProductDescription = ({ id }) => {
+  // console.log(parse, 'parse');
   const [thumbnail, setThumbnail] = useState(0);
   const [selectAttribute, setSelectAttribute] = useState(false);
   const { data, loading, error } = useQuery(QUERY_SINGLE_PRODUCT, {
@@ -182,12 +186,15 @@ export const ProductDescription = ({ id }) => {
               !Please select all available options for the product!
             </div>
           )}
-          <div
+          <div className="product__details-description" id="details">
+            {parse(Product.description)}
+          </div>
+          {/* <div
             className="product__details-description"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(Product.description),
             }}
-          ></div>
+          ></div> */}
         </div>
       </div>
     </ProductContainer>
