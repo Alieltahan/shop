@@ -96,8 +96,7 @@ const CartStyle = styled.div`
 export const NavBar = () => {
   const { data: dataCurrencies } = useQuery(QUERY_CURRENCIES);
   const { data: dataCategories } = useQuery(QUERY_CATEGORIES);
-  // const { activeCategory } = useSelector((state) => state.activeCategory);
-
+  const { activeCategory } = useSelector((state) => state.activeCategory);
   const dispatch = useDispatch();
 
   let { totalCount } = useSelector((state) => state.cart);
@@ -122,14 +121,14 @@ export const NavBar = () => {
       </CartCurrencyWrapper>
       {/* Categories */}
       <HeaderStyles>
-        {/* {activeCategory === '' ? 'active' : null} */}
-        <NavLink className="" to="/">
+        {/*  */}
+        <NavLink className={activeCategory === '' ? 'active' : ''} to="/">
           <HeaderCategoryStyles>All</HeaderCategoryStyles>
         </NavLink>
         {dataCategories?.categories?.map((cat) => (
           <NavLink
-            // {activeCategory === cat.name ? 'active' : ''}
-            className=""
+            //
+            className={activeCategory === cat.name ? 'active' : ''}
             key={cat?.name}
             to={cat?.name}
           >
