@@ -26,7 +26,7 @@ export const Main = () => {
   const { productAdded, miniCartOpen } = useSelector((state) => state.cart);
 
   const { showSwitcher } = useSelector((state) => state.ccy);
-  const Location = useLocation().pathname;
+  const { pathname: Location } = useLocation();
   // Updating current Active Category when route Changes
   dispatch(routeCategory(Location));
   // Getting All The Categories Dynamically (For Scalability in the Future)

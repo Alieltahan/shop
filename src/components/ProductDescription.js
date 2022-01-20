@@ -9,6 +9,7 @@ import { currCategory } from './store/activeCategory';
 import { addProduct, productAddedToggle } from './store/cart';
 import { ProductAttributes } from './common/ProductAttributes';
 import parse from 'html-react-parser';
+import { checkIfImageExists } from './common/checkImage';
 
 const ProductContainer = styled.div`
   padding-top: 16rem;
@@ -71,7 +72,6 @@ const ProductContainer = styled.div`
  * @param {id} String of Product Id
  *  */
 export const ProductDescription = ({ id }) => {
-  // console.log(parse, 'parse');
   const [thumbnail, setThumbnail] = useState(0);
   const [selectAttribute, setSelectAttribute] = useState(false);
   const { data, loading, error } = useQuery(QUERY_SINGLE_PRODUCT, {
@@ -80,7 +80,11 @@ export const ProductDescription = ({ id }) => {
   const { currency } = useSelector((state) => state.ccy);
   const dispatch = useDispatch();
 
-  const ProductImages = data?.product?.gallery.map((image) => image);
+  // Ignores 404 Non exist images with helper Function checkIfImageExists
+  const ProductImages = data?.product?.gallery.filter(
+    (image) => checkIfImageExists(image) && image
+  );
+
   const handleImageChange = (index) => {
     setThumbnail(index);
   };
@@ -121,7 +125,7 @@ export const ProductDescription = ({ id }) => {
   return (
     <ProductContainer>
       <div>
-        {Product.gallery?.map((image, index) => (
+        {ProductImages?.map((image, index) => (
           <img
             onClick={() => handleImageChange(index)}
             className={`product__sideImage- product__sideImage-${index}`}

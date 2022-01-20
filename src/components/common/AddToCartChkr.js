@@ -1,8 +1,7 @@
 /**@param {product} Object */
 /**@returns boolean */
 
-export function AddToCartChkr(product) {
-  const { attributes, selectedOptions } = product;
+export function AddToCartChkr({ attributes, selectedOptions }) {
   // 1- If Product doesn't have attributes to be selected, return true (to be added in Cart)
   if (attributes?.length === 0) return true;
   // 1- selectedOption isn't found to Product Object

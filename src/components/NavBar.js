@@ -104,9 +104,7 @@ export const NavBar = () => {
     dispatch(miniCartToggle());
   };
 
-  let actvCategory = useSelector(
-    (state) => state.activeCategory.activeCategory
-  );
+  let { activeCategory } = useSelector((state) => state.activeCategory);
   return (
     <>
       {/* Logo - Center */}
@@ -124,12 +122,12 @@ export const NavBar = () => {
       </CartCurrencyWrapper>
       {/* Categories */}
       <HeaderStyles>
-        <NavLink className={actvCategory === '' ? 'active' : null} to="/">
+        <NavLink className={activeCategory === '' ? 'active' : null} to="/">
           <HeaderCategoryStyles>All</HeaderCategoryStyles>
         </NavLink>
         {dataCategories?.categories?.map((cat) => (
           <NavLink
-            className={actvCategory === cat.name ? 'active' : ''}
+            className={activeCategory === cat.name ? 'active' : ''}
             key={cat?.name}
             to={cat?.name}
           >

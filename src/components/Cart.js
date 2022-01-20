@@ -287,7 +287,9 @@ const ContainerStyles = styled.div`
     }
   }
 `;
-/**@param {mini} Boolean to render the mini Cart or Cart Page */
+/**
+ * @param {mini} Boolean to render the mini Cart or Cart Page
+ */
 export const Cart = ({ mini }) => {
   const { products, totalAmount } = useSelector((state) => state.cart);
   const { currency } = useSelector((state) => state.ccy);
@@ -306,6 +308,7 @@ export const Cart = ({ mini }) => {
   };
   const handlePrevImg = (product) => {
     let currentIds = { ...inputs };
+    // let gallery = productGallery(product);
     let { id, gallery } = product;
     let [existingItem] = Object.keys(inputs).filter((input) => input === id);
     if (existingItem && inputs[existingItem] !== 0)
@@ -314,6 +317,14 @@ export const Cart = ({ mini }) => {
       setInputs({ ...currentIds, [id]: gallery.length - 1 });
     }
   };
+
+  // const productGallery = (product) => {
+  //   let validImages = product.gallery.filter(
+  //     (image) => checkIfImageExists(image) && image
+  //   );
+  //   return validImages;
+  // };
+
   return (
     <>
       <ContainerStyles>
@@ -515,7 +526,6 @@ export const Cart = ({ mini }) => {
                         product.gallery[0]
                       }
                       alt={product.name}
-                      // Not safe as may lead to endless loop if all images not available
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = `${handleNextImg(product)}`;
