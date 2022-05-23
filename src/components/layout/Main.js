@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useLocation } from 'react-router';
 import styled from 'styled-components';
-import { NotificationCart } from '../common/NotificationCart';
+
 import { QUERY_CATEGORIES } from '../http/graphql';
 import { routeCategory } from '../store/activeCategory';
 import { miniCartToggle } from '../store/cart';
@@ -23,7 +23,7 @@ const Modal = styled.div`
 `;
 export const Main = () => {
   const dispatch = useDispatch();
-  const { productAdded, miniCartOpen } = useSelector((state) => state.cart);
+  const { miniCartOpen } = useSelector((state) => state.cart);
 
   const { showSwitcher } = useSelector((state) => state.ccy);
   const { pathname: Location } = useLocation();
@@ -39,7 +39,6 @@ export const Main = () => {
       {showSwitcher && <Modal onClick={() => dispatch(toggleSwitcher())} />}
 
       <Header />
-      {productAdded && <NotificationCart />}
 
       <Routes>
         <Route path="/product/:id" element={<PDP />} />

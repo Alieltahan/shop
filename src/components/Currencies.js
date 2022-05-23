@@ -76,6 +76,7 @@ const CcySwitcherStyle = styled.ul`
   /* TODO Edit if new ccy implemented (current 5 Ccys) */
   height: 22.7rem;
   transition: all 0.3s;
+  overflow: hidden;
   &.collapse {
     height: 0;
     visibility: none;

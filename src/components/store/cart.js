@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import toast from 'react-hot-toast';
 
 // initialState
 const initialState = {
@@ -7,7 +8,6 @@ const initialState = {
   totalCount: 0,
   miniCartOpen: false,
   cartOverlay: {},
-  productAdded: false,
 };
 const cartSlice = createSlice({
   name: 'cart',
@@ -28,12 +28,14 @@ const cartSlice = createSlice({
       // Updating Quantity of existing Product.
       let existingProduct = state.products[existingCartProductIndex];
       if (existingCartProductIndex >= 0) {
+        toast.success('Product quantity had been increased.');
         state.products[existingCartProductIndex] = {
           ...existingProduct,
           quantity: existingProduct.quantity + 1,
         };
         // If Not, Adding the new Product
       } else {
+        toast.success('Product had been added.');
         state.products.push(action.payload);
       }
       // Updating the Amount & Product Counts.
@@ -57,10 +59,12 @@ const cartSlice = createSlice({
       };
       state.totalCount--;
       state.totalAmount -= priceDetails[0].amount;
-      if (existingProduct.quantity === 1)
+      if (existingProduct.quantity === 1) {
+        toast.success('Product has been removed.');
         state.products = state.products.filter(
           (product) => product.id !== existingProduct.id
         );
+      } else toast.success('Product has been decreased.');
     },
     //
     // Toggle Mini Cart
@@ -99,11 +103,6 @@ const cartSlice = createSlice({
     setCartOverlayProd: (state, action) => {
       state.cartOverlay = action.payload;
     },
-    //
-    // Product Added Notifcation
-    productAddedToggle: (state, action) => {
-      state.productAdded = !state.productAdded;
-    },
   },
 });
 
@@ -114,6 +113,5 @@ export const {
   changeTotalCcy,
   cartOverlayClose,
   setCartOverlayProd,
-  productAddedToggle,
 } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -12,7 +12,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   /* --c-white */
   background: var(--c-white);
-  z-index: 4;
+  z-index: 5;
 `;
 
 export const Header = () => {

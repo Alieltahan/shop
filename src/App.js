@@ -5,9 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { Main } from './components/layout/Main';
 import confStore from './components/store/confStore';
 import { Provider } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: 'http://localhost:4000',
+  uri: 'https://shopbescandi.herokuapp.com/',
 });
 
 const GlobalStyles = createGlobalStyle`
@@ -143,6 +144,7 @@ function App() {
         <BrowserRouter>
           <GlobalStyles />
           <Main />
+          <Toaster />
         </BrowserRouter>
       </ApolloProvider>
     </Provider>

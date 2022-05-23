@@ -6,7 +6,7 @@ import { QUERY_SINGLE_PRODUCT } from './http/graphql';
 import { AddToCartChkr } from './common/AddToCartChkr';
 import { useForm } from './lib/useForm';
 import { currCategory } from './store/activeCategory';
-import { addProduct, productAddedToggle } from './store/cart';
+import { addProduct } from './store/cart';
 import { ProductAttributes } from './common/ProductAttributes';
 import parse from 'html-react-parser';
 
@@ -115,8 +115,6 @@ export const ProductDescription = ({ id }) => {
       })
     );
     clearProductAtt();
-    dispatch(productAddedToggle());
-    setTimeout(() => dispatch(productAddedToggle()), 2000);
   };
 
   if (loading) return <h3>Loading...</h3>;
